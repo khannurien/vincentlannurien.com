@@ -1,0 +1,15 @@
+[submodule "themes/hugo-book"]
+	path = themes/hugo-book
+	url = https://github.com/alex-shpak/hugo-book
+[submodule "themes/hugo-theme-texify"]
+	path = themes/hugo-theme-texify
+	url = https://github.com/queensferryme/hugo-theme-texify.git
+[submodule "themes/maverick"]
+	path = themes/maverick
+	url = https://github.com/canhtran/maverick.git
+[submodule "themes/hugo-theme-stack"]
+	path = themes/hugo-theme-stack
+	url = https://github.com/CaiJimmy/hugo-theme-stack/
+[submodule "themes/hugo-theme-ladder"]
+	path = themes/hugo-theme-ladder
+	url = https://github.com/guangzhengli/hugo-theme-ladder
