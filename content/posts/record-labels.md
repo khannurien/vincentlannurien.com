@@ -1,7 +1,7 @@
 ---
 title: "Record Labels"
 date: 2022-10-13T11:38:48+02:00
-tag:
+tags:
 - links
 - music
 ---
