@@ -12,7 +12,7 @@ tags:
 
 > Seb Wildblood
 
-* https://churchofficial.bandcamp.com/releases
+* https://churchofficial.bandcamp.com/
 * https://soundcloud.com/churchuk
 
 ## Future Times
@@ -26,6 +26,7 @@ tags:
 
 📍 Amsterdam
 
+* https://heistrecordings.bandcamp.com/
 * https://soundcloud.com/heistrecordings
 * https://www.youtube.com/channel/UCDldVIFCZW5vn6KGwjoON9g
 
@@ -33,13 +34,14 @@ tags:
 
 📍 London
 
+* https://industwetrust.bandcamp.com/
 * https://soundcloud.com/idwtrecordings
 
 ## Lobster Theremin
 
 📍 London 
 
-* https://lobstertheremin.com/
+* https://lobstertheremin.bandcamp.com/
 * https://soundcloud.com/lobster-theremin
 
 ## Malka Tuti
@@ -80,6 +82,7 @@ tags:
 
 📍 Paris
 
+* https://ondulerecordings.bandcamp.com/
 * https://soundcloud.com/ondulerecordings
 * https://www.youtube.com/channel/UCNcPGKPGwIBa5Tz6wm8T5tg
 
@@ -102,7 +105,7 @@ tags:
 
 📍 Bristol
 
-* https://shallnotfade.co.uk/
+* https://shallnotfade.bandcamp.com/
 * https://soundcloud.com/shallnotfade
 
 ## STRCTR
