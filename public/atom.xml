@@ -6,22 +6,29 @@
     <link>https://vincentlannurien.com/</link>
     
     <language>en</language>
-    <copyright>Copyright 313131, Calvin Tran</copyright>
+    <copyright>Copyright 2023, Calvin Tran</copyright>
     <lastBuildDate>Thu, 13 Oct 2022 11:38:48 +0200</lastBuildDate>
     <generator>Hugo - gohugo.io</generator>
     <docs>http://cyber.harvard.edu/rss/rss.html</docs>
     <atom:link href="https://vincentlannurien.com//atom.xml" rel="self" type="application/atom+xml"/>
     
+    
     <item>
       <title>Record Labels</title>
       <link>https://vincentlannurien.com/posts/record-labels/</link>
-      <description>&lt;h2 id=&#34;church&#34;&gt;Church&lt;/h2&gt;
+      <description>&lt;h2 id=&#34;astro-nautico&#34;&gt;Astro Nautico&lt;/h2&gt;
+&lt;p&gt;📍 New York&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://astronautico.bandcamp.com/&#34;&gt;https://astronautico.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://soundcloud.com/astronautico&#34;&gt;https://soundcloud.com/astronautico&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;church&#34;&gt;Church&lt;/h2&gt;
 &lt;p&gt;📍 London&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Seb Wildblood&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://churchofficial.bandcamp.com/releases&#34;&gt;https://churchofficial.bandcamp.com/releases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://churchofficial.bandcamp.com/&#34;&gt;https://churchofficial.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/churchuk&#34;&gt;https://soundcloud.com/churchuk&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;future-times&#34;&gt;Future Times&lt;/h2&gt;
@@ -33,18 +40,20 @@
 &lt;h2 id=&#34;heist-recordings&#34;&gt;Heist Recordings&lt;/h2&gt;
 &lt;p&gt;📍 Amsterdam&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://heistrecordings.bandcamp.com/&#34;&gt;https://heistrecordings.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/heistrecordings&#34;&gt;https://soundcloud.com/heistrecordings&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.youtube.com/channel/UCDldVIFCZW5vn6KGwjoON9g&#34;&gt;https://www.youtube.com/channel/UCDldVIFCZW5vn6KGwjoON9g&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;in-dust-we-trust&#34;&gt;In Dust We Trust&lt;/h2&gt;
 &lt;p&gt;📍 London&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://industwetrust.bandcamp.com/&#34;&gt;https://industwetrust.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/idwtrecordings&#34;&gt;https://soundcloud.com/idwtrecordings&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;lobster-theremin&#34;&gt;Lobster Theremin&lt;/h2&gt;
 &lt;p&gt;📍 London&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://lobstertheremin.com/&#34;&gt;https://lobstertheremin.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://lobstertheremin.bandcamp.com/&#34;&gt;https://lobstertheremin.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/lobster-theremin&#34;&gt;https://soundcloud.com/lobster-theremin&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;malka-tuti&#34;&gt;Malka Tuti&lt;/h2&gt;
@@ -79,6 +88,7 @@
 &lt;h2 id=&#34;ondulé-recordings&#34;&gt;Ondulé Recordings&lt;/h2&gt;
 &lt;p&gt;📍 Paris&lt;/p&gt;
 &lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://ondulerecordings.bandcamp.com/&#34;&gt;https://ondulerecordings.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/ondulerecordings&#34;&gt;https://soundcloud.com/ondulerecordings&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.youtube.com/channel/UCNcPGKPGwIBa5Tz6wm8T5tg&#34;&gt;https://www.youtube.com/channel/UCNcPGKPGwIBa5Tz6wm8T5tg&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -98,7 +108,7 @@
 &lt;h2 id=&#34;shall-not-fade&#34;&gt;Shall Not Fade&lt;/h2&gt;
 &lt;p&gt;📍 Bristol&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://shallnotfade.co.uk/&#34;&gt;https://shallnotfade.co.uk/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://shallnotfade.bandcamp.com/&#34;&gt;https://shallnotfade.bandcamp.com/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/shallnotfade&#34;&gt;https://soundcloud.com/shallnotfade&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;strctr&#34;&gt;STRCTR&lt;/h2&gt;
@@ -123,7 +133,7 @@
 &lt;li&gt;&lt;a href=&#34;https://soundcloud.com/textrecords&#34;&gt;https://soundcloud.com/textrecords&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-      <author>trandcanh@gmail.com (Calvin Tran)</author>
+      <author></author>
       <guid>https://vincentlannurien.com/posts/record-labels/</guid>
       <pubDate>Thu, 13 Oct 2022 11:38:48 +0200</pubDate>
     </item>

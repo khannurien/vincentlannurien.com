@@ -1,3 +1,11 @@
+---
+title: "About"
+date: 2022-10-13T11:38:48+02:00
+hide_title: true
+---
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
 ## Links
 
 * [Cloud & Linux Labs](https://khannurien.github.io/)

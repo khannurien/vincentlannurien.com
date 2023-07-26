@@ -2,9 +2,16 @@
 title: "Record Labels"
 date: 2022-10-13T11:38:48+02:00
 tags:
-- links
-- music
+  - links
+  - music
 ---
+
+## Astro Nautico
+
+📍 New York
+
+* https://astronautico.bandcamp.com/
+* https://soundcloud.com/astronautico
 
 ## Church
 
