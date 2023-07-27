@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vincent Lannurien</title><description/><link>https://vincentlannurien.com/</link><language>en</language><copyright>Copyright 2023, Calvin Tran</copyright><lastBuildDate>Wed, 26 Jul 2023 11:38:48 +0200</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://vincentlannurien.com//atom.xml" rel="self" type="application/atom+xml"/><item><title>Record Labels</title><link>https://vincentlannurien.com/posts/record-labels/</link><description>&lt;h2 id="astro-nautico">Astro Nautico&lt;/h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vincent Lannurien</title><description>Some notes that made their way out here</description><link>https://vincentlannurien.com/</link><language>en</language><copyright>Copyright 2023, Calvin Tran</copyright><lastBuildDate>Wed, 26 Jul 2023 11:38:48 +0200</lastBuildDate><generator>Hugo - gohugo.io</generator><docs>http://cyber.harvard.edu/rss/rss.html</docs><atom:link href="https://vincentlannurien.com//atom.xml" rel="self" type="application/atom+xml"/><item><title>Record Labels</title><link>https://vincentlannurien.com/posts/record-labels/</link><description>&lt;h2 id="astro-nautico">Astro Nautico&lt;/h2>
 &lt;p>📍 New York&lt;/p>
 &lt;ul>
 &lt;li>&lt;a href="https://astronautico.bandcamp.com/">https://astronautico.bandcamp.com/&lt;/a>&lt;/li>
@@ -113,4 +113,4 @@
 &lt;ul>
 &lt;li>&lt;a href="https://fourtet.bandcamp.com/">https://fourtet.bandcamp.com/&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://soundcloud.com/textrecords">https://soundcloud.com/textrecords&lt;/a>&lt;/li>
-&lt;/ul></description><author/><guid>https://vincentlannurien.com/posts/record-labels/</guid><pubDate>Thu, 13 Oct 2022 11:38:48 +0200</pubDate></item></channel></rss>
+&lt;/ul></description><author>Vincent Lannurien</author><guid>https://vincentlannurien.com/posts/record-labels/</guid><pubDate>Thu, 13 Oct 2022 11:38:48 +0200</pubDate></item></channel></rss>
