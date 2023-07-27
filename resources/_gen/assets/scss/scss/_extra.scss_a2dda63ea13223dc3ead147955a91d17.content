@@ -1,1 +1,0 @@
-body{width:100vw}.hidden{display:none}.wrapper{display:grid;grid-template-columns:repeat(3,1fr);gap:.8em}.essential-item{background-color:#fff;border:1px solid grey;display:flex;flex-direction:column}.essential-item>div{padding:.5em;text-align:center}.essential-item>.essential-item-content{margin-top:auto;margin-bottom:auto;border-top:1px solid grey;border-bottom:1px solid grey}
