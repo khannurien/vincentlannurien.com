@@ -102,6 +102,12 @@ records:
       - name: "Regular John"
         url: "https://www.youtube.com/watch?v=wjNbxJttwP8"
         id: "wjNbxJttwP8"
+      - name: "If Only"
+        url: "https://www.youtube.com/watch?v=1HqTh0nd9GE"
+        id: "1HqTh0nd9GE"
+      - name: "You Would Know"
+        url: "https://www.youtube.com/watch?v=Fp32A3Tvi8A"
+        id: "Fp32A3Tvi8A"
 ---
 
 > *Stoner rock is typically slow-to-mid tempo and features a heavily distorted, groove-laden bass-heavy sound, melodic vocals, and "retro" production.*
