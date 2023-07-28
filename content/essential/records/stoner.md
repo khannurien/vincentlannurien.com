@@ -1,6 +1,11 @@
 ---
 title: "Essential Stoner Records"
 date: 2023-07-26T11:38:48+02:00
+images:
+  - "images/stoner/black_sabbath_paranoid.jpg"
+  - "images/stoner/colour_haze_all.jpg"
+  - "images/stoner/truckfighters_desert_x.jpg"
+  - "images/stoner/qotsa_qotsa.jpg"
 
 records:
   - artist: "Black Sabbath"

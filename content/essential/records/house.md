@@ -1,6 +1,8 @@
 ---
 title: "Essential House Records"
 date: 2023-07-26T11:38:48+02:00
+images:
+  - "images/house/pepe_bradock_burning.jpg"
 
 records:
   - artist: "Pépé Bradock & The Grand Brûlé's Choir"

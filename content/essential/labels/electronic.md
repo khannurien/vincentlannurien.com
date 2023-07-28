@@ -1,6 +1,11 @@
 ---
 title: "Essential Electronic Labels"
 date: 2023-07-26T11:38:48+02:00
+images:
+  - "images/electronic/astro_nautico.jpg"
+  - "images/electronic/future_times.jpg"
+  - "images/electronic/shall_not_fade.jpg"
+  - "images/electronic/omena.jpg"
 
 labels:
   - name: "Astro Nautico"

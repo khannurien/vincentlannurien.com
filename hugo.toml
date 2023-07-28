@@ -16,24 +16,9 @@ theme = "maverick"
 
 [menu]
   [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about/"
-    weight = "4"
-  [[menu.main]]
     identifier = "essential"
     name = "Essential"
     url = "/essential/"
-    weight = "3"
-  [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = "2"
-  [[menu.main]]
-    identifier = "tags"
-    name = "Tags"
-    url = "/tags/"
     weight = "1"
 
 [markup]
