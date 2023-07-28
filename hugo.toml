@@ -17,7 +17,7 @@ theme = "maverick"
 [menu]
   [[menu.main]]
     identifier = "essential"
-    name = "Essential"
+    name = "📝 Essential"
     url = "/essential/"
     weight = "1"
 
@@ -36,8 +36,8 @@ theme = "maverick"
     lineNumbersInTable = true
     noClasses = true
     noHl = false
-    style = 'monokailight'
-    tabWidth = 4
+    style = 'nord'
+    tabWidth = 2
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
