@@ -117,6 +117,8 @@ records:
 
 > *Stoner rock is typically slow-to-mid tempo and features a heavily distorted, groove-laden bass-heavy sound, melodic vocals, and "retro" production.*
 
-{{< essential 0 4 >}}
+{{< essential 0 6 >}}
 
-{{< essential 4 >}}
+{{< figure src="../images/stoner/qotsa_band.jpg" caption="Queens of the Stone Age - Andres Neumann" >}}
+
+{{< essential 6 >}}
