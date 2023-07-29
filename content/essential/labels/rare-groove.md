@@ -30,3 +30,5 @@ labels:
 ---
 
 > *Norman Jay's show was a collaboration with DJ Judge Jules and featured a mainly urban soundtrack from the 1970s and 1980s mixed with early house music. Tracks similar to "rare grooves" had begun to see a following in the 1970s Northern soul movement, which curated a collection of rare and obscure soul records for play in dance clubs.*
+
+{{< essential >}}

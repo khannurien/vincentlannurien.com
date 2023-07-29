@@ -171,4 +171,21 @@ labels:
 
 ---
 
+{{< felt-map >}}
+
 > *There were newspaper reports from America and England (early and recently) that computers may have played music earlier, but thorough research has debunked these stories as there is no evidence to support the newspaper reports (some of which were obviously speculative). Research has shown that people speculated about computers playing music, possibly because computers would make noises, but there is no evidence that they actually did it.*
+
+{{< essential 0 9 >}}
+
+___
+
+{{< raw-html >}}
+  <center>
+    <small>~~~</small>
+    <img src="/images/banner_brest.jpg" />
+  </center>
+{{< /raw-html >}}
+
+___
+
+{{< essential 9 >}}

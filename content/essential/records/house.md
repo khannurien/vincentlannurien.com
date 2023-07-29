@@ -17,3 +17,5 @@ records:
 ---
 
 > *In its most typical form, the genre is characterized by repetitive 4/4 rhythms including bass drums, off-beat hi-hats, snare drums, claps, and/or snaps at a tempo of between 120 and 130 beats per minute (bpm); synthesizer riffs; deep basslines; and often, but not necessarily, sung, spoken or sampled vocals.*
+
+{{< essential 0 2 >}}
