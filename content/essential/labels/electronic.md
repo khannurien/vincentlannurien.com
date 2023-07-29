@@ -7,13 +7,15 @@ images:
   - "images/electronic/shall_not_fade.jpg"
   - "images/electronic/omena.jpg"
 
+map: "Essential-Electronic-Labels-US9BKA9AzVSqeNB266iKDpOC?loc=47.44,-37.44,3z"
+
 labels:
   - name: "Astro Nautico"
     location: "New York"
     image: "images/electronic/astro_nautico.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://astronautico.bandcamp.com/"
+        url: "https://astronautico.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/astronautico"
 
@@ -22,7 +24,7 @@ labels:
     image: "images/electronic/church.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://churchofficial.bandcamp.com/"
+        url: "https://churchofficial.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/churchuk"
 
@@ -31,7 +33,7 @@ labels:
     image: "images/electronic/future_times.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://futuretimes.bandcamp.com/"
+        url: "https://futuretimes.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/future-times"
 
@@ -40,7 +42,7 @@ labels:
     image: "images/electronic/heist_recordings.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://heistrecordings.bandcamp.com/"
+        url: "https://heistrecordings.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/heistrecordings"
       - name: "YouTube"
@@ -51,7 +53,7 @@ labels:
     image: "images/electronic/in_dust_we_trust.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://industwetrust.bandcamp.com/"
+        url: "https://industwetrust.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/idwtrecordings"
 
@@ -60,7 +62,7 @@ labels:
     image: "images/electronic/lobster_theremin.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://lobstertheremin.bandcamp.com/"
+        url: "https://lobstertheremin.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/lobster-theremin"
 
@@ -69,7 +71,7 @@ labels:
     image: "images/electronic/malka_tuti.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://malkatuti.bandcamp.com/"
+        url: "https://malkatuti.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/malka-tuti"
 
@@ -78,7 +80,7 @@ labels:
     image: "images/electronic/mistress_recordings.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://dvs1mistress.bandcamp.com/"
+        url: "https://dvs1mistress.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/dvs1"
 
@@ -87,7 +89,7 @@ labels:
     image: "images/electronic/multi_culti.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://multiculti.bandcamp.com/"
+        url: "https://multiculti.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/multiculti"
 
@@ -96,7 +98,7 @@ labels:
     image: "images/electronic/omena.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://omena.bandcamp.com/"
+        url: "https://omena.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/omena-records"
 
@@ -105,7 +107,7 @@ labels:
     image: "images/electronic/ondule_recordings.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://ondulerecordings.bandcamp.com/"
+        url: "https://ondulerecordings.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/ondulerecordings"
       - name: "YouTube"
@@ -116,7 +118,7 @@ labels:
     image: "images/electronic/rns_records.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://randsrecords.bandcamp.com/"
+        url: "https://randsrecords.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/r-srecords"
 
@@ -125,7 +127,7 @@ labels:
     image: "images/electronic/rhythm_section.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://wearerhythmsection.bandcamp.com/"
+        url: "https://wearerhythmsection.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/bradleyzero"
       - name: "YouTube"
@@ -136,7 +138,7 @@ labels:
     image: "images/electronic/shall_not_fade.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://shallnotfade.bandcamp.com/"
+        url: "https://shallnotfade.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/shallnotfade"
 
@@ -145,7 +147,7 @@ labels:
     image: "images/electronic/strctr.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://strctr-records.bandcamp.com/"
+        url: "https://strctr-records.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/strctr-records"
 
@@ -154,7 +156,7 @@ labels:
     image: "images/electronic/tessellate.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://tessellatelondon.bandcamp.com/"
+        url: "https://tessellatelondon.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/tessellatelondon"
 
@@ -163,7 +165,7 @@ labels:
     image: "images/electronic/text_records.jpg"
     links:
       - name: "Bandcamp"
-        url: "https://fourtet.bandcamp.com/"
+        url: "https://fourtet.bandcamp.com/music"
       - name: "SoundCloud"
         url: "https://soundcloud.com/textrecords"
 
