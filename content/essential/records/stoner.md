@@ -113,6 +113,16 @@ records:
       - name: "You Would Know"
         url: "https://www.youtube.com/watch?v=Fp32A3Tvi8A"
         id: "Fp32A3Tvi8A"
+
+  - artist: "The Black Angels"
+    album: "Passover"
+    year: 2006
+    cover: "images/stoner/black_angels_passover.jpg"
+    url_discogs: "https://www.discogs.com/fr/master/47665-The-Black-Angels-Passover"
+    youtube_links:
+      - name: "Young Men Dead"
+        url: "https://www.youtube.com/watch?v=VvKjpGP6P5Y"
+        id: "VvKjpGP6P5Y"
 ---
 
 > *Stoner rock is typically slow-to-mid tempo and features a heavily distorted, groove-laden bass-heavy sound, melodic vocals, and "retro" production.*
