@@ -14,6 +14,19 @@ records:
       - name: "Deep Burnt"
         url: "https://www.youtube.com/watch?v=cYtBjRkc95g"
         id: "cYtBjRkc95g"
+
+  - artist: "Moodymann"
+    album: "Moodymann"
+    year: 2014
+    cover: "images/house/moodymann_moodymann.jpg"
+    url_discogs: "https://www.discogs.com/fr/master/641752-Moodymann-Moodymann"
+    youtube_links:
+      - name: "Lyk U Used 2"
+        url: "https://www.youtube.com/watch?v=iX8X9RIO_cI"
+        id: "iX8X9RIO_cI"
+      - name: "Hold It Down"
+        url: "https://www.youtube.com/watch?v=3-y4Yqx4uwQ"
+        id: "3-y4Yqx4uwQ"
 ---
 
 > *In its most typical form, the genre is characterized by repetitive 4/4 rhythms including bass drums, off-beat hi-hats, snare drums, claps, and/or snaps at a tempo of between 120 and 130 beats per minute (bpm); synthesizer riffs; deep basslines; and often, but not necessarily, sung, spoken or sampled vocals.*
