@@ -3,7 +3,7 @@ draft: false
 hide_title: false
 
 title: "Retrospective June 2024"
-date: "2024-07-06T20:02:20+02:00"
+date: "2024-06-06T20:02:20+02:00"
 
 tags:
   - "retrospective"
