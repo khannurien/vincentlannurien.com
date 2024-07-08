@@ -6,6 +6,7 @@ images:
   - "images/french-rap/ma_6t_va_cracker.jpg"
   - "images/french-rap/kheops_sad_hill.jpg"
   - "images/french-rap/113_princes_de_la_ville.jpg"
+intro: "Many of the French hip hop artists come from the poor urban areas on the outskirts of large cities known as banlieues (\"suburbs\"). The political and social status of the minority immigrant groups living in France have a direct influence on French hip hop. Many French rappers are products of the HLM rent-controlled housing and draw upon their upbringing in this environment as a source of inspiration for their lyrics. France's hip hop scene is, by far, the most active in Europe."
 
 records:
   - artist: "La Rumeur"
@@ -98,7 +99,5 @@ records:
         url: "https://www.youtube.com/watch?v=F_tTFp3i8Uw"
         id: "F_tTFp3i8Uw"
 ---
-
-> *Many of the French hip hop artists come from the poor urban areas on the outskirts of large cities known as banlieues ("suburbs"). The political and social status of the minority immigrant groups living in France have a direct influence on French hip hop. Many French rappers are products of the HLM rent-controlled housing and draw upon their upbringing in this environment as a source of inspiration for their lyrics. France's hip hop scene is, by far, the most active in Europe.*
 
 {{< essential >}}

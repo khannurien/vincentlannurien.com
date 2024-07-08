@@ -1,0 +1,11 @@
+<footer>
+  {{ if .IsHome }}
+  <ul class="main-links">
+    {{ range $link := .Params.links }}
+      <li><a href="{{ $link.url }}">{{ $link.name }}</a></li>
+    {{ end }}
+  </ul>
+  {{ end }}
+
+  <p class="bye"><a href="https://github.com/khannurien/vincentlannurien.com">👋</a></p>
+</footer>

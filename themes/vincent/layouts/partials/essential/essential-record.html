@@ -1,0 +1,46 @@
+{{ $item_min := cond (gt (len .Params) 0) (.Get 0) 0 }}
+{{ $item_max := cond (eq (len .Params) 2) (.Get 1) (len .Page.Params.records) }}
+
+<div class="essential essential-record">
+  <div class="grid grid-big">
+    {{ range $index, $record := .Page.Params.records }}
+      {{ if and (ge $index $item_min) (lt $index $item_max) }}
+        <div class="essential-item">
+          <div class="essential-item-header">
+            <span>{{ $record.artist }} - <a href="{{ $record.url_discogs }}">{{ $record.album }}</a> <small>({{ $record.year }})</small></span>
+          </div>
+          <div class="essential-item-content">
+            <a data-src='{{ index (index $record.youtube_links 0) "id" }}' href="#" onclick="createModal(this); return false;">
+              <img src="../{{ $record.cover }}" />
+            </a>
+          </div>
+          <div class="essential-item-footer">
+            {{ range $youtube_index, $youtube := $record.youtube_links }}
+              <span>[ <a href="{{ $youtube.url }}" title="{{ $record.artist }} - {{ $youtube.name }}"># {{ add $youtube_index 1 }}</a> ]</span>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+</div>
+
+<script>
+  function createModal(target) {
+    const template = document.getElementById('essential-modal');
+    const modal = template.content.firstElementChild.cloneNode(true);
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.remove();
+      }
+    }
+
+    const iframe = modal.querySelector('iframe');
+    iframe.src = "https://www.youtube.com/embed/" + target.dataset.src;
+
+    const modal_node = document.getElementById('modal-node');
+    modal_node.appendChild(modal);
+  }
+</script>

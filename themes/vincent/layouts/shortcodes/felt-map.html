@@ -1,0 +1,5 @@
+{{ if isset .Page.Params "map" }}
+  {{ $felt_url := .Page.Params.map }}
+
+  <iframe width="100%" height="450" frameborder="0" title="Felt Map" src="https://felt.com/embed/map/{{ $felt_url }}"></iframe>
+{{ end }}

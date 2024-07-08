@@ -1,0 +1,630 @@
+/*
+ * Dracula Color Palette
+ * https://github.com/dracula/dracula-theme#color-palette
+ */
+
+$color-background: #282a36;
+$color-current: #44475a;
+$color-selection: #53576d;
+$color-foreground: #f8f8f2;
+$color-comment: #6272a4;
+
+$color-cyan: #8be9fd;
+$color-green: #50fa7b;
+$color-orange: #ffb86c;
+$color-pink: #ff79c6;
+$color-purple: #bd93f9;
+$color-red: #ff5555;
+$color-yellow: #f1fa8c;
+
+/*
+ * General
+ */
+
+html {
+  background: $color-background;
+}
+
+body {
+  margin: auto;
+  max-width: 50rem;
+}
+
+hr {
+  display: none;
+}
+
+figure {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 0.8rem;
+  color: $color-comment;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  font-style: normal;
+}
+
+pre {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+blockquote {
+  line-height: 1.4rem;
+
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.hidden {
+  display: none;
+}
+
+/*
+ * Header
+ */
+
+header {
+  margin: 2rem 0 2rem 0;
+  padding: 1rem;
+
+  background: $color-current;
+
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+header ul {
+  list-style-type: none;
+}
+
+header a {
+  color: $color-orange;
+  text-decoration: none;
+
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+}
+
+header a:hover {
+  color: $color-yellow;
+}
+
+header .grid {
+  display: grid;
+  grid-template-columns: 0.75fr 0.25fr;
+  grid-gap: 1rem;
+}
+
+header .grid .header-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+header .grid .header-nav {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/*
+ * Breadcrumbs
+ */
+
+nav#breadcrumbs {
+  color: $color-foreground;
+  background: url('/assets/matrix.gif') no-repeat $color-selection;
+  background-size: 100% auto;
+  
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: $color-cyan;
+  border-radius: 5px;
+
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+nav#breadcrumbs ul {
+  background-color: rgba(40, 42, 54, 0.8);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+
+  margin: 0;
+  padding: 0.2rem 0 0.4rem 2rem;
+
+  list-style-type: none;
+}
+
+nav#breadcrumbs ul li {
+  display: inline;
+}
+
+nav#breadcrumbs ul li a {
+  color: $color-yellow;
+  text-shadow: 1px 1px 2px pink;
+
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+}
+
+nav#breadcrumbs ul li a:hover {
+  color: $color-orange;
+}
+
+/*
+ * Main
+ */
+
+main {
+  margin: 0 auto 2rem auto;
+
+  background: $color-current;
+  color: $color-foreground;
+
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+main img {
+  height: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+main .main-head {
+  padding: 1rem 2rem 2rem 2rem;
+  background: $color-background;
+}
+
+main .main-content {
+  padding: 1rem 2rem 1rem 2rem;
+
+  line-height: 1.6rem;
+}
+
+main .main-content a,
+main .main-head a {
+  color: $color-red;
+  text-decoration: $color-current underline wavy;
+
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+}
+
+main .main-content a:hover,
+main .main-head a:hover {
+  color: $color-pink;
+  text-decoration: $color-yellow underline wavy;
+}
+
+/*
+ * Essential
+ */
+
+main .essential {
+  padding: 1rem 0 1rem 0;
+
+  font-size: 0.9rem;
+}
+
+main .essential .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+}
+
+main .essential .grid-big {
+  grid-gap: 1rem;
+}
+
+main .essential .grid-small {
+  grid-gap: 0;
+}
+
+main .essential .grid .essential-item {
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem;
+
+  background: $color-background;
+
+  transition: transform 0.2s;
+}
+
+main .essential .grid .essential-item:hover,
+main .essential .grid .essential-item:focus {
+  transform: translate(2px, 2px);
+}
+
+main .essential .grid .essential-item-header {
+  text-align: center;
+}
+
+main .essential .grid .essential-item-link {
+  text-decoration: none;
+  opacity: 0.5;
+
+  -o-transition: opacity .2s ease-out, background 1s ease-in;
+  -ms-transition: opacity .2s ease-out, background 1s ease-in;
+  -moz-transition: opacity .2s ease-out, background 1s ease-in;
+  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: opacity .2s ease-out, background 1s ease-in;
+}
+
+main .essential .grid .essential-item-link:hover {
+  opacity: 1;
+}
+
+main .essential .grid .essential-image {
+}
+
+main .essential .grid .essential-icon {
+  text-align: center;
+  font-size: 4rem;
+}
+
+main .essential .grid .essential-item-content {
+  margin: 1rem 0 1rem 0;
+}
+
+main .essential .grid .essential-item-footer {
+  text-align: center;
+}
+
+main .essential .grid .essential-item-footer .recursive {
+  list-style-type: none;
+
+  text-align: left;
+  
+}
+
+/*
+ * Footer
+ */
+
+ footer {
+  text-align: center;
+}
+
+footer ul.main-links {
+  padding: 1rem;
+
+  list-style-type: none;
+
+  background: $color-current;
+}
+
+footer ul.main-links li {
+  display: inline;
+}
+
+footer ul.main-links li a {
+  text-decoration: none;
+
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+
+  color: $color-background;
+
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+footer ul.main-links li a:hover {
+  color: $color-selection;
+}
+
+footer .bye {
+  margin: 2rem 0 0 0;
+}
+
+footer .bye a {
+  text-decoration: none;
+}
+
+/*
+ * Modal window
+ * https://www.w3schools.com/howto/howto_css_modals.asp
+ */
+
+/* The Modal (background) */
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Disable scroll */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  margin: 10% auto;
+  padding: 20px;
+  width: 40%;
+  text-align: center;
+  filter: drop-shadow(5px 5px 30px black);
+}
+
+@media all and (min-width: 0px) and (max-width: 480px) {
+  .modal-content {
+      margin: 60% auto;
+      width: 100%;
+  }
+}
+
+@media all and (min-width: 480px) and (max-width: 576px) {
+  .modal-content {
+      margin: 50% auto;
+      width: 90%;
+  }
+}
+
+@media all and (min-width: 576px) and (max-width: 720px) {
+  .modal-content {
+      margin: 30% auto;
+      width: 90%;
+  }
+}
+
+@media all and (min-width: 720px) and (max-width: 1024px) {
+  .modal-content {
+      margin: 20% auto;
+      width: 80%;
+  }
+}
+
+@media all and (min-width: 1024px) and (max-width: 1200px) {
+  .modal-content {
+      margin: 20% auto;
+      width: 70%;
+  }
+}
+
+@media all and (min-width: 1200px) and (max-width: 1440px) {
+  .modal-content {
+      margin: 20% auto;
+      width: 60%;
+  }
+}
+
+@media all and (min-width: 1440px) and (max-width: 1980px) {
+  .modal-content {
+      margin: 10% auto;
+      width: 50%;
+  }
+}
+
+.embed-container { 
+  position: relative; 
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+} 
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed { 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * FX
+ */
+
+/* Blink */
+
+.animate-blink {
+  animation: opacity 1s infinite;
+  opacity: 1;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* CRT */
+/* http://aleclownes.com/2017/02/01/crt-display.html */
+
+@keyframes flicker {
+  0% {
+    opacity: 0.27861;
+  }
+  5% {
+    opacity: 0.34769;
+  }
+  10% {
+    opacity: 0.23604;
+  }
+  15% {
+    opacity: 0.90626;
+  }
+  20% {
+    opacity: 0.18128;
+  }
+  25% {
+    opacity: 0.83891;
+  }
+  30% {
+    opacity: 0.65583;
+  }
+  35% {
+    opacity: 0.67807;
+  }
+  40% {
+    opacity: 0.26559;
+  }
+  45% {
+    opacity: 0.84693;
+  }
+  50% {
+    opacity: 0.96019;
+  }
+  55% {
+    opacity: 0.08594;
+  }
+  60% {
+    opacity: 0.20313;
+  }
+  65% {
+    opacity: 0.71988;
+  }
+  70% {
+    opacity: 0.53455;
+  }
+  75% {
+    opacity: 0.37288;
+  }
+  80% {
+    opacity: 0.71428;
+  }
+  85% {
+    opacity: 0.70419;
+  }
+  90% {
+    opacity: 0.7003;
+  }
+  95% {
+    opacity: 0.36108;
+  }
+  100% {
+    opacity: 0.24387;
+  }
+}
+@keyframes textShadow {
+  0% {
+    text-shadow: 0.4389924193300864px 0 1px rgba(0,30,255,0.5), -0.4389924193300864px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  5% {
+    text-shadow: 2.7928974010788217px 0 1px rgba(0,30,255,0.5), -2.7928974010788217px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  10% {
+    text-shadow: 0.02956275843481219px 0 1px rgba(0,30,255,0.5), -0.02956275843481219px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  15% {
+    text-shadow: 0.40218538552878136px 0 1px rgba(0,30,255,0.5), -0.40218538552878136px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  20% {
+    text-shadow: 3.4794037899852017px 0 1px rgba(0,30,255,0.5), -3.4794037899852017px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  25% {
+    text-shadow: 1.6125630401149584px 0 1px rgba(0,30,255,0.5), -1.6125630401149584px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  30% {
+    text-shadow: 0.7015590085143956px 0 1px rgba(0,30,255,0.5), -0.7015590085143956px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  35% {
+    text-shadow: 3.896914047650351px 0 1px rgba(0,30,255,0.5), -3.896914047650351px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  40% {
+    text-shadow: 3.870905614848819px 0 1px rgba(0,30,255,0.5), -3.870905614848819px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  45% {
+    text-shadow: 2.231056963361899px 0 1px rgba(0,30,255,0.5), -2.231056963361899px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  50% {
+    text-shadow: 0.08084290417898504px 0 1px rgba(0,30,255,0.5), -0.08084290417898504px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  55% {
+    text-shadow: 2.3758461067427543px 0 1px rgba(0,30,255,0.5), -2.3758461067427543px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  60% {
+    text-shadow: 2.202193051050636px 0 1px rgba(0,30,255,0.5), -2.202193051050636px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  65% {
+    text-shadow: 2.8638780614874975px 0 1px rgba(0,30,255,0.5), -2.8638780614874975px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  70% {
+    text-shadow: 0.48874025155497314px 0 1px rgba(0,30,255,0.5), -0.48874025155497314px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  75% {
+    text-shadow: 1.8948491305757957px 0 1px rgba(0,30,255,0.5), -1.8948491305757957px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  80% {
+    text-shadow: 0.0833037308038857px 0 1px rgba(0,30,255,0.5), -0.0833037308038857px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  85% {
+    text-shadow: 0.09769827255241735px 0 1px rgba(0,30,255,0.5), -0.09769827255241735px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  90% {
+    text-shadow: 3.443339761481782px 0 1px rgba(0,30,255,0.5), -3.443339761481782px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  95% {
+    text-shadow: 2.1841838852799786px 0 1px rgba(0,30,255,0.5), -2.1841838852799786px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+  100% {
+    text-shadow: 2.6208764473832513px 0 1px rgba(0,30,255,0.5), -2.6208764473832513px 0 1px rgba(255,0,80,0.3), 0 0 3px;
+  }
+}
+.crt::after {
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+.crt::before {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+.crt {
+  animation: textShadow 1.6s infinite;
+}

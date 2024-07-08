@@ -6,6 +6,7 @@ images:
   - "images/house/moodymann_moodymann.jpg"
   - "images/house/omar_s_thank_you.jpg"
   - "images/house/theo_parrish_dreamers_blues_lost_angel.jpg"
+intro: "In its most typical form, the genre is characterized by repetitive 4/4 rhythms including bass drums, off-beat hi-hats, snare drums, claps, and/or snaps at a tempo of between 120 and 130 beats per minute (bpm); synthesizer riffs; deep basslines; and often, but not necessarily, sung, spoken or sampled vocals."
 
 records:
   - artist: "Pépé Bradock & The Grand Brûlé's Choir"
@@ -51,7 +52,5 @@ records:
         url: "https://www.youtube.com/watch?v=ON2dJZnP4mQ"
         id: "ON2dJZnP4mQ"
 ---
-
-> *In its most typical form, the genre is characterized by repetitive 4/4 rhythms including bass drums, off-beat hi-hats, snare drums, claps, and/or snaps at a tempo of between 120 and 130 beats per minute (bpm); synthesizer riffs; deep basslines; and often, but not necessarily, sung, spoken or sampled vocals.*
 
 {{< essential >}}

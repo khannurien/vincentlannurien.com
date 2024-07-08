@@ -1,0 +1,25 @@
+<header>
+  <div class="grid">
+    <p class="header-title">
+      <a href="/">
+        <b>{{ .Site.Title }}</b>
+        <span class="animate-blink">💔</span><span style="opacity: 0.5">🤍🤍</span>
+      </a>
+    </p>
+
+    <ul class="header-nav">
+      {{ $currentPage := . }}
+      {{ range .Site.Menus.main }}
+        <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+          <a href="{{ .URL }}"><span>{{ .Name }}</span></a>
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+</header>
+
+<hr>
+
+{{ partial "breadcrumbs.html" . }}
+
+<hr>

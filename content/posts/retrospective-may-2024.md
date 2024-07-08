@@ -7,6 +7,7 @@ date: "2024-05-06T20:02:18+02:00"
 
 tags:
   - "retrospective"
+  - "music"
 ---
 
 ##  Fat White Family - Serfs Up! (2024) [Domino Recording]

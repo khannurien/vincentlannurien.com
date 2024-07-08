@@ -7,6 +7,7 @@ date: "2024-04-06T20:02:15+02:00"
 
 tags:
   - "retrospective"
+  - "music"
 ---
 
 ## IDLES - TANGK (2024) [Partisan Records]

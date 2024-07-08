@@ -1,0 +1,5 @@
+{{ if eq .Page.Parent.Name "Essential Labels" }}
+  {{ partial "essential/essential-label.html" . }}
+{{ else if eq .Page.Parent.Name "Essential Records" }}
+  {{ partial "essential/essential-record.html" . }}
+{{ end }}

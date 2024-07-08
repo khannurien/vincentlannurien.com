@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  {{ partial "head.html" . }}
+
+  <body>
+    {{ partial "header.html" . }}
+
+    <main id="main">
+      <article>
+        <section class="main-head crt">
+          <h2 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h2>
+
+          {{ if eq .Section "posts" }}
+          <div class="post-date">
+            <span>📅 {{.Date.Format "January 2, 2006"}}</span> —
+            {{ $taxonomy := "tags" }}
+            {{ with .Param $taxonomy }}
+              {{ range $index, $tag := . }}
+                {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
+                <span>🏷️ <a href="{{ .Permalink }}">{{ $tag | urlize }}</a></span>
+                {{ end }}
+              {{ end }}
+            {{ end }}
+          </div>
+          {{ end }}
+        </section>
+
+        <section class="main-content">
+          {{ .Content }}
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

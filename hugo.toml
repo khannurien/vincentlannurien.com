@@ -1,7 +1,7 @@
 baseURL = "https://vincentlannurien.com/"
 languageCode = "en-us"
 title = "Vincent Lannurien"
-theme = "maverick"
+theme = "vincent"
 
 [params]
   logo = '/assets/favicon.ico'

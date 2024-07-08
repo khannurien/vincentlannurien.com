@@ -1,0 +1,24 @@
+{{ $item_min := cond (gt (len .Params) 0) (.Get 0) 0 }}
+{{ $item_max := cond (eq (len .Params) 2) (.Get 1) (len .Page.Params.labels) }}
+
+<div class="essential essential-label">
+  <div class="grid grid-big">
+    {{ range $index, $label := .Page.Params.labels }}
+      {{ if and (ge $index $item_min) (lt $index $item_max) }}
+        <div class="essential-item">
+          <div class="essential-item-header">
+            <span>{{ $label.name }} <small>({{ $label.location }})</small></span>
+          </div>
+          <div class="essential-item-content">
+            <img src="../{{ $label.image }}" />
+          </div>
+          <div class="essential-item-footer">
+            {{ range $link := $label.links }}
+              <span>[ <a href="{{ .url }}">{{ .name }}</a> ]</span>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+  </div>
+</div>

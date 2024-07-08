@@ -7,6 +7,7 @@ date: "2024-02-06T20:01:59+02:00"
 
 tags:
   - "retrospective"
+  - "music"
 ---
 
 ## Peter Cat Recording - Bismillah (2019) [Panache Recordings]

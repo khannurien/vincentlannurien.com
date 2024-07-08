@@ -7,6 +7,7 @@ date: "2024-01-06T19:37:28+01:00"
 
 tags:
   - "retrospective"
+  - "music"
 ---
 
 ## Admas - Sons of Ethiopia (1984) [Frederiksberg Records]

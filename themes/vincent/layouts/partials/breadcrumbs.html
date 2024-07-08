@@ -1,0 +1,15 @@
+{{ if not .IsHome }}
+{{ $ancestors_count := len .Ancestors }}
+
+<nav id="breadcrumbs">
+  <ul>
+    <li>$</li>
+    {{ range .Ancestors.Reverse }}
+      {{ if not (eq .RelPermalink "/") }}
+      <li><small><a href="{{ .RelPermalink }}">{{ .Title }}</a></small> ~</li>
+      {{ end }}
+    {{ end }}
+    <li><small><a href="{{ .RelPermalink }}">{{ .Title }}</a></small></li>
+  </ul>
+</nav>
+{{ end }}
