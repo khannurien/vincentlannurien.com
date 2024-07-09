@@ -28,6 +28,8 @@ html {
 body {
   margin: auto;
   max-width: 50rem;
+
+  font-size: 1em;
 }
 
 hr {
@@ -108,7 +110,7 @@ header a:hover {
 
 header .grid {
   display: grid;
-  grid-template-columns: 0.75fr 0.25fr;
+  grid-template-columns: 0.23fr 0.52fr 0.25fr;
   grid-gap: 1rem;
 }
 
@@ -117,8 +119,13 @@ header .grid .header-title {
   grid-row: 1;
 }
 
-header .grid .header-nav {
+header .grid .header-logo {
   grid-column: 2;
+  grid-row: 1;
+}
+
+header .grid .header-nav {
+  grid-column: 3;
   grid-row: 1;
 }
 

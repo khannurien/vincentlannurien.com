@@ -24,9 +24,7 @@ jobs:
           extended: true
 
       - name: Build
-        # FIXME: minify breaks spaces in breadcrumbs...
-        # run: hugo --minify
-        run: hugo
+        run: hugo --minify
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
