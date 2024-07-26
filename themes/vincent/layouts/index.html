@@ -15,8 +15,34 @@
 
             {{ range (first 10 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
               <p>
-                <time class="g time" datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "2006-01-02" .Date }}</time>&nbsp;
-                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                <span>
+                  <small><tt>-rw-r--r--</tt></small> <a href="{{ .Permalink }}">{{ .Title }}</a>
+                </span>
+                <span>
+                  <small>
+                    <tt>
+                      [
+                      {{ $created := time .Date }}
+                      {{ $month_difference := sub now.Month $created.Month }}
+
+                      {{ if eq $month_difference 0 }}
+                        {{ $day_difference := sub now.Day $created.Day }}
+                        {{ if eq $day_difference 0 }}
+                          today!
+                        {{ else if eq $day_difference 1 }}
+                          {{ $day_difference }} day ago
+                        {{ else }}
+                          {{ $day_difference }} days ago
+                        {{ end }}
+                      {{ else if eq $month_difference 1 }}
+                        {{ $month_difference }} month ago
+                      {{ else }}
+                        {{ $month_difference }} months ago
+                      {{ end }}
+                      ]
+                    </tt>
+                  </small>
+                </span>
               <p>
             {{ end }}
           </section>
