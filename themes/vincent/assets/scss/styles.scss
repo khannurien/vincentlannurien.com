@@ -110,13 +110,15 @@ header a:hover {
 
 header .grid {
   display: grid;
-  grid-template-columns: 0.23fr 0.52fr 0.25fr;
+  grid-template-columns: 0.25fr 0.50fr 0.25fr;
   grid-gap: 1rem;
 }
 
 header .grid .header-title {
   grid-column: 1;
   grid-row: 1;
+
+  margin: auto auto auto 1rem;
 }
 
 header .grid .header-logo {
@@ -319,7 +321,7 @@ main .essential .grid .essential-item-footer .recursive {
  * Footer
  */
 
- footer {
+footer {
   text-align: center;
 }
 
@@ -358,7 +360,7 @@ footer ul.main-links li a:hover {
 }
 
 footer .bye {
-  margin: 2rem 0 0 0;
+  margin: 2rem 0 2rem 0;
 }
 
 footer .bye a {
