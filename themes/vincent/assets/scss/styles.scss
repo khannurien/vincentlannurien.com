@@ -191,10 +191,17 @@ main {
   background: $color-current;
   color: $color-foreground;
 
-  font-family: "Neue Haas Grotesk Display Pro", sans-serif;
+  // font-family: "Neue Haas Grotesk Display Pro", sans-serif;
+  font-family: Inter, sans-serif;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
+  font-size: 0.9rem;
+}
+
+@supports (font-variation-settings: normal) {
+  main { font-family: InterVariable, sans-serif; }
 }
 
 main img {
