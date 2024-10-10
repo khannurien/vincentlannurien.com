@@ -379,6 +379,17 @@ footer ul.main-links li a:hover {
 footer .bye {
   margin: 2rem 0 2rem 0;
   opacity: 0.5;
+
+  -o-transition: opacity .2s ease-out, background 1s ease-in;
+  -ms-transition: opacity .2s ease-out, background 1s ease-in;
+  -moz-transition: opacity .2s ease-out, background 1s ease-in;
+  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: opacity .2s ease-out, background 1s ease-in;
+}
+
+footer .bye:hover {
+  opacity: 1;
 }
 
 footer .bye a {
