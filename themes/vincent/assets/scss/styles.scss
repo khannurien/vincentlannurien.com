@@ -129,6 +129,7 @@ header .grid .header-logo {
 header .grid .header-nav {
   grid-column: 3;
   grid-row: 1;
+  text-align: center;
 }
 
 /*
@@ -138,7 +139,7 @@ header .grid .header-nav {
 nav#breadcrumbs {
   color: $color-foreground;
   background: url('/assets/matrix.gif') no-repeat $color-selection;
-  background-size: 100% auto;
+  background-size: cover;
   
   border-width: 0 0 1px 0;
   border-style: solid;
@@ -191,7 +192,6 @@ main {
   background: $color-current;
   color: $color-foreground;
 
-  // font-family: "Neue Haas Grotesk Display Pro", sans-serif;
   font-family: Inter, sans-serif;
   font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
   font-optical-sizing: auto;
@@ -332,8 +332,14 @@ footer {
   text-align: center;
 }
 
+footer .grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 footer ul.main-links {
-  padding: 1rem;
+  padding: 0.5rem;
 
   list-style-type: none;
 
@@ -341,7 +347,7 @@ footer ul.main-links {
 }
 
 footer ul.main-links li {
-  display: inline;
+  padding: 0.5rem;
 }
 
 footer ul.main-links li a {
@@ -368,6 +374,7 @@ footer ul.main-links li a:hover {
 
 footer .bye {
   margin: 2rem 0 2rem 0;
+  opacity: 0.5;
 }
 
 footer .bye a {
@@ -493,6 +500,60 @@ footer .bye a {
   100% {
     opacity: 0;
   }
+}
+
+/* Wiggle */
+
+.animate-wiggle {
+  animation: wiggle 2s linear infinite;
+}
+.hover-wiggle:hover {
+  animation: wiggle 2s linear infinite;
+}
+
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+/* Float */
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-1rem);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0);
+	}
 }
 
 /* CRT */

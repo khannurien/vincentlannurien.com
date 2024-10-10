@@ -1,11 +1,11 @@
 <footer>
   {{ if .IsHome }}
-  <ul class="main-links">
+  <ul class="main-links grid">
     {{ range $link := .Params.links }}
       <li><a href="{{ $link.url }}">{{ $link.name }}</a></li>
     {{ end }}
   </ul>
   {{ end }}
 
-  <p class="bye"><a href="https://github.com/khannurien/vincentlannurien.com">👋</a></p>
+  <p class="bye hover-wiggle"><a href="https://github.com/khannurien/vincentlannurien.com">👋</a></p>
 </footer>
