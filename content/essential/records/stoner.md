@@ -6,7 +6,7 @@ images:
   - "images/stoner/colour_haze_all.jpg"
   - "images/stoner/truckfighters_desert_x.jpg"
   - "images/stoner/qotsa_qotsa.jpg"
-intro: "Stoner rock is typically slow-to-mid tempo and features a heavily distorted, groove-laden bass-heavy sound, melodic vocals, and \"retro\" production."
+intro: "*Stoner rock is typically slow-to-mid tempo and features a heavily distorted, groove-laden bass-heavy sound, melodic vocals, and \"retro\" production.* [[~ w]](https://en.wikipedia.org/wiki/Stoner_rock)"
 
 records:
   - artist: "Black Sabbath"

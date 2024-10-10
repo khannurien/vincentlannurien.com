@@ -4,7 +4,7 @@ date: 2023-07-29T09:33:48+02:00
 images:
   - "images/rare-groove/bongo_joe.jpg"
   - "images/rare-groove/habibi_funk_records.jpg"
-intro: "Norman Jay's show was a collaboration with DJ Judge Jules and featured a mainly urban soundtrack from the 1970s and 1980s mixed with early house music. Tracks similar to \"rare grooves\" had begun to see a following in the 1970s Northern soul movement, which curated a collection of rare and obscure soul records for play in dance clubs."
+intro: "*Norman Jay's show was a collaboration with DJ Judge Jules and featured a mainly urban soundtrack from the 1970s and 1980s mixed with early house music. Tracks similar to \"rare grooves\" had begun to see a following in the 1970s Northern soul movement, which curated a collection of rare and obscure soul records for play in dance clubs.* [[~ w]](https://en.wikipedia.org/wiki/Rare_groove)"
 
 labels:
   - name: "Les Disques Bongo Joe"

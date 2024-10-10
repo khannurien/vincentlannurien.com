@@ -7,7 +7,7 @@
 
     <main id="main">
       <section class="main-head crt">
-        <blockquote><em>{{ .Params.intro }}</em></blockquote>
+        <blockquote>{{ .Params.intro | markdownify }}</blockquote>
       </section>
 
       <section class="main-content">
