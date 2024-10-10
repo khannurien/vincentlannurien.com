@@ -51,6 +51,26 @@ records:
       - name: "Lost Angel"
         url: "https://www.youtube.com/watch?v=ON2dJZnP4mQ"
         id: "ON2dJZnP4mQ"
+
+  - artist: "Admin"
+    album: "Spirit Boogie EP"
+    year: 2016
+    cover: "images/house/admin_spirit_boogie.jpg"
+    url_discogs: "https://www.discogs.com/fr/master/993306-Admin-Spirit-Boogie"
+    youtube_links:
+      - name: "Bright Moments"
+        url: "https://www.youtube.com/watch?v=WMPzxCnWRdI"
+        id: "WMPzxCnWRdI"
+
+  - artist: "Four Tet"
+    album: "There Is Love In You"
+    year: 2010
+    cover: "images/house/four_tet_there_is_love_in_you.jpg"
+    url_discogs: "https://www.discogs.com/fr/master/220989-Four-Tet-There-Is-Love-In-You"
+    youtube_links:
+      - name: "Angel Echoes"
+        url: "https://www.youtube.com/watch?v=FiBBcHZ84i8"
+        id: "FiBBcHZ84i8"
 ---
 
 {{< essential >}}
