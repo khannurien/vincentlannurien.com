@@ -73,6 +73,10 @@ blockquote {
   display: none;
 }
 
+.center {
+  text-align: center;
+}
+
 /*
  * Header
  */
@@ -352,28 +356,44 @@ footer ul.main-links {
 
 footer ul.main-links li {
   padding: 0.5rem;
+
+  opacity: 0.5;
+
+  -o-transition: opacity .2s ease-out, background 1s ease-in;
+  -ms-transition: opacity .2s ease-out, background 1s ease-in;
+  -moz-transition: opacity .2s ease-out, background 1s ease-in;
+  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: opacity .2s ease-out, background 1s ease-in;
+}
+
+footer ul.main-links li:hover {
+  padding: 0.5rem;
+
+  opacity: 1;
 }
 
 footer ul.main-links li a {
   text-decoration: none;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -o-transition: color .2s ease-out, background 1s ease-in;
+  -ms-transition: color .2s ease-out, background 1s ease-in;
+  -moz-transition: color .2s ease-out, background 1s ease-in;
+  -webkit-transition: color .2s ease-out, background 1s ease-in;
   /* ...and now override with proper CSS property */
-  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  transition: color .2s ease-out, background 1s ease-in;
 
-  color: $color-background;
+  color: $color-foreground;
 
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
+  font-family: "IBM Plex Mono", monospace;
   font-weight: 400;
   font-style: normal;
+  font-variant: small-caps;
+  font-size: 0.9rem;
 }
 
 footer ul.main-links li a:hover {
-  color: $color-selection;
+  color: $color-yellow;
 }
 
 footer .bye {
