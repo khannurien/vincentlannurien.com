@@ -16,19 +16,24 @@
             <section class="latest-posts">
               <h1>Latest Posts</h1>
 
+              <div class="latest-posts-list">
               {{ range (first 10 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
-                <p>
-                  <span>
-                    <small><tt>-rw-r--r--</tt></small>
-                  </span>
-                  <span>
-                    <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
-                  </span>
-                  <span>
-                    <a href="{{ .Permalink }}">{{ .Title }}</a>
-                  </span>
-                </p>
+                <div class="latest-posts-item">
+                  <p>
+                    <span>
+                      <small><tt>-rw-r--r--</tt></small>
+                    </span>
+                    <span>
+                      <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
+                    </span>
+                    <span>
+                      <a href="{{ .Permalink }}">{{ .Title }}</a>
+                    </span>
+                  </p>
+                </div>
               {{ end }}
+              </div>
+              <!-- FIXME: Link to older posts -->
             </section>
           {{ end }}
         </section>
