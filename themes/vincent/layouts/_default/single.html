@@ -3,34 +3,38 @@
   {{ partial "head.html" . }}
 
   <body>
-    {{ partial "header.html" . }}
+    {{ partial "background.html" . }}
 
-    <main id="main">
-      <article>
-        <section class="main-head crt">
-          <h2 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h2>
+    <div id="content">
+      {{ partial "header.html" . }}
 
-          {{ if eq .Section "posts" }}
-          <div class="post-date">
-            <span>📅 {{.Date.Format "January 2, 2006"}}</span> —
-            {{ $taxonomy := "tags" }}
-            {{ with .Param $taxonomy }}
-              {{ range $index, $tag := . }}
-                {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
-                <span>🏷️ <a href="{{ .Permalink }}">{{ $tag | urlize }}</a></span>
+      <main id="main">
+        <article>
+          <section class="main-head crt">
+            <h2 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h2>
+
+            {{ if eq .Section "posts" }}
+            <div class="post-date">
+              <span>📅 {{.Date.Format "January 2, 2006"}}</span> —
+              {{ $taxonomy := "tags" }}
+              {{ with .Param $taxonomy }}
+                {{ range $index, $tag := . }}
+                  {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
+                  <span>🏷️ <a href="{{ .Permalink }}">{{ $tag | urlize }}</a></span>
+                  {{ end }}
                 {{ end }}
               {{ end }}
+            </div>
             {{ end }}
-          </div>
-          {{ end }}
-        </section>
+          </section>
 
-        <section class="main-content">
-          {{ .Content }}
-        </section>
-      </article>
-    </main>
+          <section class="main-content">
+            {{ .Content }}
+          </section>
+        </article>
+      </main>
 
-    {{ partial "footer.html" . }}
+      {{ partial "footer.html" . }}
+    </div>
   </body>
 </html>

@@ -3,34 +3,38 @@
   {{ partial "head.html" . }}
 
   <body>
-    {{ partial "header.html" . }}
+    {{ partial "background.html" . }}
 
-    <main id="main">
-      <section class="main-content">
-        {{ .Content }}
+    <div id="content">
+      {{ partial "header.html" . }}
 
-        {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
-          <section class="latest-posts">
-            <h1>Latest Posts</h1>
+      <main id="main">
+        <section class="main-content">
+          {{ .Content }}
 
-            {{ range (first 10 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
-              <p>
-                <span>
-                  <small><tt>-rw-r--r--</tt></small>
-                </span>
-                <span>
-                  <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
-                </span>
-                <span>
-                  <a href="{{ .Permalink }}">{{ .Title }}</a>
-                </span>
-              </p>
-            {{ end }}
-          </section>
-        {{ end }}
-      </section>
-    </main>
+          {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
+            <section class="latest-posts">
+              <h1>Latest Posts</h1>
 
-    {{ partial "footer.html" . }}
+              {{ range (first 10 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
+                <p>
+                  <span>
+                    <small><tt>-rw-r--r--</tt></small>
+                  </span>
+                  <span>
+                    <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
+                  </span>
+                  <span>
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                  </span>
+                </p>
+              {{ end }}
+            </section>
+          {{ end }}
+        </section>
+      </main>
+
+      {{ partial "footer.html" . }}
+    </div>
   </body>
 </html>

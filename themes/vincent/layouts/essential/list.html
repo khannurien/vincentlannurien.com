@@ -3,68 +3,72 @@
   {{ partial "head.html" . }}
 
   <body>
-    {{ partial "header.html" . }}
+    {{ partial "background.html" . }}
 
-    <main id="main">
-      <section class="main-head crt">
-          <blockquote>{{ .Params.intro | markdownify }}</blockquote>
-      </section>
+    <div id="content">
+      {{ partial "header.html" . }}
 
-      <section class="main-content">
-        {{ .Content }}
+      <main id="main">
+        <section class="main-head crt">
+            <blockquote>{{ .Params.intro | markdownify }}</blockquote>
+        </section>
 
-        {{ if (eq .CurrentSection .FirstSection) }}
-        <div class="essential essential-index">
-          <div class="grid grid-big">
-            {{ range .Sections.ByTitle }}
-            <div class="essential-item">
-              <div class="essential-item-header">
-                <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-              </div>
-              <div class="essential-item-content">
-                <a class="essential-item-link animate-toggle" href="{{ .RelPermalink }}">
-                  {{ $essential_image := .Params.image }}
-                  {{ $essential_icon := .Params.icon }}
-                  {{ with $essential_image }}
-                  <p class="essential-image"><img src="{{ $essential_image }}" /></p>
-                  {{ end }}
-                  {{ with $essential_icon }}
-                  <p class="essential-icon crt">{{ $essential_icon }}</p>
-                  {{ end }}
-                </a>
-              </div>
-              <div class="essential-item-footer">
-                {{ partial "recursive.html" . }}
-              </div>
-            </div>
-            {{ end }}
-          </div>
-        </div>
-        {{ else }}
-        <div class="essential">
-          <div class="grid grid-big">
-            {{ range $regular_page := .RegularPages }}
-            <div class="essential-item">
-              <div class="essential-item-header">
-                <h2><a href="{{ $regular_page.RelPermalink }}">{{ $regular_page.Title | markdownify }}</a></h2>
-              </div>
-              <div class="essential-item-content">
-                <div class="grid grid-small">
-                  {{ range $item_image := .Params.images }}
-                    <div class="essential-item-small">
-                      <a href="{{ $regular_page.RelPermalink }}"><img src="{{ $item_image }}" /></a>
-                    </div>
-                  {{ end }}
+        <section class="main-content">
+          {{ .Content }}
+
+          {{ if (eq .CurrentSection .FirstSection) }}
+          <div class="essential essential-index">
+            <div class="grid grid-big">
+              {{ range .Sections.ByTitle }}
+              <div class="essential-item">
+                <div class="essential-item-header">
+                  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+                </div>
+                <div class="essential-item-content">
+                  <a class="essential-item-link animate-toggle" href="{{ .RelPermalink }}">
+                    {{ $essential_image := .Params.image }}
+                    {{ $essential_icon := .Params.icon }}
+                    {{ with $essential_image }}
+                    <p class="essential-image"><img src="{{ $essential_image }}" /></p>
+                    {{ end }}
+                    {{ with $essential_icon }}
+                    <p class="essential-icon crt">{{ $essential_icon }}</p>
+                    {{ end }}
+                  </a>
+                </div>
+                <div class="essential-item-footer">
+                  {{ partial "recursive.html" . }}
                 </div>
               </div>
+              {{ end }}
             </div>
-            {{ end }}
           </div>
-        </div>
-        {{ end }}
-      </section>
-    </main>
+          {{ else }}
+          <div class="essential">
+            <div class="grid grid-big">
+              {{ range $regular_page := .RegularPages }}
+              <div class="essential-item">
+                <div class="essential-item-header">
+                  <h2><a href="{{ $regular_page.RelPermalink }}">{{ $regular_page.Title | markdownify }}</a></h2>
+                </div>
+                <div class="essential-item-content">
+                  <div class="grid grid-small">
+                    {{ range $item_image := .Params.images }}
+                      <div class="essential-item-small">
+                        <a href="{{ $regular_page.RelPermalink }}"><img src="{{ $item_image }}" /></a>
+                      </div>
+                    {{ end }}
+                  </div>
+                </div>
+              </div>
+              {{ end }}
+            </div>
+          </div>
+          {{ end }}
+        </section>
+      </main>
 
-    {{ partial "footer.html" . }}
+      {{ partial "footer.html" . }}
+    </div>
   </body>
 </html>

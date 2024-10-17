@@ -26,10 +26,6 @@ html {
 }
 
 body {
-  margin: auto;
-  max-width: 50rem;
-
-  font-size: 1em;
 }
 
 hr {
@@ -75,6 +71,48 @@ blockquote {
 
 .center {
   text-align: center;
+}
+
+/*
+ * Background
+ */
+
+#background {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+}
+
+#background img {
+  width: 50vw;
+  box-sizing: border-box;
+  max-width: 100%;
+  max-height: 100%;
+
+  /* Fade from top to bottom and left to right (for Chrome, Safari) */
+  -webkit-mask-image: 
+    linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0)), 
+    linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0));
+  /* Thank you ChatGPT */
+  -webkit-mask-composite: destination-in;
+
+  /* Fade from top to bottom and left to right (Standard) */
+  mask-image: 
+    linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0)), 
+    linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0));
+  /* Standard */
+  mask-composite: intersect;
+}
+
+/*
+ * Content
+ */
+
+#content {
+  margin: auto;
+  max-width: 50rem;
+
+  font-size: 1em;
 }
 
 /*
@@ -193,8 +231,8 @@ nav#breadcrumbs ul li a:hover {
 main {
   margin: 0 auto 2rem auto;
 
-  background: $color-current;
-  color: $color-foreground;
+  // background: $color-current;
+  // color: $color-foreground;
 
   font-family: Inter, sans-serif;
   font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
@@ -217,11 +255,16 @@ main img {
 
 main .main-head {
   padding: 1rem 2rem 2rem 2rem;
-  background: $color-background;
+  
+  background: transparent; // $color-background;
+  color: $color-foreground;
 }
 
 main .main-content {
   padding: 1rem 2rem 1rem 2rem;
+
+  background: $color-current;
+  color: $color-foreground;
 
   line-height: 1.6rem;
 }

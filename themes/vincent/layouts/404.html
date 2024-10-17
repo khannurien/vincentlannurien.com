@@ -3,18 +3,22 @@
   {{ partial "head.html" . }}
 
   <body>
-    {{ partial "header.html" . }}
+    {{ partial "background.html" . }}
 
-    <main id="main">
-      <section class="main-content center">
-        <p class="crt">
-          <img src="/assets/combine.png" alt="" />
-        </p>
+    <div id="content">
+      {{ partial "header.html" . }}
 
-        <p><em>Move along, citizen.</em></p>
-      </section>
-    </main>
+      <main id="main">
+        <section class="main-content center">
+          <p class="crt">
+            <img src="/assets/combine.png" alt="" />
+          </p>
 
-    {{ partial "footer.html" . }}
+          <p><em>Move along, citizen.</em></p>
+        </section>
+      </main>
+
+      {{ partial "footer.html" . }}
+    </div>
   </body>
 </html>

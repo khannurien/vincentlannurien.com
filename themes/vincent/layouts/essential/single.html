@@ -3,20 +3,24 @@
   {{ partial "head.html" . }}
 
   <body>
-    {{ partial "header.html" . }}
+    {{ partial "background.html" . }}
 
-    <main id="main">
-      <section class="main-head crt">
-        <blockquote>{{ .Params.intro | markdownify }}</blockquote>
-      </section>
+    <div id="content">
+      {{ partial "header.html" . }}
 
-      <section class="main-content">
-        {{ .Content }}
+      <main id="main">
+        <section class="main-head crt">
+          <blockquote>{{ .Params.intro | markdownify }}</blockquote>
+        </section>
 
-        {{ partial "essential/modal-youtube.html" }}
-      </section>
-    </main>
+        <section class="main-content">
+          {{ .Content }}
 
-    {{ partial "footer.html" . }}
+          {{ partial "essential/modal-youtube.html" }}
+        </section>
+      </main>
+
+      {{ partial "footer.html" . }}
+    </div>
   </body>
 </html>
