@@ -12,12 +12,14 @@
         <section class="main-content">
           {{ .Content }}
 
-          {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
+          {{ $posts := where .Site.RegularPages "Section" "posts" }}
+
+          {{ if gt (len $posts) 0 }}
             <section class="latest-posts">
               <h1>Latest Posts</h1>
 
               <div class="latest-posts-list">
-              {{ range (first 10 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
+              {{ range (first 10 ($posts).ByDate.Reverse) }}
                 <div class="latest-posts-item">
                   <p>
                     <span>
@@ -33,7 +35,14 @@
                 </div>
               {{ end }}
               </div>
-              <!-- FIXME: Link to older posts -->
+
+              {{ if gt (len $posts) 10 }}
+                <div class="older-posts-link">
+                  <p>
+                    <small>🌀 <a href="/posts"><em>There's more...</em></a></small>
+                  </p>
+                </div>
+              {{ end }}
             </section>
           {{ end }}
         </section>

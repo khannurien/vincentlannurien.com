@@ -160,7 +160,7 @@ header a:hover {
 header .grid {
   width: 100%;
   display: grid;
-  grid-template-columns: 0.30fr 0.40fr 0.30fr;
+  grid-template-columns: 0.30fr 0.15fr 0.50fr;
 }
 
 header .grid .header-title {
@@ -184,7 +184,9 @@ header .grid .header-nav {
   grid-row: 1;
 
   padding: 0;
-  text-align: center;
+  text-align: right;
+
+  margin: auto 1rem auto auto;
 }
 
 header .grid .header-nav li {
@@ -193,7 +195,7 @@ header .grid .header-nav li {
 
 @media (max-width: 600px) {
   header .grid {
-    grid-gap: 0;
+    grid-template-columns: 0.5fr 0.5fr;
   }
 
   header .grid .header-logo {
@@ -201,6 +203,10 @@ header .grid .header-nav li {
     grid-row: 2;
 
     margin: auto auto auto 1rem;
+  }
+
+  header .grid .header-nav {
+    grid-column: 2;
   }
 }
 
@@ -335,6 +341,10 @@ main .main-head a:hover {
 //     grid-template-columns: repeat(2, 1fr);
 //   }
 // }
+
+main .latest-posts .older-posts-link {
+  font-variant: small-caps;
+}
 
 /*
  * Essential
