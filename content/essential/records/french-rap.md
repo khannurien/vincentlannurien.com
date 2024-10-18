@@ -26,8 +26,8 @@ records:
     url_discogs: "https://www.discogs.com/fr/master/150584-Various-Ma-6-T-Va-Crack-er"
     youtube_links:
       - name: "Retour Aux Pyramides"
-        url: "https://www.youtube.com/watch?v=s8mGJbvfw24"
-        id: "s8mGJbvfw24"
+        url: "https://www.youtube.com/watch?v=s2AKYGBT328"
+        id: "s2AKYGBT328"
 
   - artist: "Sté Strausz"
     album: "Sté Real"

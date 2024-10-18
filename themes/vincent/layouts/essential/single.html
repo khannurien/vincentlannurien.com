@@ -16,7 +16,9 @@
         <section class="main-content">
           {{ .Content }}
 
-          {{ partial "essential/modal-youtube.html" }}
+          {{ if eq .Page.Parent.Name "Essential Records" }}
+            {{ partial "essential/modal-youtube.html" }}
+          {{ end }}
         </section>
       </main>
 
