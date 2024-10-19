@@ -17,6 +17,11 @@ $color-purple: #bd93f9;
 $color-red: #ff5555;
 $color-yellow: #f1fa8c;
 
+$font-sans-variable: "Helvetica Neue", "InterVariable", sans-serif;
+$font-sans-fallback: "Helvetica Neue", "Inter", sans-serif;
+$font-serif: "Playfair Display", serif;
+$font-mono: "Fantasque Sans Mono", monospace;
+
 /*
  * General
  */
@@ -45,13 +50,13 @@ figcaption {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: $font-mono;
   font-weight: 600;
   font-style: normal;
 }
 
 pre {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
 }
@@ -59,7 +64,7 @@ pre {
 blockquote {
   line-height: 1.4rem;
 
-  font-family: "Playfair Display", serif;
+  font-family: $font-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -132,7 +137,7 @@ header {
 
   background: $color-current;
 
-  font-family: "IBM Plex Mono", monospace;
+  font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
 }
@@ -224,7 +229,7 @@ nav#breadcrumbs {
   border-color: $color-cyan;
   border-radius: 5px;
 
-  font-family: "IBM Plex Mono", monospace;
+  font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
 }
@@ -270,7 +275,7 @@ main {
   // background: $color-current;
   // color: $color-foreground;
 
-  font-family: Inter, sans-serif;
+  font-family: $font-sans-fallback;
   font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
   font-optical-sizing: auto;
   font-weight: 400;
@@ -279,7 +284,7 @@ main {
 }
 
 @supports (font-variation-settings: normal) {
-  main { font-family: InterVariable, sans-serif; }
+  main { font-family: $font-sans-variable; }
 }
 
 main img {
@@ -431,7 +436,7 @@ main .essential .grid .essential-item-content {
 main .essential .grid .essential-item-footer {
   text-align: center;
 
-  // font-family: "IBM Plex Mono", monospace;
+  // font-family: $font-mono;
   // font-weight: 400;
   // font-style: normal;
 }
@@ -497,7 +502,7 @@ footer ul.main-links li a {
 
   color: $color-foreground;
 
-  font-family: "IBM Plex Mono", monospace;
+  font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
   font-variant: small-caps;
