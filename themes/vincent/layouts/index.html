@@ -12,11 +12,11 @@
         <section class="main-content">
           {{ .Content }}
 
-          {{ $posts := where .Site.RegularPages "Section" "posts" }}
-          {{ $paginator := .Paginate $posts }}
-
           <section class="latest-posts">
             <h1>Latest Posts</h1>
+
+            {{ $posts := where .Site.RegularPages "Section" "posts" }}
+            {{ $paginator := .Paginate $posts }}
 
             <div class="latest-posts-list">
             {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
