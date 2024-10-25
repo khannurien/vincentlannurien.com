@@ -86,13 +86,14 @@ blockquote {
   position: fixed;
   z-index: -1;
   top: 0;
+  left: 0;
 }
 
 #background img {
-  width: 50vw;
+  height: 120vh;
   box-sizing: border-box;
-  max-width: 100%;
-  max-height: 100%;
+  overflow: hidden;
+  max-height: 120%;
 
   /* Fade from top to bottom and left to right (for Chrome, Safari) */
   -webkit-mask-image: 
@@ -165,7 +166,7 @@ header a:hover {
 header .grid {
   width: 100%;
   display: grid;
-  grid-template-columns: 0.30fr 0.15fr 0.55fr;
+  grid-template-columns: 0.28fr 0.15fr 0.57fr;
 }
 
 header .grid .header-title {
