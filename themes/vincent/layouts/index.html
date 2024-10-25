@@ -13,38 +13,56 @@
           {{ .Content }}
 
           {{ $posts := where .Site.RegularPages "Section" "posts" }}
+          {{ $paginator := .Paginate $posts }}
 
-          {{ if gt (len $posts) 0 }}
-            <section class="latest-posts">
-              <h1>Latest Posts</h1>
+          <section class="latest-posts">
+            <h1>Latest Posts</h1>
 
-              <div class="latest-posts-list">
-              {{ range (first 10 ($posts).ByDate.Reverse) }}
-                <div class="latest-posts-item">
-                  <p>
-                    <span>
-                      <small><tt>-rw-r--r--</tt></small>
-                    </span>
-                    <span>
-                      <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
-                    </span>
-                    <span>
-                      <a href="{{ .Permalink }}">{{ .Title }}</a>
-                    </span>
-                  </p>
-                </div>
-              {{ end }}
+            <div class="latest-posts-list">
+            {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
+              <div class="latest-posts-item">
+                <p>
+                  <span>
+                    <small><tt>-rw-r--r--</tt></small>
+                  </span>
+                  <span>
+                    <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
+                  </span>
+                  <span>
+                    <a href="{{ .Permalink }}">{{ .Title }}</a>
+                  </span>
+                </p>
               </div>
+            {{ end }}
+            </div>
+          </section>
 
-              {{ if gt (len $posts) 10 }}
-                <div class="older-posts-link">
-                  <p>
-                    <small>🌀 <a href="/posts"><em>There's more...</em></a></small>
-                  </p>
-                </div>
-              {{ end }}
-            </section>
-          {{ end }}
+          <section class="main-pagination">
+            {{ if gt $paginator.TotalPages 1 }}
+              {{ $total := $paginator.TotalPages }}
+              {{ $prev := sub $paginator.PageNumber 1 }}
+              {{ $curr := $paginator.PageNumber }}
+              {{ $next := add 1 $paginator.PageNumber }}
+
+              <div class="main-pagination">
+                <small><tt>
+                  <span>
+                    {{ if $paginator.HasPrev }}
+                      <a href="{{ $paginator.Prev.URL | absURL }}">« {{ $prev }}/{{ $total }}</a>
+                    {{ end }}
+                  </span>
+                  <span>
+                    [ {{ $curr }} ]
+                  </span>
+                  <span>
+                    {{ if $paginator.HasNext }}
+                      <a href="{{ $paginator.Next.URL | absURL }}">{{ $next }}/{{ $total }} »</a>
+                    {{ end }}
+                  </span>
+                </tt></small>
+              </div>
+            {{ end }}
+          </section>
         </section>
       </main>
 

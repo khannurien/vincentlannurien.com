@@ -8,17 +8,49 @@
     <div id="content">
       {{ partial "header.html" . }}
 
+      {{ $pages := .Pages }}
+      {{ $paginator := .Paginate $pages }}
+
       <main id="main">
         <section class="main-content">
-          <ul reversed class="list">
-            {{ range .Pages }}
-              <li>
-                <a class="link" href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a>
-                <hr class="hr-list">
-                <time class="g time" datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "02/01/06" .Date }}</time>
-              </li>
+          <section class="main-list">
+            <ul reversed class="list">
+              {{ range $index, $page := $paginator.Pages }}
+                <li>
+                  <a class="link" href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a>
+                  <hr class="hr-list">
+                  <time class="g time" datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "02/01/06" .Date }}</time>
+                </li>
               {{ end }}
-          </ul>
+            </ul>
+          </section>
+
+          <section class="main-pagination">
+            {{ if gt $paginator.TotalPages 1 }}
+              {{ $total := $paginator.TotalPages }}
+              {{ $prev := sub $paginator.PageNumber 1 }}
+              {{ $curr := $paginator.PageNumber }}
+              {{ $next := add 1 $paginator.PageNumber }}
+
+              <div class="main-pagination">
+                <small><tt>
+                  <span>
+                    {{ if $paginator.HasPrev }}
+                      <a href="{{ $paginator.Prev.URL | absURL }}">« {{ $prev }}/{{ $total }}</a>
+                    {{ end }}
+                  </span>
+                  <span>
+                    [ {{ $curr }} ]
+                  </span>
+                  <span>
+                    {{ if $paginator.HasNext }}
+                      <a href="{{ $paginator.Next.URL | absURL }}">{{ $next }}/{{ $total }} »</a>
+                    {{ end }}
+                  </span>
+                </tt></small>
+              </div>
+            {{ end }}
+          </section>
         </section>
       </main>
 

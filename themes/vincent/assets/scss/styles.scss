@@ -348,8 +348,27 @@ main .main-head a:hover {
 //   }
 // }
 
-main .latest-posts .older-posts-link {
-  font-variant: small-caps;
+/*
+ * Pagination
+ */
+
+main .main-pagination {
+  opacity: 0.5;
+
+  -o-transition: opacity .2s ease-out, background 1s ease-in;
+  -ms-transition: opacity .2s ease-out, background 1s ease-in;
+  -moz-transition: opacity .2s ease-out, background 1s ease-in;
+  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: opacity .2s ease-out, background 1s ease-in;
+}
+
+main .main-pagination:hover {
+  opacity: 1;
+}
+
+main .main-pagination a {
+  color: $color-purple;
 }
 
 /*
