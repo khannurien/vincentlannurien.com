@@ -110,13 +110,6 @@ blockquote {
   mask-composite: intersect;
 }
 
-// # FIXME: Barely visible on narrow viewports :-(
-// @media (max-width: 500px) {
-//   #background img {
-//     width: 50vh;
-//   }
-// }
-
 /*
  * Content
  */
@@ -137,6 +130,7 @@ header {
   padding: 1rem;
 
   background: $color-current;
+  color: $color-foreground;
 
   font-family: $font-mono;
   font-weight: 400;
@@ -334,8 +328,11 @@ main .main-head a:hover {
  * Posts
  */
 
-// main .latest-posts {
-// }
+main .latest-posts .latest-posts-meta {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+}
 
 // main .latest-posts .latest-posts-list .latest-posts-item p {
 //   display: grid;
@@ -353,6 +350,10 @@ main .main-head a:hover {
  */
 
 main .main-pagination {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
   opacity: 0.5;
 
   -o-transition: opacity .2s ease-out, background 1s ease-in;

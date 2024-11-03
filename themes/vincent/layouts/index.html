@@ -13,7 +13,7 @@
           {{ .Content }}
 
           <section class="latest-posts">
-            <h1>Latest Posts</h1>
+            <h2>Latest Posts</h2>
 
             {{ $posts := where .Site.RegularPages "Section" "posts" }}
             {{ $paginator := .Paginate $posts }}
@@ -23,11 +23,11 @@
             {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
               <div class="latest-posts-item">
                 <p>
-                  <span>
-                    <small><tt>-rw-r--r--</tt></small>
+                  <span class="latest-posts-meta">
+                    <small>-rw-r--r--</small>
                   </span>
-                  <span>
-                    <small><tt>[ {{ time.Format "Jan 2006" .Date }} ] :: </tt></small>
+                  <span class="latest-posts-meta">
+                    <small>[ {{ time.Format "Jan 2006" .Date }} ] :: </small>
                   </span>
                   <span>
                     <a href="{{ .Permalink }}">{{ .Title }}</a>

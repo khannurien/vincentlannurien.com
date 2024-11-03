@@ -7,7 +7,7 @@
   {{ $next := add 1 $paginator.PageNumber }}
   <section class="main-pagination">
     <div class="main-pagination">
-      <small><tt>
+      <small>
         {{ if $paginator.HasPrev }}
           <span>
             <a href="{{ $paginator.Prev.URL | absURL }}">« {{ $prev }}/{{ $total }}</a>
@@ -21,7 +21,7 @@
             <a href="{{ $paginator.Next.URL | absURL }}">{{ $next }}/{{ $total }} »</a>
           </span>
         {{ end }}
-      </tt></small>
+      </small>
     </div>
   </section>
 {{ end }}
