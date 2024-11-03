@@ -13,7 +13,6 @@
           <section class="main-head crt">
             <h2 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h2>
 
-            {{ if eq .Section "posts" }}
             <div class="post-date">
               <span>📅 {{.Date.Format "January 2, 2006"}}</span> —
               {{ $taxonomy := "tags" }}
@@ -25,7 +24,6 @@
                 {{ end }}
               {{ end }}
             </div>
-            {{ end }}
           </section>
 
           <section class="main-content">

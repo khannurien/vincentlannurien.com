@@ -10,6 +10,7 @@
 
       {{ $pages := .Pages }}
       {{ $paginator := .Paginate $pages }}
+      {{ .Scratch.Set "pagination" $paginator }}
 
       <main id="main">
         <section class="main-content">
@@ -25,32 +26,7 @@
             </ul>
           </section>
 
-          <section class="main-pagination">
-            {{ if gt $paginator.TotalPages 1 }}
-              {{ $total := $paginator.TotalPages }}
-              {{ $prev := sub $paginator.PageNumber 1 }}
-              {{ $curr := $paginator.PageNumber }}
-              {{ $next := add 1 $paginator.PageNumber }}
-
-              <div class="main-pagination">
-                <small><tt>
-                  <span>
-                    {{ if $paginator.HasPrev }}
-                      <a href="{{ $paginator.Prev.URL | absURL }}">« {{ $prev }}/{{ $total }}</a>
-                    {{ end }}
-                  </span>
-                  <span>
-                    [ {{ $curr }} ]
-                  </span>
-                  <span>
-                    {{ if $paginator.HasNext }}
-                      <a href="{{ $paginator.Next.URL | absURL }}">{{ $next }}/{{ $total }} »</a>
-                    {{ end }}
-                  </span>
-                </tt></small>
-              </div>
-            {{ end }}
-          </section>
+          {{ partial "pagination.html" . }}
         </section>
       </main>
 
