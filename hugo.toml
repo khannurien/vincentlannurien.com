@@ -19,10 +19,25 @@ theme = "vincent"
 
 [menu]
   [[menu.main]]
+    identifier = "about"
+    name = "❓ About me"
+    url = "/about/"
+    weight = "1"
+  [[menu.main]]
+    identifier = "guides"
+    name = "📓 Guides"
+    url = "/guides/"
+    weight = "2"
+  [[menu.main]]
+    identifier = "labs"
+    name = "🧑‍🔬 Labs"
+    url = "/labs/"
+    weight = "3"
+  [[menu.main]]
     identifier = "essential"
     name = "📝 Essential"
     url = "/essential/"
-    weight = "1"
+    weight = "4"
 
 [markup]
   [markup.goldmark.renderer]

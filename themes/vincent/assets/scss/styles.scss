@@ -30,9 +30,6 @@ html {
   background: $color-background;
 }
 
-body {
-}
-
 hr {
   display: none;
 }
@@ -59,6 +56,14 @@ pre {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
+
+  padding: 1rem;
+
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 blockquote {
@@ -68,6 +73,11 @@ blockquote {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+// TODO: tables
+table {
+  
 }
 
 .hidden {
@@ -121,6 +131,10 @@ blockquote {
   font-size: 1em;
 }
 
+.fit-embed {
+  width: 100%;
+}
+
 /*
  * Header
  */
@@ -135,10 +149,6 @@ header {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
-}
-
-header ul {
-  list-style-type: none;
 }
 
 header a {
@@ -187,6 +197,8 @@ header .grid .header-nav {
   text-align: right;
 
   margin: auto 1rem auto auto;
+
+  list-style-type: none;
 }
 
 header .grid .header-nav li {
@@ -303,6 +315,18 @@ main .main-content {
   color: $color-foreground;
 
   line-height: 1.6rem;
+}
+
+main .main-content .main-list {
+  
+}
+
+main .main-content .main-list .list-link {
+  
+}
+
+main .main-content .main-list .list-time {
+  font-size: 0.8rem;
 }
 
 main .main-content a,
