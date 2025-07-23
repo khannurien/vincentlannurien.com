@@ -391,7 +391,7 @@ Pour les formater, vous aurez besoin d'extraire et isoler certaines informations
 
 Voici un exemple de fonctionnement attendu en mode interactif :
 
-![](images/linux-admin-interactive.gif)
+![](../images/linux-admin-interactive.gif)
 
 L'appel au script en mode interactif se fait sans passage d'arguments :
 
