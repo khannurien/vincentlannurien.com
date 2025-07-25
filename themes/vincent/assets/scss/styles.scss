@@ -402,6 +402,26 @@ main .main-content .main-list {
   
 }
 
+main .main-content .main-list ul {
+  list-style: none;
+}
+
+main .main-content .main-list > ul > li:before {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  content: "~/";
+}
+
+main .main-content .main-list > ul > li > ul > li:before {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  content: "|--";
+}
+
 main .main-content .main-list .list-link {
   
 }
