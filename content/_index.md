@@ -33,7 +33,7 @@ You will find more details regarding my research interests, teachings and projec
 
 - [CV](/about/cv)
 - [Publications](/about/publications)
-- [Teachings](/about/Teachings)
+- [Teachings](/about/teachings)
 
 <!-- 
 ## Latest Tracks
