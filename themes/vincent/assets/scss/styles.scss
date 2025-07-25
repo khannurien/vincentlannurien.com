@@ -177,7 +177,7 @@ header .grid {
 
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   flex-wrap: wrap;
 
@@ -188,7 +188,7 @@ header .grid {
 @media (max-width: 768px) {
   header .grid {
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     flex-wrap: wrap;
   }
@@ -202,7 +202,7 @@ header .grid .header-title {
   // grid-column: 1;
   // grid-row: 1;
 
-  margin: auto auto auto 1rem;
+  margin: auto 1rem auto 1rem;
 }
 
 header .grid .header-logo {
