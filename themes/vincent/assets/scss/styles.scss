@@ -194,7 +194,7 @@ header .grid {
 
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   flex-wrap: wrap;
 
@@ -205,7 +205,7 @@ header .grid {
 @media (max-width: 768px) {
   header .grid {
     flex-direction: row;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     flex-wrap: wrap;
   }
@@ -219,7 +219,7 @@ header .grid .header-title {
   // grid-column: 1;
   // grid-row: 1;
 
-  margin: auto auto auto 1rem;
+  margin: auto 1rem auto 1rem;
 }
 
 header .grid .header-logo {
@@ -417,6 +417,26 @@ main .main-content {
 
 main .main-content .main-list {
   
+}
+
+main .main-content .main-list ul {
+  list-style: none;
+}
+
+main .main-content .main-list > ul > li:before {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  content: "~/";
+}
+
+main .main-content .main-list > ul > li > ul > li:before {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  content: "|--";
 }
 
 main .main-content .main-list .list-link {

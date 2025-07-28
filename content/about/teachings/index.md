@@ -11,7 +11,7 @@ tags:
 
 My lab materials are available (in French) in the [Labs](/labs/) section for the following classes:
 
-- Cloud computing course
-- GNU/Linux administration course
+- [Cloud computing](/labs/cloud/) course;
+- [GNU/Linux](/labs/linux/) administration course.
 
-I also provide various [Guides](/guides/) for classes and projects, also written in French.
+I also provide various [guides](/guides/) for classes and projects, also written in French.
