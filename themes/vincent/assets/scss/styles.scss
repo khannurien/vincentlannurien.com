@@ -23,6 +23,25 @@ $font-serif: "Playfair Display", serif;
 $font-mono: "Fantasque Sans Mono", monospace;
 
 /*
+ * Inspired by true events
+ * https://www.jonoalderson.com/conjecture/its-time-for-modern-css-to-kill-the-spa/
+ */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: fade 0.3s ease both;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/*
  * General
  */
 
@@ -65,8 +84,6 @@ pre {
   white-space: -pre-wrap;      /* Opera 4-6 */
   white-space: -o-pre-wrap;    /* Opera 7 */
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
-
-  overflow-x: scroll;
 }
 
 blockquote {
