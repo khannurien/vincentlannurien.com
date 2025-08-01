@@ -114,14 +114,22 @@ table {
   text-align: center;
 }
 
+.justify {
+  text-align: justify;
+}
+
 .rounded {
   border-radius: 50%;
 }
 
 .inline-image {
-  width: 20%;
   float: left;
+  width: 20%;
   margin: 1.5rem;
+}
+
+.opacity-25 {
+  opacity: 25%;
 }
 
 /*
