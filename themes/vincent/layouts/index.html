@@ -9,10 +9,10 @@
       {{ partial "header.html" . }}
 
       <main id="main">
-        <section class="main-content">
+        <section class="main-content justify">
           {{ .Content }}
 
-          <section class="latest-posts">
+          <!-- <section class="latest-posts">
             <h2>Latest Posts</h2>
 
             {{ $posts := where .Site.RegularPages "Section" "posts" }}
@@ -38,7 +38,7 @@
             </div>
           </section>
 
-          {{ partial "pagination.html" . }}
+          {{ partial "pagination.html" . }} -->
         </section>
       </main>
 

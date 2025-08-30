@@ -8,6 +8,8 @@
       <span class="animate-blink">💔</span><span style="opacity: 0.5">🤍🤍</span>
     </p>
 
+    <label for="sidebar-toggle" role="button" class="sidebar-toggle-label" aria-label="Toggle menu">☰</label>
+
     <ul class="header-nav">
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
@@ -26,3 +28,15 @@
 
 <hr>
 {{ end }}
+
+<input type="checkbox" role="button" id="sidebar-toggle" class="sidebar-toggle" aria-controls="sidebar">
+<aside class="sidebar">
+  <ul class="sidebar-nav">
+    {{ $currentPage := . }}
+    {{ range .Site.Menus.main }}
+      <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+        <a href="{{ .URL }}"><span>{{ .Name }}</span></a>
+      </li>
+    {{ end }}
+  </ul>
+</aside>

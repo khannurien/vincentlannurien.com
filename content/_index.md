@@ -2,9 +2,7 @@
 title: "Vincent Lannurien"
 
 links:
-  - name: "☁️ Cloud & Linux Labs"
-    url: "https://khannurien.github.io/"
-  - name: "🖥️ GitHub"
+  - name: "🐛 GitHub"
     url: "https://github.com/khannurien/"
   - name: "‍💼 LinkedIn"
     url: "https://www.linkedin.com/in/vincentlannurien/"
@@ -14,16 +12,31 @@ links:
     url: "https://soundcloud.com/khannurien"
 ---
 
-<!-- ![Welcome](images/banner_brest.jpg) -->
-
 ```c {.animate-float}
   printf("%s\n", "h̵̫͔̻̙̞̦͒͂̿̇̒͂̾̎̔̈́̉̕͘̕e̸͕͙͂̌͊̿͒̓l̴̨̡̡͕̝̱̗̦̫̲̗̥̹̩͈̝͖̝͖̒̈́͋́͒̃̑̔̐̚͜l̴̨̦̟͎̹͔͓̳̝͍͉̻̩̹̳̙̜͚̝͕͆̉͠o̸̧̩̤̺̰͓̾͛͗̀̇̎͒̋̿̉͑̒̂͘͜ͅ ̶̨̨͔̘̞̙̻̹̦͖̰͔̹̬͉͚̞͖̄͛̈́́͒̂̋̆͘͘̕͜͝w̷̛̳͇̭͓͇̜̪̰̜̹̯̞̃̏͋̉͗͘͝o̷̦̱̭͖̥̫̗͓͇̟̻͉̞̮͇̯̘̙͍͐̏͌͒̀̌͑̿̓̄̔̇̒͛͠r̵͉̝͕̱̝͖̘̘̀̉͂̌̌̏̀̈́̓̀̓̊̅͜l̷̤͔̫̍̉̍d̵̢̨̛̜͖͉̟̺̬͔̰̱͎̪̊̔̄̽͛͗̓̾̎̋̂̚");
 ```
 
-<!-- 
-## Latest Tracks
+<div class="center">
+  <img src="./about/images/monge.jpg" alt="Le Monge, as seen from Yves Collet street" />
+</div>
 
-{{< soundcloud id="1924998527" >}}
+<img src="./images/profile.jpg" class="inline-image rounded" />
 
-{{< soundcloud id="1908978053" >}}
--->
+I am Vincent Lannurien, an **Associate Professor** (*Maître de Conférences*) at Lab-STICC, Université de Bretagne Occidentale (Brest, France). I am part of the [**SHAKER**](https://labsticc.fr/fr/equipes/shaker) team and my research interests are in **performance evaluation** and **optimization** of distributed and embedded systems, with a focus on energy consumption.
+
+Before that, I was a **Postdoctoral Researcher** at Lab-STICC, ENSTA (Brest, France).
+
+Between 2021 and 2024, I have been working on **allocation and scheduling policies** to enable efficient orchestration in serverless platforms in the cloud; see [my PhD thesis](https://theses.hal.science/tel-04941961) and [defense slides](./about/resources/phd_defense.pdf).
+
+---
+
+<div class="center">
+  <img src="./images/divider.gif" class="opacity-25" />
+</div>
+
+You will find more details regarding my work, teachings and projects in the following sections:
+
+- [CV](/about/cv)
+- [Projects](/about/projects)
+- [Publications](/about/publications)
+- [Teachings](/about/teachings)

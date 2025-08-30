@@ -17,10 +17,29 @@ $color-purple: #bd93f9;
 $color-red: #ff5555;
 $color-yellow: #f1fa8c;
 
-$font-sans-variable: "Helvetica Neue", "InterVariable", sans-serif;
-$font-sans-fallback: "Helvetica Neue", "Inter", sans-serif;
+$font-sans-variable: "Roboto Condensed", "Helvetica Neue", "InterVariable", sans-serif;
+$font-sans-fallback: "Roboto Condensed", "Helvetica Neue", "Inter", sans-serif;
 $font-serif: "Playfair Display", serif;
 $font-mono: "Fantasque Sans Mono", monospace;
+
+/*
+ * Inspired by true events
+ * https://www.jonoalderson.com/conjecture/its-time-for-modern-css-to-kill-the-spa/
+ */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: fade 0.3s ease both;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 
 /*
  * General
@@ -28,9 +47,7 @@ $font-mono: "Fantasque Sans Mono", monospace;
 
 html {
   background: $color-background;
-}
-
-body {
+  font-size: 120%;
 }
 
 hr {
@@ -59,6 +76,14 @@ pre {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
+
+  padding: 1rem;
+
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
 blockquote {
@@ -68,6 +93,17 @@ blockquote {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+
+  white-space: pre-wrap;       /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+// TODO: tables
+table {
+  
 }
 
 .hidden {
@@ -76,6 +112,24 @@ blockquote {
 
 .center {
   text-align: center;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.inline-image {
+  float: left;
+  width: 20%;
+  margin: 1.5rem;
+}
+
+.opacity-25 {
+  opacity: 25%;
 }
 
 /*
@@ -121,6 +175,10 @@ blockquote {
   font-size: 1em;
 }
 
+.fit-embed {
+  width: 100%;
+}
+
 /*
  * Header
  */
@@ -135,10 +193,6 @@ header {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
-}
-
-header ul {
-  list-style-type: none;
 }
 
 header a {
@@ -159,20 +213,40 @@ header a:hover {
 
 header .grid {
   width: 100%;
-  display: grid;
-  grid-template-columns: 0.28fr 0.15fr 0.57fr;
+
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  // display: grid;
+  // grid-template-columns: 0.28fr 0.15fr 0.57fr;
+}
+
+@media (max-width: 768px) {
+  header .grid {
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  header .grid .header-nav {
+    display: none;
+  }
 }
 
 header .grid .header-title {
-  grid-column: 1;
-  grid-row: 1;
+  // grid-column: 1;
+  // grid-row: 1;
 
-  margin: auto auto auto 1rem;
+  margin: auto 1rem auto 1rem;
 }
 
 header .grid .header-logo {
-  grid-column: 2;
-  grid-row: 1;
+  // grid-column: 2;
+  // grid-row: 1;
 }
 
 header .grid .header-title p {
@@ -187,27 +261,85 @@ header .grid .header-nav {
   text-align: right;
 
   margin: auto 1rem auto auto;
+
+  list-style-type: none;
 }
 
 header .grid .header-nav li {
   display: inline;
 }
 
-@media (max-width: 600px) {
-  header .grid {
-    grid-template-columns: 0.5fr 0.5fr;
+/**
+ * Sidebar
+ */
+
+.sidebar-toggle {
+  display: none;
+}
+
+.sidebar-toggle-label {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: $color-foreground;
+}
+
+.sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 250px;
+  height: 100%;
+
+  background: $color-background;
+  color: $color-foreground;
+
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle-label {
+    display: block;
+    grid-column: 3;
+    grid-row: 1;
+    margin: auto 1rem auto auto;
   }
 
-  header .grid .header-logo {
-    grid-column: 1;
-    grid-row: 2;
-
-    margin: auto auto auto 1rem;
+  .sidebar {
+    display: block;
   }
 
-  header .grid .header-nav {
-    grid-column: 2;
+  .sidebar-toggle:checked ~ .sidebar {
+    transform: translateX(0);
   }
+}
+
+.sidebar-nav {
+  list-style-type: none;
+  padding: 1rem;
+}
+
+.sidebar-nav li {
+  margin: 1rem 0;
+}
+
+.sidebar-nav li a {
+  color: $color-foreground;
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+  color: $color-yellow;
 }
 
 /*
@@ -303,6 +435,38 @@ main .main-content {
   color: $color-foreground;
 
   line-height: 1.6rem;
+}
+
+main .main-content .main-list {
+  
+}
+
+main .main-content .main-list ul {
+  list-style: none;
+}
+
+main .main-content .main-list > ul > li:before {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  content: "~/";
+}
+
+main .main-content .main-list > ul > li > ul > li:before {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  content: "|--";
+}
+
+main .main-content .main-list .list-link {
+  
+}
+
+main .main-content .main-list .list-time {
+  font-size: 0.8rem;
 }
 
 main .main-content a,
