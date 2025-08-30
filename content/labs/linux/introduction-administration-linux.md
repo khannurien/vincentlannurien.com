@@ -17,23 +17,19 @@ todo:
 
 # Introduction à l'administration Linux
 
-![width:200px](../images/linux-torvalds.jpg)
+{{< flex >}}
+![Linus Torvalds](../images/linus-torvalds.jpg)
+
+---
 
 > Hello everybody out there using minix -
 > 
-> I'm doing a (free) operating system (just a hobby, won't be big and
-> professional like gnu) for 386(486) AT clones. This has been brewing
-> since april, and is starting to get ready. I'd like any feedback on
-> things people like/dislike in minix, as my OS resembles it somewhat
-> (same physical layout of the file-system (due to practical reasons)
-> among other things).
+> I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386(486) AT clones. This has been brewing since april, and is starting to get ready. I'd like any feedback on things people like/dislike in minix, as my OS resembles it somewhat (same physical layout of the file-system (due to practical reasons) among other things).
 > 
-> I've currently ported bash(1.08) and gcc(1.40), and things seem to work.
-> This implies that I'll get something practical within a few months, and
-> I'd like to know what features most people would want. Any suggestions
-> are welcome, but I won't promise I'll implement them :-)
+> I've currently ported bash(1.08) and gcc(1.40), and things seem to work. This implies that I'll get something practical within a few months, and I'd like to know what features most people would want. Any suggestions are welcome, but I won't promise I'll implement them :-)
 > 
 > Linus
+{{< /flex >}}
 
 ## Objectifs
 

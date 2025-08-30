@@ -1,0 +1,8 @@
+<div class="flex">
+  {{ $blocks := split .Inner "---" }}
+  {{ range $blocks }}
+  <div class="flex-item">
+    {{ . | markdownify }}
+  </div>
+  {{ end }}
+</div>
