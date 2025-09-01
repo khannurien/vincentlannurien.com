@@ -20,9 +20,9 @@
             <ul reversed>
               {{ range $index, $page := $paginator.Pages }}
                 <li>
-                  <a class="list-link" href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a>
+                  <a class="main-list-link" href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a>
                   <!-- <hr> -->
-                  <!-- <time class="list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
+                  <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
                   {{ partial "recursive.html" $page }}
                 </li>
               {{ end }}

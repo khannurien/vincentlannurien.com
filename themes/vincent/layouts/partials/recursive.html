@@ -1,6 +1,6 @@
 {{ $child_pages := union .Sections .Pages }}
 
-<ul class="recursive">
+<ul class="recursive main-list-link">
   {{ range $child_pages.ByTitle }}
   <li>
     [ <a href="{{ .RelPermalink }}"> {{ .Title }}</a> ]

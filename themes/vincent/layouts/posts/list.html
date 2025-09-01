@@ -20,21 +20,19 @@
             {{ .Scratch.Set "pagination" $paginator }}
 
             <div class="latest-posts-list">
-            {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
-              <div class="latest-posts-item">
-                <p>
-                  <span class="latest-posts-meta">
-                    <small>-rw-r--r--</small>
-                  </span>
-                  <span class="latest-posts-meta">
-                    <small>[ {{ time.Format "Jan 2006" .Date }} ] :: </small>
-                  </span>
-                  <span>
-                    <a href="{{ .Permalink }}">{{ .Title }}</a>
-                  </span>
-                </p>
-              </div>
-            {{ end }}
+              {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
+              <a class="latest-posts-item" href="{{ .Permalink }}">
+                <span class="latest-posts-meta">
+                  <small>-rw-r--r--</small>
+                </span>
+                <span class="latest-posts-meta">
+                  <small>[ {{ time.Format "Jan 2006" .Date }} ] :: </small>
+                </span>
+                <span class="latest-posts-link">
+                  {{ .Title }}
+                </span>
+              </a>
+              {{ end }}
             </div>
           </section>
 

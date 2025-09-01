@@ -88,7 +88,7 @@ pre {
 
 blockquote {
   margin: 0;
-  padding: 1rem;
+  padding: 0 1rem 1.5rem 1rem;
   line-height: 1.4rem;
 
   background: $color-background;
@@ -115,9 +115,35 @@ blockquote > p + p {
   margin-top: 0; /* space between paragraphs */
 }
 
-// TODO: tables
 table {
-  
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border-top: 1px solid $color-comment;
+  border-bottom: 1px solid $color-comment;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+tr:first-child th,
+tr:first-child td {
+  border-top: 3px double $color-comment;
+}
+
+tr:last-child th,
+tr:last-child td {
+  border-bottom: 3px double $color-comment;
+}
+
+th {
+  background-color: $color-background;
+  font-weight: 400;
+}
+
+tr:nth-child(0) {
+  background-color: $color-background;
 }
 
 .hidden {
@@ -225,12 +251,12 @@ header a {
   color: $color-orange;
   text-decoration: none;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
   /* ...and now override with proper CSS property */
-  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
 header a:hover {
@@ -406,12 +432,12 @@ nav#breadcrumbs ul li a {
   color: $color-yellow;
   text-shadow: 1px 1px 2px pink;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
   /* ...and now override with proper CSS property */
-  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
 nav#breadcrumbs ul li a:hover {
@@ -450,7 +476,14 @@ main img {
 main .main-head {
   padding: 1rem 2rem 2rem 2rem;
   
-  background: transparent; // $color-background;
+  background: transparent;
+  color: $color-foreground;
+}
+
+main .main-head blockquote {
+  padding: 1rem;
+  
+  background: transparent;
   color: $color-foreground;
 }
 
@@ -469,6 +502,13 @@ main .main-content .main-list {
 
 main .main-content .main-list ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main .main-content .main-list ul li {
+  margin: 0;
+  padding: 0;
 }
 
 main .main-content .main-list > ul > li:before {
@@ -487,11 +527,13 @@ main .main-content .main-list > ul > li > ul > li:before {
   content: "|--";
 }
 
-main .main-content .main-list .list-link {
-  
+main .main-content .main-list .main-list-link {
 }
 
-main .main-content .main-list .list-time {
+main .main-content .main-list .main-list-link:hover {
+}
+
+main .main-content .main-list .main-list-time {
   font-size: 0.8rem;
 }
 
@@ -500,12 +542,12 @@ main .main-head a {
   color: $color-red;
   text-decoration: $color-current underline wavy;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
   /* ...and now override with proper CSS property */
-  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out, background 1s ease-in;
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
 main .main-content a:hover,
@@ -518,28 +560,46 @@ main .main-head a:hover {
  * Posts
  */
 
-main .latest-posts .latest-posts-meta {
+main .latest-posts .latest-posts-list .latest-posts-item {
+  display: block;
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  border-radius: 5px;
+
+  color: inherit;
+  text-decoration: none;
+
+  -o-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  -ms-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  -moz-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  -webkit-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;  
+}
+
+main .latest-posts .latest-posts-list .latest-posts-item:hover {
+  background: $color-background;
+  text-decoration: none;
+}
+
+main .latest-posts .latest-posts-list .latest-posts-item .latest-posts-meta {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
 }
 
-// main .latest-posts .latest-posts-list .latest-posts-item p {
-//   display: grid;
-//   grid-template-columns: repeat(3, 1fr);
-// }
-
-// @media (max-width: 600px) {
-//   main .latest-posts .latest-posts-list .latest-posts-item p {
-//     grid-template-columns: repeat(2, 1fr);
-//   }
-// }
+main .latest-posts .latest-posts-list .latest-posts-item .latest-posts-link {
+  color: $color-red;
+}
 
 /*
  * Pagination
  */
 
 main .main-pagination {
+  margin: 1.5rem auto auto auto;
+
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
