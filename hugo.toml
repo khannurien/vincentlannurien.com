@@ -32,7 +32,7 @@ pluralizeListTitles = false
   [[menu.main]]
     identifier = "blog"
     name = "📝 Blog"
-    url = "/posts/"
+    url = "/blog/"
     weight = "3"
   [[menu.main]]
     identifier = "essential"

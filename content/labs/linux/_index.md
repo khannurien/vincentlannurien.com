@@ -1,3 +1,3 @@
 ---
-title: "Linux Labs"
+title: "🐧 Linux Labs"
 ---

@@ -72,6 +72,14 @@ h1, h2, h3, h4, h5, h6 {
   font-style: normal;
 }
 
+code {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+
+  background-color: $color-selection;
+}
+
 pre {
   font-family: $font-mono;
   font-weight: 400;
@@ -451,9 +459,6 @@ nav#breadcrumbs ul li a:hover {
 main {
   margin: 0 auto 2rem auto;
 
-  // background: $color-current;
-  // color: $color-foreground;
-
   font-family: $font-sans-fallback;
   font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
   font-optical-sizing: auto;
@@ -496,47 +501,6 @@ main .main-content {
   line-height: 1.6rem;
 }
 
-main .main-content .main-list {
-  
-}
-
-main .main-content .main-list ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-main .main-content .main-list ul li {
-  margin: 0;
-  padding: 0;
-}
-
-main .main-content .main-list > ul > li:before {
-  font-family: $font-mono;
-  font-weight: 400;
-  font-style: normal;
-
-  content: "~/";
-}
-
-main .main-content .main-list > ul > li > ul > li:before {
-  font-family: $font-mono;
-  font-weight: 400;
-  font-style: normal;
-
-  content: "|--";
-}
-
-main .main-content .main-list .main-list-link {
-}
-
-main .main-content .main-list .main-list-link:hover {
-}
-
-main .main-content .main-list .main-list-time {
-  font-size: 0.8rem;
-}
-
 main .main-content a,
 main .main-head a {
   color: $color-red;
@@ -556,9 +520,89 @@ main .main-head a:hover {
   text-decoration: $color-yellow underline wavy;
 }
 
+main .main-list {
+  padding: 1rem 2rem 1rem 2rem;
+
+  background: $color-current;
+  color: $color-foreground;
+
+  line-height: 1.6rem;
+}
+
+main .main-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main .main-list ul li {
+  margin: 0;
+  padding: 0;
+}
+
+main .main-list .recursive .main-list-item {
+  margin-left: 2rem;
+}
+
+main .main-list .main-list-item {
+  display: block;
+
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  border-radius: 5px;
+
+  color: $color-background;
+  text-decoration: none;
+
+  -o-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  -ms-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  -moz-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  -webkit-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
+}
+
+main .main-list .main-list-item:hover {
+  background: $color-background;
+  color: $color-foreground;
+  text-decoration: none;
+}
+
+main .main-list .main-list-item .main-list-link {
+  padding-left: 0.5rem;
+  color: $color-red;
+}
+
 /*
  * Posts
  */
+
+main .latest-posts {
+  padding: 1rem 2rem 1rem 2rem;
+
+  background: $color-current;
+  color: $color-foreground;
+
+  line-height: 1.6rem;
+}
+
+main .latest-posts a {
+  color: $color-red;
+  text-decoration: $color-current underline wavy;
+
+  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
+}
+
+main .latest-posts a:hover {
+  color: $color-pink;
+  text-decoration: $color-yellow underline wavy;
+}
 
 main .latest-posts .latest-posts-list .latest-posts-item {
   display: block;
@@ -575,7 +619,7 @@ main .latest-posts .latest-posts-list .latest-posts-item {
   -moz-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
   -webkit-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
   /* ...and now override with proper CSS property */
-  transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;  
+  transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
 }
 
 main .latest-posts .latest-posts-list .latest-posts-item:hover {
@@ -631,6 +675,11 @@ main .essential {
   padding: 1rem 0 1rem 0;
 
   font-size: 0.9rem;
+}
+
+main .essential-intro {
+  margin: 0;
+  padding: 0.5rem;
 }
 
 /* Inspired by true events

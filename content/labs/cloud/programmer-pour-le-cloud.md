@@ -328,9 +328,9 @@ Ces fichiers *action* peuvent être mobilisés dans le cadre d'une composition a
     * la publier sur [Docker Hub](https://hub.docker.com/) ;
     * la publier sur [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
 
-    > ⚠️ Il faudra veiller à ne pas divulguer de secrets (mots de passe, clefs d'API, etc.) dans vos fichiers actions. Lisez attentivement la [documentation de GitHub au sujet des secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions).
-
 3. Vérifiez que votre image est bien publiée sur les deux registres lorsque vous poussez un changement sur votre dépôt.
+
+> ⚠️ Il faudra veiller à ne pas divulguer de secrets (mots de passe, clefs d'API, etc.) dans vos fichiers actions. Lisez attentivement la [documentation de GitHub au sujet des secrets](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions).
 
 ## TD4 : déploiement continu sur PaaS
 

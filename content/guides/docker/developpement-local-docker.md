@@ -113,9 +113,9 @@ Modifier le fichier `hosts` pour autoriser la résolution des noms :
 * Sous **macOS** et **Linux**, `/etc/hosts` ;
 * Sous **Windows**, `C:\Windows\System32\drivers\etc\hosts`.
 
-Ajoutez-y :
+Ajoutez-y les lignes suivantes :
 
-```
+```sh
 127.0.0.1        localhost
 127.0.0.1        app.localhost
 ```

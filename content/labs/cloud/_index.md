@@ -1,3 +1,3 @@
 ---
-title: "Cloud Labs"
+title: "☁️ Cloud Labs"
 ---
