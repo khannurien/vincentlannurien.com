@@ -26,7 +26,7 @@ I am Vincent Lannurien, an **Associate Professor** (*Maître de Conférences*) a
 
 Before that, I was a **Postdoctoral Researcher** at Lab-STICC, ENSTA (Brest, France).
 
-Between 2021 and 2024, I have been working on **allocation and scheduling policies** to enable efficient orchestration in serverless platforms in the cloud; see [my PhD thesis](https://theses.hal.science/tel-04941961) and [defense slides](./about/resources/phd_defense.pdf).
+Between 2021 and 2024, I have been working on **allocation and scheduling policies** to enable efficient orchestration in serverless platforms for private clouds; see [my PhD thesis](https://theses.hal.science/tel-04941961) and [defense slides](./about/resources/phd_defense.pdf).
 
 ---
 
