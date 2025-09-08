@@ -11,11 +11,8 @@ tags:
   - "systems"
 
 todo:
-  - Add a comprehensive section on SSH keys
-  - Ask students to create their sets of keys and upload them to GitHub
+  - Ajout d'une section dédiée aux clefs SSH
 ---
-
-# Introduction à l'administration Linux
 
 {{< flex >}}
 ![Linus Torvalds](../images/linus-torvalds.jpg)

@@ -12,13 +12,7 @@ tags:
   - "docker"
   - "git"
   - "ssh"
-
-todo:
-  - Add a comprehensive section on SSH keys
-  - Ask students to create their sets of keys and upload them to GitHub
 ---
-
-# Programmer pour le Cloud
 
 ![](../images/xkcd-automation.png)
 

@@ -6,20 +6,18 @@
   {{ $curr := $paginator.PageNumber }}
   {{ $next := add 1 $paginator.PageNumber }}
   <section class="main-pagination">
-    <div class="main-pagination">
-      {{ if $paginator.HasPrev }}
-        <span>
-          <a href="{{ $paginator.Prev.URL | absURL }}">« {{ $prev }}/{{ $total }}</a>
-        </span>
-      {{ end }}
+    {{ if $paginator.HasPrev }}
       <span>
-        [ {{ $curr }} ]
+        <a href="{{ $paginator.Prev.URL | absURL }}">« {{ $prev }}/{{ $total }}</a>
       </span>
-      {{ if $paginator.HasNext }}
-        <span>
-          <a href="{{ $paginator.Next.URL | absURL }}">{{ $next }}/{{ $total }} »</a>
-        </span>
-      {{ end }}
-    </div>
+    {{ end }}
+    <span>
+      [ {{ $curr }} ]
+    </span>
+    {{ if $paginator.HasNext }}
+      <span>
+        <a href="{{ $paginator.Next.URL | absURL }}">{{ $next }}/{{ $total }} »</a>
+      </span>
+    {{ end }}
   </section>
 {{ end }}

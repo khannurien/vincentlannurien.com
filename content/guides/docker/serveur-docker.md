@@ -11,8 +11,6 @@ tags:
   - "deployment"
 ---
 
-# Un serveur avec Docker
-
 Dans ce guide, je vous propose d'utiliser Docker et Docker Compose pour déployer et orchestrer vos services sur un serveur.
 
 ![](../images/home-server.jpg)

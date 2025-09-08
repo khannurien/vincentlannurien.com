@@ -34,9 +34,4 @@ Between 2021 and 2024, I have been working on **allocation and scheduling polici
   <img src="./images/divider.gif" class="opacity-25" />
 </div>
 
-You will find more details regarding my work, teachings and projects in the following sections:
-
-- [CV](/about/cv)
-- [Projects](/about/projects)
-- [Publications](/about/publications)
-- [Teachings](/about/teachings)
+You will find more details regarding my work, teachings and projects in the [About](/about) section.

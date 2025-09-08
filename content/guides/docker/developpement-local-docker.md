@@ -11,8 +11,6 @@ tags:
   - "development"
 ---
 
-# Développer en local avec Docker
-
 Dans ce guide, je vous propose d'utiliser Docker et Docker Compose pour conteneuriser un environnement de développement local.
 
 ![](../images/evergreen.png)

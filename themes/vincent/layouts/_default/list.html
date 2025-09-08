@@ -20,16 +20,16 @@
         {{ end }}
 
         <section class="main-list">
-          <ul reversed>
-            {{ range $index, $page := $paginator.Pages }}
-              <li>
-                <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
-                  ➤ <span class="main-list-link">{{ .Title }}</span>
-                </a>
-                <!-- <hr> -->
-                <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
-                {{ partial "recursive.html" $page }}
-              </li>
+          <ul>
+            {{ range $index, $page := ($paginator.Pages).ByDate.Reverse }}
+            <li>
+              <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
+                ➤ <span class="main-list-link"><strong>{{ .Title }}</strong></span>
+              </a>
+              <!-- <hr> -->
+              <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
+              {{ partial "recursive.html" $page }}
+            </li>
             {{ end }}
           </ul>
 
