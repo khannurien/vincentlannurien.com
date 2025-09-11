@@ -6,6 +6,7 @@ title: "Programmer pour le Cloud"
 date: "2025-01-24T12:02:15+02:00"
 
 tags:
+  - "labs"
   - "cloud"
   - "deployment"
   - "development"

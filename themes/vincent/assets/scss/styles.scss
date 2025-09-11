@@ -479,7 +479,7 @@ main img {
 }
 
 main .main-head {
-  padding: 1rem 2rem 1rem 2rem;
+  padding: 1rem 2rem 2rem 2rem;
   
   background: transparent;
   color: $color-foreground;
@@ -506,6 +506,39 @@ main article .main-content {
   text-decoration: underline double $color-orange;
   text-decoration-thickness: 0.01rem;
   // text-underline-offset: 0.3rem;
+  }
+}
+
+main article .main-content {
+  h1::before {
+    content: "# ";
+  }
+  h2::before {
+    content: "## ";
+  }
+  h3::before {
+    content: "### ";
+  }
+  h4::before {
+    content: "#### ";
+  }
+  h5::before {
+    content: "##### ";
+  }
+  h6::before {
+    content: "###### ";
+  }
+  // em::before, em::after {
+  //   content: "*";
+  // }
+  // strong::before, strong::after {
+  //   content: "**";
+  // }
+  code::before, code::after {
+    content: "`";
+  }
+  pre code::before, pre code::after {
+    content: none;
   }
 }
 
