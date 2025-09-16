@@ -738,9 +738,8 @@ main .essential .grid-small {
 }
 
 main .essential .grid .essential-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Align contents vertically */
+  display: grid;
+  grid-template-rows: 1fr auto; /* content grows, image row sticks to bottom */
 
   padding: 1rem;
 
@@ -766,6 +765,10 @@ main .essential .grid .essential-item-header {
   text-align: center;
 }
 
+main .essential .grid .essential-item-content {
+  margin: 1rem 0 1rem 0;
+}
+
 main .essential .grid .essential-item-link {
   text-decoration: none;
   opacity: 0.5;
@@ -788,10 +791,6 @@ main .essential .grid .essential-image {
 main .essential .grid .essential-icon {
   text-align: center;
   font-size: 4rem;
-}
-
-main .essential .grid .essential-item-content {
-  margin: 1rem 0 1rem 0;
 }
 
 main .essential .grid .essential-item-footer {

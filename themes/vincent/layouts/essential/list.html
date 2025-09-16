@@ -26,13 +26,11 @@
                 </div>
                 <div class="essential-item-content">
                   <a class="essential-item-link animate-toggle" href="{{ .RelPermalink }}">
-                    {{ $essential_image := .Params.image }}
-                    {{ $essential_icon := .Params.icon }}
-                    {{ with $essential_image }}
-                    <p class="essential-image"><img src="{{ $essential_image }}" /></p>
+                    {{ with .Params.image }}
+                    <p class="essential-image"><img src="{{ . }}" /></p>
                     {{ end }}
-                    {{ with $essential_icon }}
-                    <p class="essential-icon crt">{{ $essential_icon }}</p>
+                    {{ with .Params.icon }}
+                    <p class="essential-icon crt">{{ . }}</p>
                     {{ end }}
                   </a>
                 </div>
@@ -46,7 +44,7 @@
           {{ else }}
           <div class="essential">
             <div class="grid grid-big">
-              {{ range $regular_page := .RegularPages }}
+              {{ range $regular_page := .RegularPages.ByTitle }}
               <div class="essential-item">
                 <div class="essential-item-header">
                   <h2><a href="{{ $regular_page.RelPermalink }}">{{ $regular_page.Title | markdownify }}</a></h2>
