@@ -22,23 +22,33 @@ pluralizeListTitles = false
   [[menu.main]]
     identifier = "guides"
     name = "📓 Guides"
+    pre = "/doc"
     url = "/guides/"
     weight = "1"
   [[menu.main]]
     identifier = "labs"
     name = "🧑‍🔬 Labs"
+    pre = "/labs"
     url = "/labs/"
     weight = "2"
   [[menu.main]]
     identifier = "blog"
     name = "📝 Blog"
+    pre = "/blog"
     url = "/blog/"
     weight = "3"
   [[menu.main]]
     identifier = "essential"
     name = "🎯 Essential"
+    pre = "/stuff"
     url = "/essential/"
     weight = "4"
+  [[menu.main]]
+    identifier = "about"
+    name = "🆔 About"
+    pre = "/me"
+    url = "/about/"
+    weight = "5"
 
 [markup]
   [markup.goldmark.renderer]

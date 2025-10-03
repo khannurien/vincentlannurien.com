@@ -271,6 +271,8 @@ header {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
 
 header a {
@@ -297,12 +299,9 @@ header .grid {
   align-items: start;
   justify-content: space-between;
   flex-wrap: wrap;
-
-  // display: grid;
-  // grid-template-columns: 0.28fr 0.15fr 0.57fr;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   header .grid {
     flex-direction: row;
     align-items: start;
@@ -316,15 +315,10 @@ header .grid {
 }
 
 header .grid .header-title {
-  // grid-column: 1;
-  // grid-row: 1;
-
   margin: auto 1rem auto 1rem;
 }
 
 header .grid .header-logo {
-  // grid-column: 2;
-  // grid-row: 1;
 }
 
 header .grid .header-title p {
@@ -341,6 +335,24 @@ header .grid .header-nav {
   margin: auto 1rem auto auto;
 
   list-style-type: none;
+}
+
+/* Default: show full name, hide short name */
+header .grid .header-nav .short-name {
+  display: none;
+}
+header .grid .header-nav .full-name {
+  display: inline;
+}
+
+/* Mobile: show short name, hide full name */
+@media (max-width: 864px) {
+  header .grid .header-nav .short-name {
+    display: inline;
+  }
+  header .grid .header-nav .full-name {
+    display: none;
+  }
 }
 
 header .grid .header-nav li {
@@ -385,7 +397,7 @@ header .grid .header-nav li {
   transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .sidebar-toggle-label {
     display: block;
     grid-column: 3;
@@ -437,6 +449,8 @@ nav#breadcrumbs {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
 
 nav#breadcrumbs ul {
@@ -497,7 +511,7 @@ main img {
 }
 
 main .main-head {
-  padding: 1rem 2rem 1rem 2rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
   
   background: transparent;
   color: $color-foreground;
@@ -521,6 +535,8 @@ main .main-content {
   color: $color-foreground;
 
   line-height: 1.6rem;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
 
 main article .main-content {
@@ -550,12 +566,6 @@ main article .main-content {
   h6::before {
     content: "###### ";
   }
-  // em::before, em::after {
-  //   content: "*";
-  // }
-  // strong::before, strong::after {
-  //   content: "**";
-  // }
   code::before, code::after {
     content: "`";
   }
@@ -592,6 +602,8 @@ main .main-list {
   color: $color-foreground;
 
   line-height: 1.6rem;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
 
 main .main-list ul {
@@ -882,6 +894,8 @@ footer ul.main-links {
   list-style-type: none;
 
   background: $color-current;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
 
 footer ul.main-links li {

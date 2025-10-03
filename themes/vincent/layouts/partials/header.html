@@ -13,9 +13,12 @@
     <ul class="header-nav">
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
-        <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
-          <a href="{{ .URL }}"><span>{{ .Name }}</span></a>
-        </li>
+      <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+        <a href="{{ .URL }}">
+          <span class="full-name">{{ .Name }}</span>
+          <span class="short-name">{{ .Pre }}</span>
+        </a>
+      </li>
       {{ end }}
     </ul>
   </div>

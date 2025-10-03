@@ -1,6 +1,6 @@
 ---
 draft: false
-hide_title: true
+hide_title: false
 
 title: "Teachings"
 date: "2025-01-24T12:02:15+02:00"
