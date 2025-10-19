@@ -1,0 +1,67 @@
+$font-print: "Spectral", serif;
+
+@page {
+  size: A4;
+  margin: 2cm;
+}
+
+header,
+footer,
+aside,
+hr,
+#sidebar-toggle,
+#background,
+#breadcrumbs {
+  display: none;
+}
+
+main {
+  font-family: $font-print;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+  font-weight: 400;
+  font-style: normal;
+  font-size: 48pt;
+
+  text-align: justify;
+}
+
+main article {
+  margin: 36pt;
+}
+
+main article .main-head {
+  display: none;
+}
+
+main article {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 108pt auto 36pt auto;
+
+    text-decoration: underline;
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+
+    width: 75%;
+    height: auto;
+    max-width: 100%;
+    image-resolution: 300dpi;
+  }
+
+  a, a:visited {
+    text-decoration: none;
+    color: blue;
+  }
+
+  a::after {
+    content: " [" attr(href) "]";
+
+    vertical-align: super;
+
+    font-style: italic;
+    font-size: 70%;
+    color: grey;
+  }
+}
