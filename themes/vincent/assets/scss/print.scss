@@ -42,6 +42,9 @@ main article {
 
   img {
     display: block;
+    break-inside: avoid;       /* avoid spanning page breaks */
+    page-break-inside: avoid;  /* fallback for older browsers */
+
     margin: 0 auto;
 
     width: 75%;
