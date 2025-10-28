@@ -95,18 +95,6 @@ pre {
 }
 
 blockquote {
-  margin: 0;
-  padding: 0 1rem 1.5rem 1rem;
-  line-height: 1.4rem;
-
-  background: $color-background;
-
-  font-family: $font-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 90%;
-
   text-align: justify;
 
   white-space: pre-wrap;       /* Since CSS 2.1 */
@@ -116,12 +104,18 @@ blockquote {
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-blockquote > p {
+blockquote p {
   margin: 0;
 }
 
-blockquote > p + p {
+blockquote p + p {
   margin-top: 0; /* space between paragraphs */
+}
+
+blockquote ul, blockquote ul li {
+  margin: 0;
+  padding: 0 auto 0 auto;
+  line-height: 1rem;
 }
 
 table {
@@ -519,6 +513,14 @@ main .main-head {
 
 main .main-head blockquote {
   padding: 1rem;
+
+  line-height: 1.4rem;
+
+  font-family: $font-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 90%;
   
   background: transparent;
   color: $color-foreground;
@@ -592,6 +594,14 @@ main .main-content a:hover,
 main .main-head a:hover {
   color: $color-pink;
   text-decoration: $color-yellow underline wavy;
+}
+
+main .main-content blockquote {
+  margin: 0;
+  padding: 0 2rem 1.5rem 2rem;
+
+  background: $color-background;
+  font-style: italic;
 }
 
 main .main-list {
