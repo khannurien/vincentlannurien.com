@@ -26,7 +26,6 @@ $font-mono: "Fantasque Sans Mono", monospace;
  * Inspired by true events
  * https://www.jonoalderson.com/conjecture/its-time-for-modern-css-to-kill-the-spa/
  */
-
 @view-transition {
   navigation: auto;
 }
@@ -885,6 +884,52 @@ main .essential .grid .essential-item-footer .recursive {
 }
 
 /*
+ * Now Playing
+ */
+
+.now-playing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+
+  background: $color-selection;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
+
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+  font-variant: small-caps;
+  font-size: 0.9rem;
+}
+
+.now-playing-container a {
+  color: $color-foreground;
+
+  text-decoration: none;
+
+  opacity: 0.5;
+
+  -o-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
+  -ms-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
+  -moz-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
+  -webkit-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
+  /* ...and now override with proper CSS property */
+  transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
+}
+
+.now-playing-container a:hover {
+  color: $color-purple;
+
+  opacity: 1;
+}
+
+.now-playing-container img {
+  margin-top: 0.5rem;
+}
+
+/*
  * Footer
  */
 
@@ -1048,20 +1093,40 @@ footer .bye a {
   }
 }
 
-.embed-container { 
+/**
+ * Inspired by true events
+ * https://www.w3schools.com/howto/howto_css_responsive_iframes.asp
+ */
+.embed-container {
   position: relative; 
-  padding-bottom: 56.25%;
-  overflow: hidden;
   max-width: 100%;
   height: auto;
-} 
+  overflow: hidden;
+  padding-bottom: 56.25%;
+}
+
+.embed-container-wide {
+  padding-bottom: 56.25%;
+}
+
+.embed-container-small {
+  padding-bottom: 10%;
+}
+
+@media (max-width: 856px) {
+  .embed-container-small {
+    padding-bottom: 15%;
+  }
+}
 
 .embed-container iframe,
 .embed-container object,
-.embed-container embed { 
+.embed-container embed {
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 0;
+  right: 0;
   width: 100%;
   height: 100%;
 }

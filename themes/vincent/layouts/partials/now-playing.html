@@ -1,0 +1,15 @@
+<div class="now-playing-container crt">
+  <a href="" id="now-playing" data-username="">
+    🎧 Loading track info...
+  </a>
+
+  <img id="now-playing-cover" alt="" loading="lazy" />
+</div>
+
+{{ $listenBrainz := resources.Get "/ts/listenbrainz.ts" | js.Build }}
+
+<script src="{{ $listenBrainz.RelPermalink }}"></script>
+
+<!-- <div class="embed-container embed-container-small">
+  <iframe src="https://listenbrainz.org/user/khannurien/embed/playing-now/" height="80px" frameborder="0"></iframe>
+</div> -->
