@@ -50,17 +50,17 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
 
   const mapperRequest = `https://mapper.listenbrainz.org/mapping/lookup?${params.toString()}`;
 
-  console.log("mapperRequest = ", mapperRequest);
+  // console.log("mapperRequest = ", mapperRequest);
 
   const corsRequest = `https://api.allorigins.win/get?url=${encodeURIComponent(mapperRequest)}`;
 
-  console.log("corsRequest = ", corsRequest);
+  // console.log("corsRequest = ", corsRequest);
 
   try {
     const corsResponse = await fetchJson(corsRequest);
     const releaseInfo = JSON.parse(corsResponse.contents);
 
-    console.log(releaseInfo);
+    // console.log(releaseInfo);
 
     const releaseMbid = releaseInfo.release_mbid;
     if (!releaseMbid) return null;
@@ -81,7 +81,7 @@ async function getCoverArtUrl(track: Record<string, any>): Promise<string | null
   try {
     const coverUrl = `https://coverartarchive.org/release/${releaseMbid}/front-250`;
 
-    console.log(coverUrl);
+    // console.log(coverUrl);
 
     const coverRes = await fetch(coverUrl, { method: "HEAD" });
     if (!coverRes.ok) return null;

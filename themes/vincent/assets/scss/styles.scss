@@ -882,7 +882,7 @@ main .essential .grid .essential-item-footer .recursive {
 .now-playing-container {
   position: absolute;
   top: 5%;
-  right: 5%;
+  right: 3.5%;
   width: 14rem;
 
   font-family: $font-mono;
@@ -892,13 +892,15 @@ main .essential .grid .essential-item-footer .recursive {
   font-size: 0.7rem;
 
   line-height: 1rem !important;
+  text-align: right;
 }
 
 .now-playing-container a {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr auto;
   gap: 1rem;
   align-items: start;
+  justify-items: end;
   
   color: $color-foreground !important;
 
@@ -920,6 +922,7 @@ main .essential .grid .essential-item-footer .recursive {
 
 .now-playing-container .now-playing-info {
   min-width: 0;
+  align-self: center;
 }
 
 .now-playing-container .now-playing-info ul {
