@@ -272,11 +272,6 @@ header a {
   color: $color-orange;
   text-decoration: none;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -465,11 +460,6 @@ nav#breadcrumbs ul li a {
   color: $color-yellow;
   text-shadow: 1px 1px 2px pink;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -581,11 +571,6 @@ main .main-head a {
   text-decoration: $color-current underline wavy;
   text-underline-offset: 0.3rem;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -641,11 +626,6 @@ main .main-list .main-list-item {
   color: $color-background;
   text-decoration: none;
 
-  -o-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -661,11 +641,6 @@ main .main-list .main-list-item .main-list-meta {
   font-style: normal;
   color: $color-comment;
 
-  -o-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -683,11 +658,6 @@ main .main-list .main-list-item .main-list-link {
   text-decoration: $color-current underline wavy;
   text-underline-offset: 0.3rem;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -742,11 +712,6 @@ main .main-pagination {
 
   opacity: 0.5;
 
-  -o-transition: opacity .2s ease-out, background 1s ease-in;
-  -ms-transition: opacity .2s ease-out, background 1s ease-in;
-  -moz-transition: opacity .2s ease-out, background 1s ease-in;
-  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
-  /* ...and now override with proper CSS property */
   transition: opacity .2s ease-out, background 1s ease-in;
 
   border-width: 0 0 1px 0;
@@ -762,11 +727,6 @@ main .main-pagination:hover {
 main .main-pagination a {
   color: $color-purple;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -ms-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -moz-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
@@ -816,7 +776,6 @@ main .essential .grid-small {
 main .essential .grid .essential-item {
   display: grid;
   grid-template-rows: 1fr auto; /* content grows, image row sticks to bottom */
-
   padding: 1rem;
 
   background: $color-background;
@@ -849,11 +808,6 @@ main .essential .grid .essential-item-link {
   text-decoration: none;
   opacity: 0.5;
 
-  -o-transition: opacity .2s ease-out, background 1s ease-in;
-  -ms-transition: opacity .2s ease-out, background 1s ease-in;
-  -moz-transition: opacity .2s ease-out, background 1s ease-in;
-  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
-  /* ...and now override with proper CSS property */
   transition: opacity .2s ease-out, background 1s ease-in;
 }
 
@@ -872,9 +826,13 @@ main .essential .grid .essential-icon {
 main .essential .grid .essential-item-footer {
   text-align: center;
 
-  // font-family: $font-mono;
-  // font-weight: 400;
-  // font-style: normal;
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+}
+
+main .essential .grid .essential-item-footer span {
+  white-space: nowrap;
 }
 
 main .essential .grid .essential-item-footer .recursive {
@@ -887,99 +845,164 @@ main .essential .grid .essential-item-footer .recursive {
  * Now Playing
  */
 
+// .now-playing-container {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   padding: 1rem;
+
+//   background: $color-selection;
+
+//   box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
+
+//   font-family: $font-mono;
+//   font-weight: 400;
+//   font-style: normal;
+//   font-variant: small-caps;
+//   font-size: 0.9rem;
+// }
+
+.main-container {
+  width: 100%;
+}
+
+.main-wrapper {
+  position: relative;
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.main-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .now-playing-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-
-  background: $color-selection;
-
-  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 14rem;
 
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
   font-variant: small-caps;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
+
+  line-height: 1rem !important;
 }
 
 .now-playing-container a {
-  color: $color-foreground;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  
+  color: $color-foreground !important;
 
-  text-decoration: none;
+  text-decoration: none !important;
 
   opacity: 0.5;
 
-  -o-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
-  -ms-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
-  -moz-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
-  -webkit-transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
-  /* ...and now override with proper CSS property */
-  transition: color .2s ease-out, background 1s ease-in, opacity .2s ease-out, background 1s ease-in;
+  transition: color .2s ease-in-out, opacity .2s ease-in-out !important;
 }
-
 .now-playing-container a:hover {
   color: $color-purple;
 
   opacity: 1;
 }
 
-.now-playing-container img {
-  margin-top: 0.5rem;
+.now-playing-container #now-playing-status {
+  color: $color-purple !important;
 }
+
+.now-playing-container .now-playing-info {
+  min-width: 0;
+}
+
+.now-playing-container .now-playing-info ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+// .now-playing-container .now-playing-album-art {
+//   height: 0; /* remove it from heigt calculation */
+//   min-height: 100%; /* give it a min-height to match rows's height */
+// }
+
+.now-playing-container .now-playing-album-art img {
+  display: block;
+  width: 96px;
+  border-radius: 12px;
+}
+
+// @media (max-width: 768px) {
+//   .now-playing-container a {
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }
 
 /*
  * Footer
  */
 
 footer {
-  text-align: center;
+  align-items: center;
 }
 
 footer .grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
 }
 
-footer ul.main-links {
-  padding: 0.5rem;
+@media (max-width: 768px) {
+  footer .grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 
-  list-style-type: none;
-
+footer .main-links {
   background: $color-current;
 
   box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
 
-footer ul.main-links li {
+footer .main-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0.5rem;
+  text-align: center;
+
+  list-style-type: none;
+}
+
+footer .main-links ul li {
   padding: 0.5rem;
 
   opacity: 0.5;
 
-  -o-transition: opacity .2s ease-out, background 1s ease-in;
-  -ms-transition: opacity .2s ease-out, background 1s ease-in;
-  -moz-transition: opacity .2s ease-out, background 1s ease-in;
-  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
-  /* ...and now override with proper CSS property */
   transition: opacity .2s ease-out, background 1s ease-in;
 }
 
-footer ul.main-links li:hover {
+footer .main-links ul li:hover {
   padding: 0.5rem;
 
   opacity: 1;
 }
 
-footer ul.main-links li a {
+footer .main-links a {
   text-decoration: none;
 
-  -o-transition: color .2s ease-out, background 1s ease-in;
-  -ms-transition: color .2s ease-out, background 1s ease-in;
-  -moz-transition: color .2s ease-out, background 1s ease-in;
-  -webkit-transition: color .2s ease-out, background 1s ease-in;
-  /* ...and now override with proper CSS property */
   transition: color .2s ease-out, background 1s ease-in;
 
   color: $color-foreground;
@@ -991,7 +1014,7 @@ footer ul.main-links li a {
   font-size: 0.9rem;
 }
 
-footer ul.main-links li a:hover {
+footer .main-links a:hover {
   color: $color-yellow;
 }
 
@@ -999,11 +1022,8 @@ footer .bye {
   margin: 2rem 0 2rem 0;
   opacity: 0.5;
 
-  -o-transition: opacity .2s ease-out, background 1s ease-in;
-  -ms-transition: opacity .2s ease-out, background 1s ease-in;
-  -moz-transition: opacity .2s ease-out, background 1s ease-in;
-  -webkit-transition: opacity .2s ease-out, background 1s ease-in;
-  /* ...and now override with proper CSS property */
+  text-align: center;
+
   transition: opacity .2s ease-out, background 1s ease-in;
 }
 

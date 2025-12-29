@@ -16,10 +16,6 @@ links:
   printf("%s\n", "h̵̫͔̻̙̞̦͒͂̿̇̒͂̾̎̔̈́̉̕͘̕e̸͕͙͂̌͊̿͒̓l̴̨̡̡͕̝̱̗̦̫̲̗̥̹̩͈̝͖̝͖̒̈́͋́͒̃̑̔̐̚͜l̴̨̦̟͎̹͔͓̳̝͍͉̻̩̹̳̙̜͚̝͕͆̉͠o̸̧̩̤̺̰͓̾͛͗̀̇̎͒̋̿̉͑̒̂͘͜ͅ ̶̨̨͔̘̞̙̻̹̦͖̰͔̹̬͉͚̞͖̄͛̈́́͒̂̋̆͘͘̕͜͝w̷̛̳͇̭͓͇̜̪̰̜̹̯̞̃̏͋̉͗͘͝o̷̦̱̭͖̥̫̗͓͇̟̻͉̞̮͇̯̘̙͍͐̏͌͒̀̌͑̿̓̄̔̇̒͛͠r̵͉̝͕̱̝͖̘̘̀̉͂̌̌̏̀̈́̓̀̓̊̅͜l̷̤͔̫̍̉̍d̵̢̨̛̜͖͉̟̺̬͔̰̱͎̪̊̔̄̽͛͗̓̾̎̋̂̚");
 ```
 
-<div class="center">
-  <img src="./about/images/monge.jpg" alt="Le Monge, as seen from Yves Collet street" />
-</div>
-
 <img src="./images/profile.jpg" class="inline-image rounded" />
 
 I am Vincent Lannurien, an **Associate Professor** (*Maître de Conférences*) at Lab-STICC, Université de Bretagne Occidentale (Brest, France). I am part of the [**SHAKER**](https://labsticc.fr/fr/equipes/shaker) team and my research interests are in **performance evaluation** and **optimization** of distributed and embedded systems, with a focus on energy consumption.

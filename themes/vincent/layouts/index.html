@@ -10,11 +10,17 @@
 
       <main id="main">
         <section class="main-content justify">
+          <div class="main-container">
+            <div class="main-wrapper">
+              <img src="./about/images/monge.jpg" alt="Le Monge, as seen from Yves Collet street" />
+
+              {{ partial "now-playing.html" }}
+            </div>
+          </div>
+
           {{ .Content }}
         </section>
       </main>
-
-      {{ partial "now-playing.html" }}
 
       {{ partial "footer.html" . }}
     </div>

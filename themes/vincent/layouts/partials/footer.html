@@ -1,10 +1,16 @@
 <footer>
   {{ if .IsHome }}
-  <ul class="main-links grid">
-    {{ range $link := .Params.links }}
-      <li><a href="{{ $link.url }}">{{ $link.name }}</a></li>
-    {{ end }}
-  </ul>
+  <!-- <div class="grid"> -->
+    <!-- {{ partial "now-playing.html" }} -->
+
+    <div class="main-links">
+      <ul>
+        {{ range $link := .Params.links }}
+          <li><a href="{{ $link.url }}">{{ $link.name }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+  <!-- </div> -->
   {{ end }}
 
   <p class="bye hover-wiggle"><a href="https://github.com/khannurien/vincentlannurien.com">👋</a></p>
