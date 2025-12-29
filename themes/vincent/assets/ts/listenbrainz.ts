@@ -166,11 +166,15 @@ async function renderTrack(
   metadataElement.style.display = "block";
   metadataElement.appendChild(ul);
 
+  const anchor = coverElement.closest("a");
+
   const coverUrl = await getCoverArtUrl(track);
   if (coverUrl) {
     coverElement.src = coverUrl;
     coverElement.style.display = "block";
+    anchor?.classList.remove("no-cover");
   } else {
     coverElement.style.display = "none";
+    anchor?.classList.add("no-cover");
   }
 }

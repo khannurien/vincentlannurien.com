@@ -910,6 +910,12 @@ main .essential .grid .essential-item-footer .recursive {
 
   transition: color .2s ease-in-out, opacity .2s ease-in-out !important;
 }
+
+.now-playing-container a.no-cover {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
 .now-playing-container a:hover {
   color: $color-purple;
 
