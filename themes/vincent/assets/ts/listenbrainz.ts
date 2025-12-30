@@ -114,7 +114,7 @@ async function updateNowPlayingWidget(
 
     if (playingNow && currentTrack) {
       statusElement.textContent = labels.nowPlaying;
-      await renderTrack(currentTrack, metadataElement, coverElement);
+      await renderTrack(currentTrack, displayElement, metadataElement, coverElement);
       return;
     }
 
@@ -123,7 +123,7 @@ async function updateNowPlayingWidget(
 
     if (recentTrack) {
       statusElement.textContent = labels.lastPlayed;
-      await renderTrack(recentTrack, metadataElement, coverElement);
+      await renderTrack(recentTrack, displayElement, metadataElement, coverElement);
     } else {
       statusElement.textContent = labels.noListens;
       metadataElement.style.display = "none";
@@ -139,10 +139,11 @@ async function updateNowPlayingWidget(
 
 async function renderTrack(
   track: Record<string, any>,
+  displayElement: HTMLAnchorElement,
   metadataElement: HTMLDivElement,
   coverElement: HTMLImageElement
 ) {
-  const metadata = {
+  const metadata: Record<string, string> = {
     artist: track.artist_name || "Unknown Artist",
     title: track.track_name || "Unknown Track",
     release: track.release_name || "Unknown Release"
@@ -150,15 +151,10 @@ async function renderTrack(
 
   const ul = document.createElement("ul");
 
-  const items = [
-    `${metadata.artist}`,
-    `${metadata.title}`,
-    `(${metadata.release})`,
-  ];
-
-  items.forEach(text => {
+  Object.entries(metadata).forEach(([key, value]) => {
     const li = document.createElement("li");
-    li.textContent = text;
+    li.classList.add(`now-playing-metadata-${key}`);
+    li.textContent = value;
     ul.appendChild(li);
   });
 
@@ -166,15 +162,13 @@ async function renderTrack(
   metadataElement.style.display = "block";
   metadataElement.appendChild(ul);
 
-  const anchor = coverElement.closest("a");
-
   const coverUrl = await getCoverArtUrl(track);
   if (coverUrl) {
     coverElement.src = coverUrl;
     coverElement.style.display = "block";
-    anchor?.classList.remove("no-cover");
+    displayElement.classList.remove("no-cover");
   } else {
     coverElement.style.display = "none";
-    anchor?.classList.add("no-cover");
+    displayElement.classList.add("no-cover");
   }
 }

@@ -942,6 +942,17 @@ main .essential .grid .essential-item-footer .recursive {
 //   min-height: 100%; /* give it a min-height to match rows's height */
 // }
 
+.now-playing-container .now-playing-metadata-artist {
+}
+
+.now-playing-container .now-playing-metadata-title {
+  font-weight: bold;
+}
+
+.now-playing-container .now-playing-metadata-release {
+  font-style: italic;
+}
+
 .now-playing-container .now-playing-album-art img {
   display: block;
   width: 96px;
