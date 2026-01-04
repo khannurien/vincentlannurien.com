@@ -67,7 +67,9 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
     if (!releaseMbid) return null;
 
     return releaseMbid;
-  } catch {
+  } catch (e: any) {
+    console.log(e);
+
     return null;
   }
 }
@@ -75,6 +77,8 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
 async function getCoverArtUrl(track: Record<string, any>): Promise<string | null> {
   // Check if release exists
   const releaseMbid = await fetchReleaseInfo(track);
+
+  console.log("releaseMbid = ", releaseMbid);
 
   if (!releaseMbid) return null;
 
