@@ -33,6 +33,7 @@ if (
 
 async function fetchJson(url: string): Promise<any> {
   const res = await fetch(url);
+  console.log(res);
   if (!res.ok) throw new Error(`HTTP error, status: ${res.status}`);
   return res.json();
 }
