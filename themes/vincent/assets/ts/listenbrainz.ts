@@ -87,7 +87,7 @@ async function getCoverArtUrl(track: Record<string, any>): Promise<string | null
     const coverRes = await fetch(coverUrl, { method: "HEAD" });
     if (!coverRes.ok) return null;
 
-    return coverUrl;
+    return coverRes.url;
   } catch {
     return null;
   }
