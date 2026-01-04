@@ -52,7 +52,8 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
 
   // console.log("mapperRequest = ", mapperRequest);
 
-  const corsRequest = `https://api.allorigins.win/get?url=${encodeURIComponent(mapperRequest)}`;
+  // const corsRequest = `https://api.allorigins.win/get?url=${encodeURIComponent(mapperRequest)}`;
+  const corsRequest = `https://proxy.sqrt.fr/?${mapperRequest}`;
 
   // console.log("corsRequest = ", corsRequest);
 
