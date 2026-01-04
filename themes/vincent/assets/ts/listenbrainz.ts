@@ -50,18 +50,18 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
 
   const mapperRequest = `https://mapper.listenbrainz.org/mapping/lookup?${params.toString()}`;
 
-  // console.log("mapperRequest = ", mapperRequest);
+  console.log("mapperRequest = ", mapperRequest);
 
   // const corsRequest = `https://api.allorigins.win/get?url=${encodeURIComponent(mapperRequest)}`;
   const corsRequest = `https://proxy.sqrt.fr/?${mapperRequest}`;
 
-  // console.log("corsRequest = ", corsRequest);
+  console.log("corsRequest = ", corsRequest);
 
   try {
     const corsResponse = await fetchJson(corsRequest);
     const releaseInfo = JSON.parse(corsResponse.contents);
 
-    // console.log(releaseInfo);
+    console.log(releaseInfo);
 
     const releaseMbid = releaseInfo.release_mbid;
     if (!releaseMbid) return null;
