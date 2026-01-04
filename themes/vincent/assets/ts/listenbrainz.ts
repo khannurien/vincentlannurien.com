@@ -82,10 +82,12 @@ async function getCoverArtUrl(track: Record<string, any>): Promise<string | null
   try {
     const coverUrl = `https://coverartarchive.org/release/${releaseMbid}/front-250`;
 
-    // console.log(coverUrl);
+    console.log(coverUrl);
 
     const coverRes = await fetch(coverUrl, { method: "HEAD" });
     if (!coverRes.ok) return null;
+
+    console.log(coverRes.url);
 
     return coverRes.url;
   } catch {
