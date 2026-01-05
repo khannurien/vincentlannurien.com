@@ -59,14 +59,10 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
   console.log("corsRequest = ", corsRequest);
 
   try {
-    const corsResponse = await fetchJson(corsRequest);
+    const releaseInfo = await fetchJson(corsRequest);
     // const releaseInfo = JSON.parse(corsResponse.contents);
 
-    console.log(corsResponse);
-
-    const releaseInfo = corsResponse.body;
-
-    console.log(JSON.parse(releaseInfo.body));
+    console.log(releaseInfo);
 
     const releaseMbid = releaseInfo.release_mbid;
     if (!releaseMbid) return null;
