@@ -33,7 +33,6 @@ if (
 
 async function fetchJson(url: string): Promise<any> {
   const res = await fetch(url);
-  console.log(res);
   if (!res.ok) throw new Error(`HTTP error, status: ${res.status}`);
   return res.json();
 }
@@ -51,26 +50,24 @@ async function fetchReleaseInfo(track: Record<string, any>): Promise<string | nu
 
   const mapperRequest = `https://mapper.listenbrainz.org/mapping/lookup?${params.toString()}`;
 
-  console.log("mapperRequest = ", mapperRequest);
+  // console.log("mapperRequest = ", mapperRequest);
 
   // const corsRequest = `https://api.allorigins.win/get?url=${encodeURIComponent(mapperRequest)}`;
   const corsRequest = `https://proxy.sqrt.fr/?${mapperRequest}`;
 
-  console.log("corsRequest = ", corsRequest);
+  // console.log("corsRequest = ", corsRequest);
 
   try {
     const releaseInfo = await fetchJson(corsRequest);
     // const releaseInfo = JSON.parse(corsResponse.contents);
 
-    console.log(releaseInfo);
+    // console.log(releaseInfo);
 
     const releaseMbid = releaseInfo.release_mbid;
     if (!releaseMbid) return null;
 
     return releaseMbid;
-  } catch (e: any) {
-    console.log(e);
-
+  } catch {
     return null;
   }
 }
@@ -79,7 +76,7 @@ async function getCoverArtUrl(track: Record<string, any>): Promise<string | null
   // Check if release exists
   const releaseMbid = await fetchReleaseInfo(track);
 
-  console.log("releaseMbid = ", releaseMbid);
+  // console.log("releaseMbid = ", releaseMbid);
 
   if (!releaseMbid) return null;
 
@@ -87,12 +84,12 @@ async function getCoverArtUrl(track: Record<string, any>): Promise<string | null
   try {
     const coverUrl = `https://coverartarchive.org/release/${releaseMbid}/front-250`;
 
-    console.log(coverUrl);
+    // console.log(coverUrl);
 
     const coverRes = await fetch(coverUrl, { method: "HEAD" });
     if (!coverRes.ok) return null;
 
-    console.log(coverRes.url);
+    // console.log(coverRes.url);
 
     return coverRes.url;
   } catch {
