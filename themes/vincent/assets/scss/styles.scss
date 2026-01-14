@@ -96,26 +96,26 @@ pre {
 blockquote {
   text-align: justify;
 
-  white-space: pre-wrap;       /* Since CSS 2.1 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  // white-space: pre-wrap;       /* Since CSS 2.1 */
+  // white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  // white-space: -pre-wrap;      /* Opera 4-6 */
+  // white-space: -o-pre-wrap;    /* Opera 7 */
+  // word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-blockquote p {
-  margin: 0;
-}
+// blockquote p {
+//   margin: 0;
+// }
 
-blockquote p + p {
-  margin-top: 0; /* space between paragraphs */
-}
+// blockquote p + p {
+//   margin-top: 0; /* space between paragraphs */
+// }
 
-blockquote ul, blockquote ul li {
-  margin: 0;
-  padding: 0 auto 0 auto;
-  line-height: 1rem;
-}
+// blockquote ul, blockquote ul li {
+//   margin: 0;
+//   padding: 0 auto 0 auto;
+//   line-height: 1rem;
+// }
 
 table {
   border-collapse: collapse;
@@ -582,7 +582,7 @@ main .main-head a:hover {
 
 main .main-content blockquote {
   margin: 0;
-  padding: 0 2rem 1.5rem 2rem;
+  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
 
   background: $color-background;
   font-style: italic;
