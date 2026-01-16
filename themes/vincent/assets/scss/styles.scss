@@ -17,8 +17,10 @@ $color-purple: #bd93f9;
 $color-red: #ff5555;
 $color-yellow: #f1fa8c;
 
-$font-sans-variable: "Roboto Condensed", "Helvetica Neue", sans-serif;
-$font-sans-fallback: "Roboto Condensed", "Helvetica Neue", sans-serif;
+$font-sans-variable: "Fira Sans", "Helvetica Neue", sans-serif;
+$font-sans-fallback: "Fira Sans", "Helvetica Neue", sans-serif;
+$font-sans-condensed-variable: "Fira Sans Condensed", "Helvetica Neue", sans-serif;
+$font-sans-condensed-fallback: "Fira Sans Condensed", "Helvetica Neue", sans-serif;
 $font-serif: "Playfair Display", serif;
 $font-mono: "Fantasque Sans Mono", monospace;
 
@@ -62,9 +64,13 @@ figcaption {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $font-mono;
+  font-family: $font-sans-condensed-fallback;
   font-weight: 600;
   font-style: normal;
+}
+
+@supports (font-variation-settings: normal) {
+  h1, h2, h3, h4, h5, h6 { font-family: $font-sans-condensed-variable; }
 }
 
 code {
@@ -141,6 +147,10 @@ kbd {
   font-size: .85em;
   font-weight: 400;
   letter-spacing: .05em;
+}
+
+@supports (font-variation-settings: normal) {
+  kbd { font-family: $font-sans-variable; }
 }
 
 hr {
@@ -472,7 +482,7 @@ main {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 @supports (font-variation-settings: normal) {
@@ -857,23 +867,6 @@ main .essential .grid .essential-item-footer .recursive {
  * Now Playing
  */
 
-// .now-playing-container {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   padding: 1rem;
-
-//   background: $color-selection;
-
-//   box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
-
-//   font-family: $font-mono;
-//   font-weight: 400;
-//   font-style: normal;
-//   font-variant: small-caps;
-//   font-size: 0.9rem;
-// }
-
 .main-container {
   width: 100%;
 }
@@ -949,11 +942,6 @@ main .essential .grid .essential-item-footer .recursive {
   list-style-type: none;
 }
 
-// .now-playing-container .now-playing-album-art {
-//   height: 0; /* remove it from heigt calculation */
-//   min-height: 100%; /* give it a min-height to match rows's height */
-// }
-
 .now-playing-container .now-playing-metadata-artist {
 }
 
@@ -970,13 +958,6 @@ main .essential .grid .essential-item-footer .recursive {
   width: 96px;
   border-radius: 12px;
 }
-
-// @media (max-width: 768px) {
-//   .now-playing-container a {
-//     display: flex;
-//     flex-direction: column;
-//   }
-// }
 
 /*
  * Footer
