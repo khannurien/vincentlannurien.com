@@ -26,7 +26,7 @@
               <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
                 ➤ <span class="main-list-link"><strong>{{ .Title }}</strong></span>
               </a>
-              <!-- <hr> -->
+              <!-- <hr class="hidden"> -->
               <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
               {{ partial "recursive.html" $page }}
             </li>

@@ -12,21 +12,25 @@
         <article>
           <section class="main-head crt">
             <div class="main-head-meta">
-              <h2 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h2>
+              <div class="main-head-title">
+                <h2 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h2>
+              </div>
 
-              <span>📅</span>
-              <date>
-                {{ .Date.Format "02 . 01 . 2006" }}
-              </date>
-              <span>—</span>
-              {{ $taxonomy := "tags" }}
-              {{ with .Param $taxonomy }}
-                {{ range $index, $tag := . }}
-                  {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
-                  <span>🏷️ <a href="{{ .Permalink }}">{{ $tag | urlize }}</a></span>
+              <div class="main-head-info">
+                <span>📅</span>
+                <date>
+                  {{ .Date.Format "02 . 01 . 2006" }}
+                </date>
+                <span>—</span>
+                {{ $taxonomy := "tags" }}
+                {{ with .Param $taxonomy }}
+                  {{ range $index, $tag := . }}
+                    {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
+                    <span class="main-head-tag"><a href="{{ .Permalink }}">🏷️ {{ $tag | urlize }}</a></span>
+                    {{ end }}
                   {{ end }}
                 {{ end }}
-              {{ end }}
+              </div>
             </div>
           </section>
 

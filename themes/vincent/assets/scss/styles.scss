@@ -49,10 +49,6 @@ html {
   font-size: 120%;
 }
 
-hr {
-  display: none;
-}
-
 figure {
   width: 100%;
   margin: 0;
@@ -76,6 +72,8 @@ code {
   font-weight: 400;
   font-style: normal;
 
+  text-shadow: 0 0 0.5em rgba($color-foreground, 0.2);
+
   background-color: $color-selection;
 }
 
@@ -95,27 +93,7 @@ pre {
 
 blockquote {
   text-align: justify;
-
-  // white-space: pre-wrap;       /* Since CSS 2.1 */
-  // white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  // white-space: -pre-wrap;      /* Opera 4-6 */
-  // white-space: -o-pre-wrap;    /* Opera 7 */
-  // word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
-
-// blockquote p {
-//   margin: 0;
-// }
-
-// blockquote p + p {
-//   margin-top: 0; /* space between paragraphs */
-// }
-
-// blockquote ul, blockquote ul li {
-//   margin: 0;
-//   padding: 0 auto 0 auto;
-//   line-height: 1rem;
-// }
 
 table {
   border-collapse: collapse;
@@ -164,6 +142,21 @@ kbd {
   font-weight: 400;
   letter-spacing: .05em;
 }
+
+hr {
+  margin: 2rem 0 2rem 0;
+  height: 2px;
+
+  background-color: $color-purple;
+  border: none;
+
+  opacity: .2;
+  box-shadow: 0 0 5px 1px rgba($color-pink, 0.2); /* Similar to text-shadow effect */
+}
+
+/*
+ * Utility
+ */
 
 .hidden {
   display: none;
@@ -517,6 +510,25 @@ main .main-head blockquote {
 
 main .main-head .main-head-meta {
   padding-bottom: 1em;
+}
+
+main .main-head .main-head-info {
+  font-size: 80%;
+}
+
+main .main-head .main-head-info .main-head-tag a {
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+
+  background: $color-selection;
+  color: $color-yellow;
+
+  border-radius: 1rem;
+  text-decoration: none;
+}
+
+main .main-head .main-head-info .main-head-tag a:hover {
+  background: $color-comment;
+  color: $color-foreground;
 }
 
 main .main-content {
