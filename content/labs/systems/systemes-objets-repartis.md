@@ -79,7 +79,7 @@ ___
 
 ### Base de données
 
-1. Reprendre la définition du cas d'usage ci-dessus et proposer un schéma de base de données.
+1. Reprendre la définition du cas d'usage ci-dessus et proposer un schéma de base de données. Donner la représentation graphique (Modèle Conceptuel de Données) du schéma.
 2. Écrire le script SQL dans un fichier `schema.sql` et le passer à SQLite pour créer la base de données :
 
     ```sh
@@ -124,6 +124,51 @@ Ci-dessous, le squelette de l'application côté serveur.
 import { Application, Router } from "@oak/oak";
 import { oakCors } from "@tajpouria/cors";
 import { Database } from "@db/sqlite";
+
+// ---------- Database -----------------------------------
+
+const db = new Database("polls.db");
+
+// ---------- HTTP Router --------------------------------
+
+const router = new Router();
+
+// ---------- WebSocket Management -----------------------
+
+const clients = new Set<WebSocket>();
+
+// ---------- API: Poll Management -----------------------
+
+// ---------- API: Voting --------------------------------
+
+// ---------- API: Poll Results --------------------------
+
+// ---------- API: Authentication / Users ----------------
+
+// ---------- Application --------------------------------
+
+const PROTOCOL = "http";
+const HOSTNAME = "localhost";
+const PORT = 8000;
+const ADDRESS = `${PROTOCOL}://${HOSTNAME}:${PORT}`;
+
+const app = new Application();
+
+app.use(oakCors());
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+app.addEventListener(
+  "listen",
+  () => console.log(`Server listening on ${ADDRESS}`),
+);
+
+if (import.meta.main) {
+  await app.listen({ hostname: HOSTNAME, port: PORT });
+}
+
+export { app };
+
 ```
 
 2. Définir les routes qui seront nécessaires au fonctionnement de l'application. En d'autres termes : définir l'API de l'application.
@@ -263,6 +308,17 @@ for await (const conn of listener) {
 
 10. Ouvrir la page https://coucou.localhost:4443 dans Firefox
 11. Constater qu'il n'y a pas d'avertissement de sécurité
+
+### nginx
+
+1. Télécharger nginx et l'ajouter au PATH :
+
+    ```sh
+    curl -L https://github.com/jirutka/nginx-binaries/raw/refs/heads/binaries/nginx-1.28.1-x86_64-linux -o ~/.local/bin/nginx
+    chmod +x ~/.local/bin/nginx
+    ```
+
+2. Écrire la configuration dans `nginx.conf`
 
 ## TP 8 : Améliorations
 

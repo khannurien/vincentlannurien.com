@@ -553,34 +553,52 @@ main .main-content {
 }
 
 main article .main-content {
-  h1, h2 {
-  text-decoration: underline double $color-orange;
-  text-decoration-thickness: 0.01rem;
-  // text-underline-offset: 0.3rem;
+  h1,
+  h2 {
+    display: inline-block;
+    position: relative;
+  }
+
+  h1::after,
+  h2::after {
+    content: "";
+    position: absolute;
+    top: 2rem;
+    right: -0.5rem;
+    bottom: 0;
+    left: 1.8rem;
+    border-bottom: 0.3rem double rgba($color-orange, 0.7);
   }
 }
 
 main article .main-content {
   h1::before {
     content: "# ";
+    opacity: .2;
   }
   h2::before {
     content: "## ";
+    opacity: .2;
   }
   h3::before {
     content: "### ";
+    opacity: .2;
   }
   h4::before {
     content: "#### ";
+    opacity: .2;
   }
   h5::before {
     content: "##### ";
+    opacity: .2;
   }
   h6::before {
     content: "###### ";
+    opacity: .2;
   }
   code::before, code::after {
     content: "`";
+    opacity: .5;
   }
   pre code::before, pre code::after {
     content: none;
