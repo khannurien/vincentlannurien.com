@@ -24,7 +24,7 @@ Before that, I was a **Postdoctoral Researcher** at Lab-STICC, ENSTA (Brest, Fra
 
 Between 2021 and 2024, I have been working on **allocation and scheduling policies** to enable efficient orchestration in serverless platforms for private clouds; see [my PhD thesis](https://theses.hal.science/tel-04941961) and [defense slides](./about/resources/phd_defense.pdf).
 
----
+<hr class="hidden">
 
 <div class="center">
   <img src="./images/divider.gif" class="opacity-25" />

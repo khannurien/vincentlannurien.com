@@ -322,6 +322,7 @@ for await (const conn of listener) {
 
 ## TP 8 : Améliorations
 
+- Présentation des résultats
 - Interface de création d'un sondage
 - Interface de gestion d'un sondage
 - Accès aux sondages par lien public
