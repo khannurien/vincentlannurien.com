@@ -9,15 +9,21 @@ tags:
   - "labs"
   - "web"
   - "systems"
+  - "development"
+  - "deployment"
 
 todo:
   - ...
 ---
 
+![](../images/iot-philips.png)
+
+[Internet of Shit](https://x.com/internetofshit/status/986006653605687296)
+
 ## Objectifs
 
 - Développer une application suivant l'architecture trois tiers, s'appuyant sur des communications via HTTP et WebSockets ;
-- Comprendre les mécanismes de l'authentification (avec ou sans état) d'un client auprès d'un serveur ;
+- Comprendre les mécanismes pour l'authentification (avec ou sans état) d'un client auprès d'un serveur ;
 - S'initier au déploiement d'une application répartie à l'aide d'un *reverse proxy*.
 
 ## Composants
@@ -25,8 +31,10 @@ todo:
 - Serveur
   - **Runtime** : Deno <sup>[[doc]](https://docs.deno.com/runtime/)</sup>
   - **Langage** : TypeScript <sup>[[doc]](https://www.typescriptlang.org/docs/handbook/intro.html)</sup>
+  - **Framework** : Oak <sup>[[doc]](https://jsr.io/@oak/oak/doc)</sup>
 - Client
-  - **Framework** : React (en TypeScript) <sup>[[doc]](https://react.dev/reference/react), [[doc]](https://docs.deno.com/examples/react_tutorial/)</sup>
+  - **Bundler** : Vite <sup>[[doc]](https://docs.deno.com/examples/react_tutorial/)</sup>
+  - **Framework** : React (en TypeScript) <sup>[[doc]](https://react.dev/reference/react)</sup>
   - **Outillage** : React Developer Tools (pour le navigateur) <sup>[[doc]](https://react.dev/learn/react-developer-tools)</sup>
 - Infrastructure
   - **Base de données** : SQLite <sup>[[doc]](https://sqlite.org/quickstart.html)</sup>
@@ -37,7 +45,7 @@ ___
 
 ## TP 0 : Préparation de l'environnement
 
-1. Installation de Deno
+1. Installation de Deno :
 
     ```sh
     curl -fsSL https://deno.land/install.sh | sh
@@ -57,6 +65,7 @@ ___
     git init
     ```
 
+> 💡 Si vous n'avez pas l'habitude d'utiliser Git, que vous ne vous sentez pas à l'aise ou que vous avez besoin de revoir certains concepts durant les TP, reportez-vous à l'excellent [Beej's Guide to Git](https://beej.us/guide/bggit/html/split/).
 ___
 
 ## TP1 : Architecture
@@ -77,20 +86,21 @@ ___
 > - Consultation des résultats (nombre de votes par option) ;
 > - Gestion des utilisateurs (inscription, authentification).
 
-### Base de données
+### Conception de la base de données
 
-1. Reprendre la définition du cas d'usage ci-dessus et proposer un schéma de base de données. Donner la représentation graphique (Modèle Conceptuel de Données) du schéma.
-2. Écrire le script SQL dans un fichier `schema.sql` et le passer à SQLite pour créer la base de données :
+1. Reprendre la définition du cas d'usage ci-dessus et proposer un schéma de base de données. Donner la représentation graphique (Modèle Conceptuel de Données) du schéma (utiliser [draw.io](https://app.diagrams.net/)).
+
+2. Écrire le script SQL correspondant au schéma dans un fichier `schema.sql`, et le passer à SQLite pour initialiser la base de données :
 
     ```sh
     sqlite3 polls.db < schema.sql
     ```
 
-### Serveur
+### Architecture du serveur
 
 #### Pré-requis
 
-1. Initialisation du projet
+1. Initialisation du projet avec Deno :
 
     ```sh
     cd ~/tp_sor
@@ -104,7 +114,7 @@ ___
     deno add jsr:@oak/oak jsr:@tajpouria/cors jsr:@db/sqlite
     ```
 
-3. Exécution du serveur de développement
+3. Exécution du serveur de développement :
 
     ```sh
     deno run dev
@@ -114,11 +124,11 @@ ___
 
 1. Écrire les interfaces TypeScript nécessaires à typer les objets qui seront échangés entre la base de données, le serveur et le client. Celles-ci doivent représenter :
 
-- un sondage ;
-- une option de sondage ;
-- un vote ;
+    - un sondage ;
+    - une option de sondage ;
+    - un vote.
 
-Ci-dessous, le squelette de l'application côté serveur.
+Ci-dessous, le squelette de l'application côté serveur (`main.ts`) :
 
 ```ts
 import { Application, Router } from "@oak/oak";
@@ -168,26 +178,98 @@ if (import.meta.main) {
 }
 
 export { app };
-
 ```
 
-2. Définir les routes qui seront nécessaires au fonctionnement de l'application. En d'autres termes : définir l'API de l'application.
+2. Définir les routes qui seront nécessaires au fonctionnement de l'application. Il s'agit ici, en d'autres termes, de définir l'API de l'application (mais pas encore de programmer son fonctionnement). On peut s'inspirer de ces cinq exemples de routes, qui permettent respectivement de lister des valeurs, récupérer une valeur par son identifiant, ajouter une nouvelle valeur, mettre à jour une valeur et supprimer une valeur :
 
-3. Écrire les interfaces TypeScript (génériques !) représentant les réponses de l'API au client.
+    ```ts
+    // Obtenir la liste des valeurs
+    router.get("/values", (ctx) => {});
+    // Obtenir une valeur unique
+    router.get("/values/:valueId", (ctx) => {});
+    // Ajouter une valeur
+    router.post("/values", (ctx) => {})
+    // Modifier une valeur
+    router.put("/values/:valueId", (ctx) => {})
+    // Supprimer une valeur
+    router.delete("/values/:valueId", (ctx) => {})
+    ```
 
-    > L'API retourne toujours une réponse. Celle-ci peut contenir la ressource demandée, ou une erreur.
+3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. En utilisant la généricité, écrire les interfaces TypeScript nécessaires à représenter les réponses de l'API au client. Ci-dessous, voici des exemples de réponses de l'API :
 
-4. Coder les fonctions appelées dans les routes de l'API.
+    ```json
+    // Succès
+    { success: true, data: ["Hello, world!"] }
+    ```
 
+    ```json
+    // Erreur
+    {
+      success: false,
+      error: { code: "NOT_FOUND", message: "Requested value not found" },
+    }
+    ```
+
+<div class="hidden">
 ___
 
 ## TP 2 : Développement du serveur
+
+1. Coder les fonctions appelées dans les routes de l'API. Voici quelques exemples de routes basiques :
+
+    ```ts
+    let values = { "foo": 42, "bar": 13.37 };
+
+    router.get("/values", (ctx) => {
+      ctx.response.body = { success: true, data: values };
+    });
+
+    router.get("/values/:valueId", (ctx) => {
+      const valueId = ctx.params.valueId;
+
+      if (!(valueId in values)) {
+        ctx.response.status = 404;
+        ctx.response.body = {
+          success: false,
+          error: { code: "NOT_FOUND", message: `Value "${valueId}" not found` },
+        };
+
+        return;
+      }
+
+      ctx.response.body = { success: true, data: values[valueId] };
+    });
+
+    router.post("/values", (ctx) => {
+      try {
+        const body = await ctx.request.body.json();
+      } catch (err) {
+        console.error(err);
+
+        ctx.response.status = 500;
+        ctx.response.body = {
+          success: false,
+          error: { code: "SERVER_ERROR", message: "Failed to read request body" },
+        };
+      }
+
+      values = { ...values, ...body };
+
+      ctx.response.status = 201;
+      ctx.response.body = { success: true, data: values };
+    })
+    ```
+
+2. Avec `curl` :
+  - créer un premier sondage et ses options associées ;
+  - tester la récupération de la liste des sondages ;
+  - tester la récupération d'un sondage par identifiant.
 
 ___
 
 ## TP 3 : Client React
 
-### Client
+### Pré-requis
 
 1. Installation du *bundler* Vite et initialisation du projet
 
@@ -236,30 +318,54 @@ ___
     deno run dev
     ```
 
-___
+### Déroulé
 
-## TP 4 :
+1. Mettre en place le routeur à la racine de l'application (`App.tsx`) :
 
-___
+    ```ts
+    import Index from "./pages/index.tsx";
+    import Poll from "./pages/Poll.tsx";
+    ```
 
-## TP 5 :
-
-___
-
-## TP 6 : Performances
-
-### Profilage
-
-1. Profilez le fonctionnement de votre application
-2. Analysez le fichier résultat dans [cpupro](https://discoveryjs.github.io/cpupro/)
-
-### Injection de trafic
-
-1. Installer [JMeter](https://jmeter.apache.org/)
+2. Créer les composants `index.tsx` (liste des sondages) et `Poll.tsx` (sondage sélectionné)
 
 ___
 
-## TP 7 : Déploiement
+## TP 4 : Amélioration du client
+
+> - Gestion de l'état du composant :
+>   - Chargement
+>   - Erreur
+> - Contraintes :
+>   - Limite sur la fréquence de vote
+
+1. Ajouter un compteur du temps restant au sondage sur la page d'un sondage
+2. ...
+
+___
+
+## TP 5 : Authentification
+
+### Côté serveur
+
+1. Écrire un module `jwt.ts` comprenant les fonctions suivantes :
+
+    ```ts
+    export async function createJWT(...): Promise<string>;
+    export async function verifyJWT(...): Promise<AuthPayload | null>;
+    export async function hashPassword(password: string): Promise<string>;
+    export async function verifyPassword(password: string, hash: string): Promise<boolean>;
+    ```
+
+### Côté client
+
+1. Créer un composant pour la connexion utilisateur
+
+2. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
+
+___
+
+## TP 6 : Déploiement
 
 ### `mkcert`
 
@@ -320,6 +426,22 @@ for await (const conn of listener) {
 
 2. Écrire la configuration dans `nginx.conf`
 
+___
+
+## TP 7 : Performances
+
+### Profilage
+
+1. Profilez le fonctionnement de votre application
+
+2. Analysez le fichier résultat dans [cpupro](https://discoveryjs.github.io/cpupro/)
+
+### Injection de trafic
+
+1. Installer [JMeter](https://jmeter.apache.org/)
+
+---
+
 ## TP 8 : Améliorations
 
 - Présentation des résultats
@@ -330,3 +452,4 @@ for await (const conn of listener) {
 - Accès protégé par mot de passe
 - Type de sondage : dates
 - Type de sondage : cagnotte
+</div>
