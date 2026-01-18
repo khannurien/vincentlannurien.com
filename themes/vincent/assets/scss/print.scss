@@ -5,6 +5,10 @@ $font-print: "Spectral", serif;
   margin: 2cm;
 }
 
+.hidden {
+  display: none;
+}
+
 header,
 footer,
 aside,
@@ -29,7 +33,7 @@ main article {
   margin: 36pt;
 }
 
-main article .main-head {
+main article .main-head-info {
   display: none;
 }
 
