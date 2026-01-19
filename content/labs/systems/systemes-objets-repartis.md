@@ -26,6 +26,10 @@ todo:
 - Comprendre les mécanismes pour l'authentification (avec ou sans état) d'un client auprès d'un serveur ;
 - S'initier au déploiement d'une application répartie à l'aide d'un *reverse proxy*.
 
+## Vue d'ensemble
+
+![](../images/architecture.png)
+
 ## Composants
 
 - Serveur
@@ -85,8 +89,6 @@ ___
 > - Vote pour une option de sondage ;
 > - Consultation des résultats (nombre de votes par option) ;
 > - Gestion des utilisateurs (inscription, authentification).
-
-![](../images/architecture.png)
 
 ### Conception de la base de données
 
