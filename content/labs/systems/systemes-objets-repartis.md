@@ -107,18 +107,20 @@ ___
     deno init server
     ```
 
-2. Installation des dépendances :
+      - Observer l'arborescence du répertoire `server` que l'on vient de créer. Quel est le point d'entrée de l'application ?
+      - Lire le `README` et tester les commandes suggérées.
+      - Modifier l'application pour afficher `Hello, World`.
+
+2. Installation des dépendances qui seront nécessaires au fonctionnement de l'application :
 
     ```sh
     cd ~/tp_sor/server
     deno add jsr:@oak/oak jsr:@tajpouria/cors jsr:@db/sqlite
     ```
 
-3. Exécution du serveur de développement :
-
-    ```sh
-    deno run dev
-    ```
+    - À quoi correspond chacun des paquets de cette liste ? Trouver leur page de description et leur documentation.
+    - Que pouvez-vous dire sur le fichier `deno.json` ? Sur le fichier `deno.lock` ?
+    - Où sont installées les dépendances ? Utiliser la commande `deno info`.
 
 #### Déroulé
 
@@ -214,6 +216,12 @@ export { app };
 ___
 
 ## TP 2 : Développement du serveur
+
+Rappel : on utilisera le serveur de développement fourni par Deno pour travailler sur l'application.
+
+    ```sh
+    deno run dev
+    ```
 
 1. Coder les fonctions appelées dans les routes de l'API. Voici quelques exemples de routes basiques :
 
