@@ -86,6 +86,8 @@ ___
 > - Consultation des résultats (nombre de votes par option) ;
 > - Gestion des utilisateurs (inscription, authentification).
 
+![](../images/architecture.png)
+
 ### Conception de la base de données
 
 1. Reprendre la définition du cas d'usage ci-dessus et proposer un schéma de base de données. Donner la représentation graphique (Modèle Conceptuel de Données) du schéma (utiliser [draw.io](https://app.diagrams.net/)).
