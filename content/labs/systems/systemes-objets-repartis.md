@@ -23,7 +23,7 @@ todo:
 ## Objectifs
 
 - Développer une application suivant l'architecture trois tiers, s'appuyant sur des communications via HTTP et WebSockets ;
-- Comprendre les mécanismes pour l'authentification (avec ou sans état) d'un client auprès d'un serveur ;
+- Comprendre les mécanismes de l'authentification (avec ou sans état) d'un client auprès d'un serveur ;
 - S'initier au déploiement d'une application répartie à l'aide d'un *reverse proxy*.
 
 ## Vue d'ensemble
@@ -205,45 +205,49 @@ export { app };
 
     ```json
     // Succès
-    { success: true, data: ["Hello, world!"] }
+    {
+      success: true,
+      data: [
+        { id: "abcd" },
+      ],
+    }
     ```
 
     ```json
     // Erreur
     {
       success: false,
-      error: { code: "NOT_FOUND", message: "Requested value not found" },
+      error: {
+        code: "NOT_FOUND",
+        message: "Requested value not found",
+      },
     }
     ```
 
-<div class="hidden">
 ___
 
 ## TP 2 : Développement du serveur
 
 Rappel : on utilisera le serveur de développement fourni par Deno pour travailler sur l'application.
 
-    ```sh
-    deno run dev
-    ```
+```sh
+deno run dev
+```
 
-1. Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
+### Routes
 
-    ```ts
-    export function pollOptionRowToApi(row: PollOptionRow): PollOption { };
-
-    export function pollRowToApi(row: PollRow, optionRows: PollOptionRow[]): Poll { }
-    ```
-
-2. Coder les fonctions appelées dans les routes de l'API. Voici quelques exemples de routes basiques :
+1. Voici quelques exemples de routes qui implantent le comportement de fonctions CRUD du serveur :
 
     ```ts
+    // Données
     let values = { "foo": 42, "bar": 13.37 };
 
+    // Lister les données
     router.get("/values", (ctx) => {
       ctx.response.body = { success: true, data: values };
     });
 
+    // Lister les détails d'une donnée
     router.get("/values/:valueId", (ctx) => {
       const valueId = ctx.params.valueId;
 
@@ -260,6 +264,7 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
       ctx.response.body = { success: true, data: values[valueId] };
     });
 
+    // Créer une nouvelle donnée
     router.post("/values", (ctx) => {
       try {
         const body = await ctx.request.body.json();
@@ -273,6 +278,8 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
         };
       }
 
+      // Attention !
+      // Il faut ici valider les données envoyées par l'utilisateur
       values = { ...values, ...body };
 
       ctx.response.status = 201;
@@ -280,11 +287,63 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
     })
     ```
 
-3. Avec `curl` :
+    - Comment modifier une valeur existante ?
+
+    - Comment supprimer une valeur de l'ensemble des données ?
+
+2. Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
+
+    ```ts
+    export function pollOptionRowToApi(row: PollOptionRow): PollOption { };
+
+    export function pollRowToApi(row: PollRow, optionRows: PollOptionRow[]): Poll { }
+    ```
+
+3. Coder les fonctions appelées dans les routes de l'API définies lors du TP 1.
+
+4. Avec `curl` :
   - créer un premier sondage et ses options associées ;
   - tester la récupération de la liste des sondages ;
   - tester la récupération d'un sondage par identifiant.
 
+    ```sh
+    curl [-X METHOD] [PROTOCOL]://[HOSTNAME]:[PORT] \
+      -H "Content-Type: application/json" \
+      -d '{
+            "id": "abcd"
+          }'
+    ```
+
+### Architecture
+
+1. Le fichier `main.ts` n'a pas vocation à comprendre l'intégralité de l'application. Découper en modules les fonctionnalités principales :
+    - Le *modèle* : les interfaces écrites pour le système de types de l'application ;
+    - Les *routes* : le comportement de l'application en réponse aux requêtes utilisateur.
+
+    Pour les routes, on peut définir un routeur par fichier :
+
+    ```ts
+    // routes/polls.ts
+    const router = new Router({ prefix: "/polls" });
+    // ...
+    export default router;
+    ```
+
+    Et l'importer tel que :
+
+    ```ts
+    // main.ts
+    import pollsRouter from "./routes/polls.ts";
+    // ...
+    const app = new Application();
+    app.use(pollsRouter.routes(), pollsRouter.allowedMethods());
+    // ...
+    ```
+
+
+2. Importer les modules dans `main.ts`.
+
+<div class="hidden">
 ___
 
 ## TP 3 : Client React
