@@ -112,7 +112,7 @@ ___
     ```
 
       - Observer l'arborescence du répertoire `server` que l'on vient de créer. Quel est le point d'entrée de l'application ?
-      - Lire le `README` et tester les commandes suggérées.
+      - Lire la sortie de la commande d'initialisation et tester les commandes suggérées.
       - Modifier l'application pour afficher `Hello, World`.
 
 2. Installation des dépendances qui seront nécessaires au fonctionnement de l'application :
