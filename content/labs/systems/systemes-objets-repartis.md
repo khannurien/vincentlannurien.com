@@ -56,8 +56,8 @@ ___
     ```
 
 2. Configuration de VS Code :
-  - installer l'extension officielle Deno (`denoland.vscode-deno`) ;
-  - ouvrir séparément (dans des fenêtres distinctes) les répertoires du serveur et du client.
+    - installer l'extension officielle Deno (`denoland.vscode-deno`) ;
+    - ouvrir séparément (dans des fenêtres distinctes) les répertoires du serveur et du client.
 
 3. Création des répertoires du projet :
 
@@ -362,9 +362,9 @@ deno run dev
 ### Test fonctionnel
 
 1. Avec `curl` :
-  - créer un premier sondage et ses options associées ;
-  - tester la récupération de la liste des sondages ;
-  - tester la récupération d'un sondage par identifiant.
+    - créer un premier sondage et ses options associées ;
+    - tester la récupération de la liste des sondages ;
+    - tester la récupération d'un sondage par identifiant.
 
     ```sh
     curl [-X METHOD] [PROTOCOL]://[HOSTNAME]:[PORT] \
