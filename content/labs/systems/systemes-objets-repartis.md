@@ -253,6 +253,9 @@ deno run dev
 
       if (!(valueId in values)) {
         ctx.response.status = 404;
+
+        // Attention !
+        // Il faudra ici typer explicitement la réponse (erreur) de l'API
         ctx.response.body = {
           success: false,
           error: { code: "NOT_FOUND", message: `Value "${valueId}" not found` },
@@ -262,7 +265,7 @@ deno run dev
       }
 
       // Attention !
-      // Il faudra ici typer explicitement la réponse de l'API
+      // Il faudra ici typer explicitement la réponse (succès) de l'API
       ctx.response.body = { success: true, data: values[valueId] };
     });
 
@@ -274,6 +277,9 @@ deno run dev
         console.error(err);
 
         ctx.response.status = 500;
+
+        // Attention !
+        // Il faudra ici typer explicitement la réponse (erreur) de l'API
         ctx.response.body = {
           success: false,
           error: { code: "SERVER_ERROR", message: "Failed to read request body" },
@@ -293,7 +299,28 @@ deno run dev
 
     - Comment supprimer une valeur de l'ensemble des données ?
 
-2. Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
+2. Dans notre application, les valeurs manipulées par les routes ne sont pas stockées dans une variable locale mais bien dans une base de données.
+
+    - On récupère un enregistrement unique avec :
+
+      ```ts
+      const pollRow = db.prepare(
+        `SELECT id, title, description, created_at, expires_at, is_active
+        FROM polls WHERE id = ?;`,
+      ).get(pollId);
+      ```
+
+    - On récupère une liste d'enregistrements avec :
+
+      ```ts
+      const pollOptionRows = db.prepare(
+        `SELECT id, text, vote_count FROM poll_options WHERE poll_id = ?;`,
+      ).all(pollId);
+      ```
+
+    Ces fonctions retournent des objets, arbitraires, de type `Record<string, SQLOutputValue>`. Le compilateur TypeScript ne nous laisse donc pas accéder aux champs de données définis dans nos interfaces.
+
+    Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
 
     ```ts
     export function pollOptionRowToApi(row: PollOptionRow): PollOption { }
@@ -314,6 +341,20 @@ deno run dev
     export function isPollRow(obj: Record<string, SQLOutputValue>): obj is PollRow { }
 
     export function isPollOptionRow(obj: Record<string, SQLOutputValue>): obj is PollOptionRow { }
+    ```
+
+    Attention : il faudra mettre à jour les interfaces `PollRow` et `PollOptionRow` pour qu'elles acceptent de porter des propriétés supplémentaires arbitraires :
+
+    ```ts
+    export interface PollRow {
+      // ...
+      [key: string]: SQLOutputValue; // Index signature
+    }
+
+    export interface PollOptionRow {
+      // ...
+      [key: string]: SQLOutputValue; // Index signature
+    }
     ```
 
 3. Coder les fonctions appelées dans les routes de l'API définies lors du TP 1.
