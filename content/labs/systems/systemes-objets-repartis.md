@@ -201,7 +201,7 @@ export { app };
     router.delete("/values/:valueId", (ctx) => {})
     ```
 
-3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. En utilisant la généricité, écrire les interfaces TypeScript nécessaires à représenter les réponses de l'API au client. Ci-dessous, voici des exemples de réponses de l'API :
+3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. En utilisant la généricité lorsque necéssaire, écrire les interfaces, énumérations et types TypeScript nécessaires à représenter les réponses de l'API au client. Ci-dessous, voici des exemples de réponses de l'API :
 
     ```json
     // Succès
@@ -261,6 +261,8 @@ deno run dev
         return;
       }
 
+      // Attention !
+      // Il faudra ici typer explicitement la réponse de l'API
       ctx.response.body = { success: true, data: values[valueId] };
     });
 
@@ -279,7 +281,7 @@ deno run dev
       }
 
       // Attention !
-      // Il faut ici valider les données envoyées par l'utilisateur
+      // Il faudra ici valider les données envoyées par l'utilisateur
       values = { ...values, ...body };
 
       ctx.response.status = 201;
@@ -294,14 +296,31 @@ deno run dev
 2. Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
 
     ```ts
-    export function pollOptionRowToApi(row: PollOptionRow): PollOption { };
+    export function pollOptionRowToApi(row: PollOptionRow): PollOption { }
 
     export function pollRowToApi(row: PollRow, optionRows: PollOptionRow[]): Poll { }
     ```
 
+    Essayer de passer aux fonctions de conversion les valeurs retournées par la base de données. On obtient une erreur de type :
+
+    ```text
+    Argument of type 'Record<string, SQLOutputValue>' is not assignable to parameter of type 'PollRow'.
+      Type 'Record<string, SQLOutputValue>' is missing the following properties from type 'PollRow': id, title, description, user_id, and 3 more.deno-ts(2345)
+    ```
+
+    Pour les utiliser, il faudra d'abord affiner le type des objets passés en paramètres des fonctions de conversion. Écrire les deux *type guards* suivants :
+
+    ```ts
+    export function isPollRow(obj: Record<string, SQLOutputValue>): obj is PollRow { }
+
+    export function isPollOptionRow(obj: Record<string, SQLOutputValue>): obj is PollOptionRow { }
+    ```
+
 3. Coder les fonctions appelées dans les routes de l'API définies lors du TP 1.
 
-4. Avec `curl` :
+### Test fonctionnel
+
+1. Avec `curl` :
   - créer un premier sondage et ses options associées ;
   - tester la récupération de la liste des sondages ;
   - tester la récupération d'un sondage par identifiant.
