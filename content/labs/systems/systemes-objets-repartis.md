@@ -139,11 +139,11 @@ Ci-dessous, le squelette de l'application côté serveur (`main.ts`) :
 ```ts
 import { Application, Router } from "@oak/oak";
 import { oakCors } from "@tajpouria/cors";
-import { Database } from "@db/sqlite";
+import { DatabaseSync } from "node:sqlite";
 
 // ---------- Database -----------------------------------
 
-const db = new Database("polls.db");
+export const db = new DatabaseSync("polls.db");
 
 // ---------- HTTP Router --------------------------------
 
@@ -227,7 +227,15 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
     deno run dev
     ```
 
-1. Coder les fonctions appelées dans les routes de l'API. Voici quelques exemples de routes basiques :
+1. Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
+
+    ```ts
+    export function pollOptionRowToApi(row: PollOptionRow): PollOption { };
+
+    export function pollRowToApi(row: PollRow, optionRows: PollOptionRow[]): Poll { }
+    ```
+
+2. Coder les fonctions appelées dans les routes de l'API. Voici quelques exemples de routes basiques :
 
     ```ts
     let values = { "foo": 42, "bar": 13.37 };
@@ -272,7 +280,7 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
     })
     ```
 
-2. Avec `curl` :
+3. Avec `curl` :
   - créer un premier sondage et ses options associées ;
   - tester la récupération de la liste des sondages ;
   - tester la récupération d'un sondage par identifiant.
