@@ -270,7 +270,7 @@ deno run dev
     });
 
     // Créer une nouvelle donnée
-    router.post("/values", (ctx) => {
+    router.post("/values", async (ctx) => {
       try {
         const body = await ctx.request.body.json();
       } catch (err) {
