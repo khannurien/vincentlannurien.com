@@ -201,7 +201,7 @@ export { app };
     router.delete("/values/:valueId", (ctx) => {})
     ```
 
-3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. En utilisant la généricité lorsque necéssaire, écrire les interfaces, énumérations et types TypeScript nécessaires à représenter les réponses de l'API au client. Ci-dessous, voici des exemples de réponses de l'API :
+3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. Ci-dessous, voici des exemples de réponses de l'API :
 
     ```json
     // Succès
@@ -223,6 +223,8 @@ export { app };
       },
     }
     ```
+
+    Il faut représenter cette *union discriminée* dans le système de types. En utilisant la généricité lorsque necéssaire, écrire les interfaces, énumérations et types TypeScript nécessaires à représenter les réponses de l'API au client.
 
 ___
 
