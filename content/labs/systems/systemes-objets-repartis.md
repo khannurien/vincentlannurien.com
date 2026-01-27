@@ -238,6 +238,34 @@ deno run dev
 
 ### Routes
 
+Pour écrire une route, il nous faut :
+
+- sa *méthode* HTTP : `GET`, `POST`, `UPDATE`, `DELETE`, etc. ;
+- son *chemin* (la partie finale de l'adresse) : par exemple, la route `"/polls"` sera atteinte à l'adresse `http://localhost:8000/polls` ;
+- sa *fonction* associée, c'est-à-dire le code qui sera appelé par le routeur lorsqu'il recevra une requête utilisateur sur cette route.
+
+Pour illustrer, on trouve ci-dessous le code d'une fonction qui retourne "Hello, world!" dans le corps d'une réponse HTTP :
+
+```ts
+function sayHello(ctx: any) {
+  ctx.response.body = "Hello, world!"
+}
+```
+
+On associe cette fonction en la passant au routeur pour une méthode (ici, `GET`) et un chemin (ici, la racine) donnés. Le routeur passera l'objet `ctx` à la fonction lors de son exécution :
+
+```ts
+router.get("/", sayHello);
+```
+
+Le contexte `ctx` comprend notamment les paramètres de la requête (`ctx.params`), la requête complète (`ctx.request`), ainsi qu'un objet réponse (`ctx.response`). Il est plus simple de passer une fonction anonyme au routeur, car l'IDE inférera le type de l'objet de `ctx` :
+
+```ts
+router.get("/", (ctx) => {
+  ctx.response.body = "Hello, world!"
+});
+```
+
 1. Voici quelques exemples de routes qui implantent le comportement de fonctions CRUD du serveur :
 
     ```ts
@@ -322,7 +350,7 @@ deno run dev
 
     Ces fonctions retournent des objets, arbitraires, de type `Record<string, SQLOutputValue>`. Le compilateur TypeScript ne nous laisse donc pas accéder aux champs de données définis dans nos interfaces.
 
-    Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
+    Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de données vers des objets exploitables dans l'API. Voici les signatures des deux fonctions :
 
     ```ts
     export function pollOptionRowToApi(row: PollOptionRow): PollOption { }
