@@ -236,6 +236,17 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
 deno run dev
 ```
 
+Par commidité, on peut passer dans le fichier `deno.json` les permissions requises par l'application. On spécifie l'appel à `run` dans la définition de la tâche `dev` :
+
+```json
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-net --allow-read --allow-write main.ts",
+  },
+  // ...
+}
+```
+
 ### Routes
 
 Pour écrire une route, il nous faut :
@@ -368,9 +379,22 @@ router.get("/", (ctx) => {
     Pour les utiliser, il faudra d'abord affiner le type des objets passés en paramètres des fonctions de conversion. Écrire les deux *type guards* suivants :
 
     ```ts
-    export function isPollRow(obj: Record<string, SQLOutputValue>): obj is PollRow { }
+    export function isPollRow(obj: Record<string, SQLOutputValue>): obj is PollRow {
+      return (
+        "id" in obj && typeof obj.id === "string" &&
+        "title" in obj && typeof obj.title === "string" &&
+        "description" in obj && (typeof obj.description === "string" || obj.description === null) &&
+        // ... à compléter
+      );
+    }
 
-    export function isPollOptionRow(obj: Record<string, SQLOutputValue>): obj is PollOptionRow { }
+    export function isPollOptionRow(obj: Record<string, SQLOutputValue>): obj is PollOptionRow {
+      return (
+        "id" in obj && typeof obj.id === "string" &&
+        "poll_id" in obj && typeof obj.poll_id === "string" &&
+        // ... à compléter
+      );
+    }
     ```
 
     Attention : il faudra mettre à jour les interfaces `PollRow` et `PollOptionRow` pour qu'elles acceptent de porter des propriétés supplémentaires arbitraires :
@@ -378,12 +402,12 @@ router.get("/", (ctx) => {
     ```ts
     export interface PollRow {
       // ...
-      [key: string]: SQLOutputValue; // Index signature
+      [key: string]: SQLOutputValue; // Index signature (à ajouter)
     }
 
     export interface PollOptionRow {
       // ...
-      [key: string]: SQLOutputValue; // Index signature
+      [key: string]: SQLOutputValue; // Index signature (à ajouter)
     }
     ```
 
