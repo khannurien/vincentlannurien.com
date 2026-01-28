@@ -134,6 +134,17 @@ ___
     - une option de sondage ;
     - un vote.
 
+    On doit en avoir six pour représenter les différentes "vues" sur nos données (c'est-à-dire à ce stade les *objets manipulés par l'API*, et les *enregistrements stockés en base de données*) :
+
+    - Vue API :
+      - `Poll`
+      - `PollOption`
+      - `Vote`
+    - Vue base de données :
+      - `PollRow`
+      - `PollOptionRow`
+      - `VoteRow`
+
 Ci-dessous, le squelette de l'application côté serveur (`main.ts`) :
 
 ```ts
