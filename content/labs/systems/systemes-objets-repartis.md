@@ -470,20 +470,7 @@ ___
 
 ___
 
-## TP 4 : Amélioration du client
-
-> - Gestion de l'état du composant :
->   - Chargement
->   - Erreur
-> - Contraintes :
->   - Limite sur la fréquence de vote
-
-1. Ajouter un compteur du temps restant au sondage sur la page d'un sondage
-2. ...
-
-___
-
-## TP 5 : Authentification
+## TP 4 : Authentification
 
 ### Côté serveur
 
@@ -567,7 +554,13 @@ for await (const conn of listener) {
 
 ___
 
-## TP 7 : Performances
+## TP 7 : Performances et fiabilité
+
+### Jeux de tests
+
+1. Tests unitaires côté serveur
+
+2. Tests *end-to-end* (E2E) côté client
 
 ### Profilage
 
@@ -582,6 +575,15 @@ ___
 ---
 
 ## TP 8 : Améliorations
+
+> - Gestion de l'état du composant :
+>   - Chargement
+>   - Erreur
+> - Contraintes :
+>   - Limite sur la fréquence de vote
+
+1. Ajouter un compteur du temps restant au sondage sur la page d'un sondage
+2. ...
 
 - Présentation des résultats
 - Interface de création d'un sondage
