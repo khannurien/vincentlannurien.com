@@ -260,7 +260,7 @@ Par commidité, on peut passer dans le fichier `deno.json` les permissions requi
 
 ### Routes
 
-Pour écrire une route, il nous faut :
+Le routage est le mécanisme principal d'un serveur web. Router une requête utilisateur, c'est la diriger vers la fonction appropriée pour traitement et réponse. Afin d'écrire une route, il nous faut :
 
 - sa *méthode* HTTP : `GET`, `POST`, `UPDATE`, `DELETE`, etc. ;
 - son *chemin* (la partie finale de l'adresse) : par exemple, la route `"/polls"` sera atteinte à l'adresse `http://localhost:8000/polls` ;
@@ -424,6 +424,14 @@ router.get("/", (ctx) => {
 
 3. Coder les fonctions appelées dans les routes de l'API définies lors du TP 1.
 
+    > Seules les routes concernant la gestion des **sondages** sont nécessaires à ce stade : lister les sondages, lister un sondage par son identifiant, créer un sondage, modifier un sondage, supprimer un sondage.
+    > Pour créer un sondage, il faudra générer son identifiant et un horodatage à la date de création :
+
+    ```ts
+    const pollId = crypto.randomUUID();
+    const createdAt = new Date().toISOString();
+    ```
+
 ### Test fonctionnel
 
 1. Avec `curl` :
@@ -472,6 +480,8 @@ router.get("/", (ctx) => {
 ___
 
 ## TP 3 : Client React
+
+
 
 ### Pré-requis
 
@@ -532,25 +542,11 @@ ___
     ```
 
 2. Créer les composants `index.tsx` (liste des sondages) et `Poll.tsx` (sondage sélectionné)
+    - 
 
 ___
 
-## TP 4 : Amélioration du client
-
-> - Gestion de l'état du composant :
->   - Chargement
->   - Erreur
-> - Contraintes :
->   - Limite sur la fréquence de vote
-
-1. Ajouter un compteur du temps restant au sondage sur la page d'un sondage
-2. ...
-
-___
-
-## TP 5 : Authentification
-
-### Côté serveur
+## TP 4 : Authentification -- Côté serveur
 
 1. Écrire un module `jwt.ts` comprenant les fonctions suivantes :
 
@@ -561,7 +557,7 @@ ___
     export async function verifyPassword(password: string, hash: string): Promise<boolean>;
     ```
 
-### Côté client
+## TP 5 : Authentification -- Côté client
 
 1. Créer un composant pour la connexion utilisateur
 
@@ -647,6 +643,15 @@ ___
 ---
 
 ## TP 8 : Améliorations
+
+> - Gestion de l'état du composant :
+>   - Chargement
+>   - Erreur
+> - Contraintes :
+>   - Limite sur la fréquence de vote
+
+1. Ajouter un compteur du temps restant au sondage sur la page d'un sondage
+2. ...
 
 - Présentation des résultats
 - Interface de création d'un sondage
