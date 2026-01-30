@@ -473,8 +473,87 @@ router.get("/", (ctx) => {
     // ...
     ```
 
-
 2. Importer les modules dans `main.ts`.
+
+3. Les routes sont alourdies par la gestion des cas d'erreur :
+
+    - leur code est englobé dans un `try`/`catch` général en cas d'erreur inattendue ;
+    - dans le chemin "normal", il existe beaucoup de cas dans lesquels on retourne une erreur au client :
+
+      ```ts
+      const responseBody: APIFailure = {
+        success: false,
+        error: {
+          code: err.code,
+          message: err.message,
+        }
+      };
+
+      ctx.response.status = err.status;
+      ctx.response.body = responseBody;
+      ```
+
+    Ce comportement doit être déplacé dans un *middleware* chargé de faire cette réponse au client. Les routes peuvent alors :
+
+    - être débarassées de leur `try`/`catch` global (les erreurs inattendues seront levées par le *middleware*) ;
+    - se contenter de lever une `APIException` en cas d'erreur, et laisser au *middleware* le soin de retourner cette erreur au client.
+
+    Voici une classe `APIException` (vue en cours) que l'on peut utiliser :
+
+      ```ts
+      export class APIException extends Error {
+        readonly code: APIErrorCode;
+        readonly status: number;
+
+        constructor(code: APIErrorCode, status: number, message: string) {
+          super(message);
+          this.code = code;
+          this.status = status;
+        }
+      }
+      ```
+
+    Ainsi que le code du *middleware* à ajouter à la chaîne de traitement des requêtes pour toutes les routes :
+
+      ```ts
+      import { Context, Next } from "@oak/oak";
+
+      import { APIErrorCode, APIException, APIFailure } from "../model/interfaces.ts";
+
+      export async function errorMiddleware(ctx: Context, next: Next) {
+        try {
+          await next();
+        } catch (err) {
+          if (err instanceof APIException) {
+            const responseBody: APIFailure = {
+              success: false,
+              error: {
+                code: err.code,
+                message: err.message,
+              }
+            };
+
+            ctx.response.status = err.status;
+            ctx.response.body = responseBody;
+
+            console.log(responseBody);
+          } else {
+            console.error(err);
+
+            const responseBody: APIFailure = {
+              success: false,
+              error: {
+                code: APIErrorCode.SERVER_ERROR,
+                message: "Unexpected server error",
+              }
+            };
+
+            ctx.response.status = 500;
+            ctx.response.body = responseBody;
+          }
+        }
+      }
+      ```
 
 <div class="hidden">
 ___
