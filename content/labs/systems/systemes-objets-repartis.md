@@ -134,6 +134,17 @@ ___
     - une option de sondage ;
     - un vote.
 
+    On doit en avoir six pour représenter les différentes "vues" sur nos données (c'est-à-dire à ce stade les *objets manipulés par l'API*, et les *enregistrements stockés en base de données*) :
+
+    - Vue API :
+      - `Poll`
+      - `PollOption`
+      - `Vote`
+    - Vue base de données :
+      - `PollRow`
+      - `PollOptionRow`
+      - `VoteRow`
+
 Ci-dessous, le squelette de l'application côté serveur (`main.ts`) :
 
 ```ts
@@ -201,7 +212,7 @@ export { app };
     router.delete("/values/:valueId", (ctx) => {})
     ```
 
-3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. En utilisant la généricité lorsque necéssaire, écrire les interfaces, énumérations et types TypeScript nécessaires à représenter les réponses de l'API au client. Ci-dessous, voici des exemples de réponses de l'API :
+3. Toute route devra retourner une réponse au client. Celle-ci peut contenir la ressource demandée, ou une erreur. Ci-dessous, voici des exemples de réponses de l'API :
 
     ```json
     // Succès
@@ -224,6 +235,8 @@ export { app };
     }
     ```
 
+    Il faut représenter cette *union discriminée* dans le système de types. En utilisant la généricité lorsque necéssaire, écrire les interfaces, énumérations et types TypeScript nécessaires à représenter les réponses de l'API au client.
+
 ___
 
 ## TP 2 : Développement du serveur
@@ -234,7 +247,46 @@ Rappel : on utilisera le serveur de développement fourni par Deno pour travaill
 deno run dev
 ```
 
+Par commidité, on peut passer dans le fichier `deno.json` les permissions requises par l'application. On spécifie l'appel à `run` dans la définition de la tâche `dev` :
+
+```json
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-net --allow-read --allow-write main.ts",
+  },
+  // ...
+}
+```
+
 ### Routes
+
+Le routage est le mécanisme principal d'un serveur web. Router une requête utilisateur, c'est la diriger vers la fonction appropriée pour traitement et réponse. Afin d'écrire une route, il nous faut :
+
+- sa *méthode* HTTP : `GET`, `POST`, `UPDATE`, `DELETE`, etc. ;
+- son *chemin* (la partie finale de l'adresse) : par exemple, la route `"/polls"` sera atteinte à l'adresse `http://localhost:8000/polls` ;
+- sa *fonction* associée, c'est-à-dire le code qui sera appelé par le routeur lorsqu'il recevra une requête utilisateur sur cette route.
+
+Pour illustrer, on trouve ci-dessous le code d'une fonction qui retourne "Hello, world!" dans le corps d'une réponse HTTP :
+
+```ts
+function sayHello(ctx: any) {
+  ctx.response.body = "Hello, world!"
+}
+```
+
+On associe cette fonction en la passant au routeur pour une méthode (ici, `GET`) et un chemin (ici, la racine) donnés. Le routeur passera l'objet `ctx` à la fonction lors de son exécution :
+
+```ts
+router.get("/", sayHello);
+```
+
+Le contexte `ctx` comprend notamment les paramètres de la requête (`ctx.params`), la requête complète (`ctx.request`), ainsi qu'un objet réponse (`ctx.response`). Il est plus simple de passer une fonction anonyme au routeur, car l'IDE inférera le type de l'objet de `ctx` :
+
+```ts
+router.get("/", (ctx) => {
+  ctx.response.body = "Hello, world!"
+});
+```
 
 1. Voici quelques exemples de routes qui implantent le comportement de fonctions CRUD du serveur :
 
@@ -320,7 +372,7 @@ deno run dev
 
     Ces fonctions retournent des objets, arbitraires, de type `Record<string, SQLOutputValue>`. Le compilateur TypeScript ne nous laisse donc pas accéder aux champs de données définis dans nos interfaces.
 
-    Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de donées vers des objets exploitables dans l'API. Voici les signatures des deux fonctions : 
+    Écrire les fonctions permettant de convertir les enregistrements pour les sondages en base de données vers des objets exploitables dans l'API. Voici les signatures des deux fonctions :
 
     ```ts
     export function pollOptionRowToApi(row: PollOptionRow): PollOption { }
@@ -338,9 +390,22 @@ deno run dev
     Pour les utiliser, il faudra d'abord affiner le type des objets passés en paramètres des fonctions de conversion. Écrire les deux *type guards* suivants :
 
     ```ts
-    export function isPollRow(obj: Record<string, SQLOutputValue>): obj is PollRow { }
+    export function isPollRow(obj: Record<string, SQLOutputValue>): obj is PollRow {
+      return (
+        "id" in obj && typeof obj.id === "string" &&
+        "title" in obj && typeof obj.title === "string" &&
+        "description" in obj && (typeof obj.description === "string" || obj.description === null) &&
+        // ... à compléter
+      );
+    }
 
-    export function isPollOptionRow(obj: Record<string, SQLOutputValue>): obj is PollOptionRow { }
+    export function isPollOptionRow(obj: Record<string, SQLOutputValue>): obj is PollOptionRow {
+      return (
+        "id" in obj && typeof obj.id === "string" &&
+        "poll_id" in obj && typeof obj.poll_id === "string" &&
+        // ... à compléter
+      );
+    }
     ```
 
     Attention : il faudra mettre à jour les interfaces `PollRow` et `PollOptionRow` pour qu'elles acceptent de porter des propriétés supplémentaires arbitraires :
@@ -348,16 +413,24 @@ deno run dev
     ```ts
     export interface PollRow {
       // ...
-      [key: string]: SQLOutputValue; // Index signature
+      [key: string]: SQLOutputValue; // Index signature (à ajouter)
     }
 
     export interface PollOptionRow {
       // ...
-      [key: string]: SQLOutputValue; // Index signature
+      [key: string]: SQLOutputValue; // Index signature (à ajouter)
     }
     ```
 
 3. Coder les fonctions appelées dans les routes de l'API définies lors du TP 1.
+
+    > Seules les routes concernant la gestion des **sondages** sont nécessaires à ce stade : lister les sondages, lister un sondage par son identifiant, créer un sondage, modifier un sondage, supprimer un sondage.
+    > Pour créer un sondage, il faudra générer son identifiant et un horodatage à la date de création :
+
+    ```ts
+    const pollId = crypto.randomUUID();
+    const createdAt = new Date().toISOString();
+    ```
 
 ### Test fonctionnel
 
@@ -400,13 +473,94 @@ deno run dev
     // ...
     ```
 
-
 2. Importer les modules dans `main.ts`.
+
+3. Les routes sont alourdies par la gestion des cas d'erreur :
+
+    - leur code est englobé dans un `try`/`catch` général en cas d'erreur inattendue ;
+    - dans le chemin "normal", il existe beaucoup de cas dans lesquels on retourne une erreur au client :
+
+      ```ts
+      const responseBody: APIFailure = {
+        success: false,
+        error: {
+          code: err.code,
+          message: err.message,
+        }
+      };
+
+      ctx.response.status = err.status;
+      ctx.response.body = responseBody;
+      ```
+
+    Ce comportement doit être déplacé dans un *middleware* chargé de faire cette réponse au client. Les routes peuvent alors :
+
+    - être débarassées de leur `try`/`catch` global (les erreurs inattendues seront levées par le *middleware*) ;
+    - se contenter de lever une `APIException` en cas d'erreur, et laisser au *middleware* le soin de retourner cette erreur au client.
+
+    Voici une classe `APIException` (vue en cours) que l'on peut utiliser :
+
+      ```ts
+      export class APIException extends Error {
+        readonly code: APIErrorCode;
+        readonly status: number;
+
+        constructor(code: APIErrorCode, status: number, message: string) {
+          super(message);
+          this.code = code;
+          this.status = status;
+        }
+      }
+      ```
+
+    Ainsi que le code du *middleware* à ajouter à la chaîne de traitement des requêtes pour toutes les routes :
+
+      ```ts
+      import { Context, Next } from "@oak/oak";
+
+      import { APIErrorCode, APIException, APIFailure } from "../model/interfaces.ts";
+
+      export async function errorMiddleware(ctx: Context, next: Next) {
+        try {
+          await next();
+        } catch (err) {
+          if (err instanceof APIException) {
+            const responseBody: APIFailure = {
+              success: false,
+              error: {
+                code: err.code,
+                message: err.message,
+              }
+            };
+
+            ctx.response.status = err.status;
+            ctx.response.body = responseBody;
+
+            console.log(responseBody);
+          } else {
+            console.error(err);
+
+            const responseBody: APIFailure = {
+              success: false,
+              error: {
+                code: APIErrorCode.SERVER_ERROR,
+                message: "Unexpected server error",
+              }
+            };
+
+            ctx.response.status = 500;
+            ctx.response.body = responseBody;
+          }
+        }
+      }
+      ```
 
 <div class="hidden">
 ___
 
 ## TP 3 : Client React
+
+
 
 ### Pré-requis
 
@@ -467,12 +621,11 @@ ___
     ```
 
 2. Créer les composants `index.tsx` (liste des sondages) et `Poll.tsx` (sondage sélectionné)
+    - 
 
 ___
 
-## TP 4 : Authentification
-
-### Côté serveur
+## TP 4 : Authentification -- Côté serveur
 
 1. Écrire un module `jwt.ts` comprenant les fonctions suivantes :
 
@@ -483,7 +636,7 @@ ___
     export async function verifyPassword(password: string, hash: string): Promise<boolean>;
     ```
 
-### Côté client
+## TP 5 : Authentification -- Côté client
 
 1. Créer un composant pour la connexion utilisateur
 
