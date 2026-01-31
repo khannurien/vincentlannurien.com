@@ -16,7 +16,7 @@ todo:
   - add final resources (slides, exercises)
 ---
 
-![](../images/iot-philips.png)
+![](./images/iot-philips.png)
 
 [Internet of Shit](https://x.com/internetofshit/status/986006653605687296)
 
@@ -28,7 +28,7 @@ todo:
 
 ## Vue d'ensemble
 
-![](../images/architecture.png)
+![](./images/architecture.png)
 
 ## Composants
 

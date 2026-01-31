@@ -55,17 +55,17 @@ todo:
 
 1. Vérifier le fonctionnement de l'Arduino en lui envoyant un programme d'exemple (menu *Fichier > Exemples > Basics > Blink*) :
 
-    ![](../images/arduino-blink.png)
+    ![](./images/arduino-blink.png)
 
 2. Écrire du texte sur la liaison depuis l'Arduino et l'afficher sur le PC en utilisant le moniteur série (menu *Outils*) :
 
-    ![](../images/arduino-serial-hello-world.png)
+    ![](./images/arduino-serial-hello-world.png)
 
 3. Envoyer une chaîne de caractères depuis le PC, la recevoir sur l'Arduino et afficher les valeurs ASCII des caractères sur le moniteur série :
 
-    ![](../images/arduino-serial-read.png)
+    ![](./images/arduino-serial-read.png)
 
-    ![](../images/arduino-serial-read-write.png)
+    ![](./images/arduino-serial-read-write.png)
 
 
 4. Vous allez envoyer des **lignes de commande** à l'Arduino, comme vu en CM. Les lignes sont de la forme :
@@ -114,15 +114,15 @@ Choisissez l'une ou l'autre de ces deux méthodes, puis passez à la partie **Ex
 
 1. Lancez XCTU. Ajoutez votre module radio dans XCTU en cliquant sur "*Add device*", en haut à gauche :
 
-    ![](../images/xctu.png)
+    ![](./images/xctu.png)
 
 2. Cliquez sur "*Refresh ports*" puis sélectionnez le port USB correspondant à votre module (en salle TP, `/dev/ACM0`) et cliquez sur "*Finish*" :
 
-    ![](../images/xctu-add.png)
+    ![](./images/xctu-add.png)
 
 3. Sélectionnez dans XCTU le module que vous venez d'ajouter. Vous accédez à sa configuration :
 
-    ![](../images/xctu-config.png)
+    ![](./images/xctu-config.png)
 
     Pour une utilisation *point à point*, la configuration doit être identique sur les deux modules XBee :
 

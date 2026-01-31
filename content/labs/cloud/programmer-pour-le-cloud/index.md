@@ -15,7 +15,7 @@ tags:
   - "ssh"
 ---
 
-![](../images/xkcd-automation.png)
+![](./images/xkcd-automation.png)
 
 [xkcd](https://xkcd.com/1319/)
 
@@ -67,7 +67,7 @@ Node.js est un runtime pour JavaScript, c'est-à-dire une machine virtuelle qui 
 
 La configuration d'un projet TypeScript demande un peu de travail préalable, c'est pourquoi vous partirez d'un projet dit *template* disponible sur GitHub. Vous créerez votre propre dépôt pour l'application à partir de ce template, via le bouton *"Use this template"* :
 
-![Use this template](../images/github-template.png "GitHub template repository")
+![](./images/github-template.png)
 
 Votre application devra être accessible par le web et capable de donner des informations concernant le système sur lequel elle s'exécute : nombre de cœurs de processeur et charge actuelle, quantité de mémoire disponible et utilisée, version du système d'exploitation, etc.
 
@@ -133,7 +133,7 @@ Docker est en réalité une suite d'outils :
 * `containerd-shim` est un processus intermédiaire qui restera le processus père d'un conteneur durant toute son exécution. Il maintient la liste des descripteurs de fichiers ouverts par le conteneur (à commencer par `stdio`). Cela permet de maintenir un lien avec le conteneur dans le cas où `containerd` est arrêté. Par ailleurs, il est responsable de remonter le code de sortie d'un conteneur au niveau supérieur ;
 * `runc` implémente la [spécification OCI](https://github.com/opencontainers/runtime-spec) et contient le code permettant l'exécution d'un conteneur. Il crée et démarre le conteneur, et termine son exécution.
 
-![Docker breakdown](../images/docker-breakdown.png "Docker breakdown")
+![](./images/docker-breakdown.png)
 [Avijit Sarkar](https://medium.com/@avijitsarkar123/docker-and-oci-runtimes-a9c23a5646d6)
 
 Dans l'écosystème Docker, une image correspond à une "recette" décrite dans un fichier, communément nommé `Dockerfile`, qui, au même titre qu'un `Makefile` pour `make` donne une suite d'instructions à la machine pour produire un binaire de l'application, donne ici la marche à suivre pour produire un conteneur qui comprendra l'application et son environnement d'exécution.

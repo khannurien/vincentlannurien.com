@@ -15,7 +15,7 @@ todo:
 ---
 
 {{< flex >}}
-![Linus Torvalds](../images/linus-torvalds.jpg)
+![](../images/linus-torvalds.jpg)
 
 ---
 
@@ -70,7 +70,7 @@ man ls
 
 Et on obtient :
 
-![](../images/man-ls.png)
+![](./images/man-ls.png)
 
 Parfois, ces pages de manuel ne fournissent pas d'exemple d'utilisation d'une commande. Il existe une base de données communautaire pour cela, [tldr.sh](https://tldr.sh/).
 
@@ -88,7 +88,7 @@ Pour vous aider à démarrer, voici une liste des commandes que vous allez devoi
     ma_commande 2> /dev/null
     ```
 
-    ![](../images/linux-input-output.png)
+    ![](./images/linux-input-output.png)
 
 4. Déplacez-vous à la racine de l'arborescence en utilisant son chemin *relatif* : à partir de tout répertoire, `.` désigne le chemin courant, et `..` désigne le répertoire parent. Comment auriez-vous fait pour vous déplacer à la racine par chemin *absolu* ?
 5. Affichez les fichiers et répertoires à la racine. Si certains sont cachés, ils doivent apparaître dans la sortie de votre commande. Reconnaissez-vous la [hiérarchie standard](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard#Directory_structure) d'un système de fichiers Unix ? Quelles différences pouvez-vous identifier ?
@@ -135,7 +135,7 @@ Pour vous aider à démarrer, voici une liste des commandes que vous allez devoi
 
 Ce premier TD ne concerne pas l'installation d'une distribution Linux "de bureau" que vous utiliseriez au quotidien sur votre machine. Notre cours adresse la question de l'*administration* d'un système Linux : nous allons mettre en place une machine virtuelle (VM, pour *Virtual Machine*) Linux qui fera office de *serveur*.
 
-![Half-filled server rack](../images/wip-server-racks.jpg "Half-filled server rack")
+![](../images/wip-server-racks.jpg)
 
 [Alexis Lê-Quôc](https://commons.wikimedia.org/wiki/File:Half_filled_server_racks.jpg)
 
@@ -160,7 +160,7 @@ Il existe deux abstractions pour un hyperviseur :
 * Type-1 (*bare-metal hypervisors*) : ces hyperviseurs fonctionnent à même le matériel de la machine hôte, sans l'intervention d'un système d'exploitation -- on peut considérer qu'ils sont eux-mêmes une forme de système d'exploitation. L'absence d'OS hôte entre le matériel et l'hyperviseur garantit une sécurité supérieure (la surface d'attaque est réduite) et de meilleures performances (moins d'indirection). Parmi les hyperviseurs type-1 de référence, on trouve VMware ESXi, KVM, Xen ou Hyper-V ;
 * Type-2 (*hosted hypervisors*) : ces hyperviseurs s'exécutent en tant que processus d'un système d'exploitation hôte tel que Linux ou Windows. Ce sont des produits dédiés aux consommateurs finaux (nous !), qui leur permettent de manipuler des systèmes d'exploitation hétérogènes sur une même machine hôte. Les plus célèbres sont QEMU et VirtualBox.
 
-![](../images/hypervisors.png)
+![](./images/hypervisors.png)
 
 1. Installez [VirtualBox](https://www.virtualbox.org/wiki/Downloads) : choisissez le *Platform package* adapté à votre système hôte ;
 2. Installez [VirtualBox Extension Pack](https://download.virtualbox.org/virtualbox/7.1.0/Oracle_VirtualBox_Extension_Pack-7.1.0.vbox-extpack), disponible sur la même page ;
@@ -187,7 +187,7 @@ Deux notions sont importantes pour cette étape :
 
 4. Si tout s'est bien passé, voici l'écran que vous devriez voir s'afficher :
 
-    ![](../images/virtualbox/virtualbox-grub.png)
+    ![](./images/virtualbox/virtualbox-grub.png)
 
 C'est le chargeur d'armoçage, *GRUB*. Vous pouvez valider le choix *Try or Install Ubuntu Server* et poursuivre le démarrage de l'OS.
 
@@ -199,19 +199,19 @@ Vous allez pouvoir vous lancer dans l'installation du système à proprement par
 
 2. Le type d'installation à sélectionner est la première, *Ubuntu Server* (et non pas *minimized*) :
 
-    ![](../images/virtualbox/virtualbox-server-ubuntu.png)
+    ![](./images/virtualbox/virtualbox-server-ubuntu.png)
 
 3. La connexion au réseau devrait s'effectuer d'elle-même. Vous n'avez pas besoin de préciser d'adresse de proxy. L'adresse du miroir d'archive Ubuntu est correcte par défaut.
 
 4. Vous arrivez à l'étape de configuration du stockage. Sélectionnez "Custom storage layout" :
 
-    ![](../images/virtualbox/virtualbox-server-storage.png)
+    ![](./images/virtualbox/virtualbox-server-storage.png)
 
 ##### Partitionnement
 
 1. Créez deux partitions : une pour la racine du système de fichiers, et une pour les répertoires utilisateur. Chacune prendra la moitié de l'espace disque total. Formatez-les avec le système de fichiers `ext4`.
 
-    ![](../images/virtualbox/virtualbox-server-partitions-1.png)
+    ![](./images/virtualbox/virtualbox-server-partitions-1.png)
 
 2. Faîtes une capture d'écran du schéma de partitionnement final et ajoutez-la à votre compte-rendu.
 
@@ -223,7 +223,7 @@ L'assistant d'installation vous demandera ensuite des informations sur votre pro
 
 À l'étape suivante, on vous propose d'installer le serveur OpenSSH. C'est ce service qui vous permettra d'accéder à distance à votre machine.
 
-![](../images/virtualbox/virtualbox-server-ssh.png)
+![](./images/virtualbox/virtualbox-server-ssh.png)
 
 Si vous avez déjà un jeu de clefs SSH, vous pouvez les importer. Sinon, vous vous connecterez avec votre identifiant et votre mot de passe.
 
@@ -233,7 +233,7 @@ Si vous avez déjà un jeu de clefs SSH, vous pouvez les importer. Sinon, vous v
 
 La dernière étape vous propose une liste de paquets suggérés : n'en sélectionnez aucun et poursuivez jusqu'à la fin de l'installation d'Ubuntu.
 
-![](../images/virtualbox/virtualbox-server-finished.png)
+![](./images/virtualbox/virtualbox-server-finished.png)
 
 Lorsque c'est fini, vous pouvez choisir de "Redémarrer maintenant".
 
@@ -263,7 +263,7 @@ On spécifie l'adresse du serveur SSH (ici, `10.0.0.1`) et le port sur lequel il
 
 Votre machine distante est connectée à un réseau virtuel géré par VirtualBox. Entre votre système hôte et votre VM, on trouve un pare-feu qui filtre les connexions entrantes :
 
-![](../images/virtualbox/virtualbox-virtual-network.png)
+![](./images/virtualbox/virtualbox-virtual-network.png)
 
 Nous allons créer une *règle* dans ce pare-feu pour autoriser les connexions au serveur SSH de votre VM :
 
@@ -271,7 +271,7 @@ Nous allons créer une *règle* dans ce pare-feu pour autoriser les connexions a
 2. Ouvrez l'onglet "Réseau". Chaque VM peut avoir jusqu'à quatre interfaces réseau. Seule la première nous intéresse ici.
 3. Déroulez les paramètres avancés et cliquez sur "Redirection de ports". Créez la règle suivante :
 
-    ![](../images/virtualbox/virtualbox-ssh-nat.png)
+    ![](./images/virtualbox/virtualbox-ssh-nat.png)
 
 #### Connexion SSH à la VM depuis votre système hôte
 
@@ -281,21 +281,21 @@ Puisque les étapes suivantes du projet consistent à développer des scripts Ba
 
 2. VSCode est un IDE *modulaire* : cela signifie que de nombreuses fonctionnalités sont accessibles via l'installation d'*extensions*. Microsoft propose une extension *Remote - SSH* qui permet de se connecter à une machine *via* SSH pour y travailler à distance. Installez l'extension :
 
-    ![](../images/vscode/vscode-remote-extension.png)
+    ![](./images/vscode/vscode-remote-extension.png)
 
     > ⚠️ Il est possible que l'installation de l'extension échoue sur le réseau de l'école. Vous pouvez installer l'extension manuellement, en téléchargeant le fichier `.vsix` sur la [page de l'extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh).
 
 3. Connectez-vous à votre machine virtuelle :
 
-    ![](../images/vscode/vscode-remote-host.png)
+    ![](./images/vscode/vscode-remote-host.png)
 
 4. Rentrez le mot de passe de votre utilisateur :
 
-    ![](../images/vscode/vscode-remote-password.png)
+    ![](./images/vscode/vscode-remote-password.png)
 
 5. Créez un répertoire pour vos travaux grâce au terminal (s'il n'est pas ouvert par défaut, passez par le menu : *Terminal > Nouveau terminal*). Ouvrez ce répertoire dans VSCode pour commencer à travailler :
 
-    ![](../images/vscode/vscode-remote-folder.png)
+    ![](./images/vscode/vscode-remote-folder.png)
 
 #### Gestion des paquets logiciels sous Ubuntu
 
@@ -384,7 +384,7 @@ Pour les formater, vous aurez besoin d'extraire et isoler certaines informations
 
 Voici un exemple de fonctionnement attendu en mode interactif :
 
-![](../images/linux-admin-interactive.gif)
+![](./images/linux-admin-interactive.gif)
 
 L'appel au script en mode interactif se fait sans passage d'arguments :
 
