@@ -706,7 +706,13 @@ for await (const conn of listener) {
 
 ___
 
-## TP 7 : Performances
+## TP 7 : Performances et fiabilité
+
+### Jeux de tests
+
+1. Tests unitaires côté serveur
+
+2. Tests *end-to-end* (E2E) côté client
 
 ### Profilage
 
