@@ -13,7 +13,7 @@ tags:
   - "deployment"
 
 todo:
-  - ...
+  - add final resources (slides, exercises)
 ---
 
 ![](../images/iot-philips.png)
@@ -555,12 +555,9 @@ router.get("/", (ctx) => {
       }
       ```
 
-<div class="hidden">
 ___
 
 ## TP 3 : Client React
-
-
 
 ### Pré-requis
 
@@ -621,8 +618,10 @@ ___
     ```
 
 2. Créer les composants `index.tsx` (liste des sondages) et `Poll.tsx` (sondage sélectionné)
-    - 
+    - copier et importer les interfaces et type guards des objets de l'API
+    - récupérer les valeurs avec `fetch`, vérifier leur type, les afficher
 
+<div class="hidden">
 ___
 
 ## TP 4 : Authentification -- Côté serveur
