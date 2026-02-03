@@ -561,7 +561,7 @@ ___
 
 ### Pré-requis
 
-1. Installation du *bundler* Vite et initialisation du projet
+1. Installation du *bundler* Vite et initialisation du projet :
 
     ```sh
     cd ~/tp_sor
@@ -594,7 +594,7 @@ ___
     }
     ```
 
-3. Installation des dépendances
+3. Installation des dépendances de l'application client :
 
     ```sh
     cd ~/tp_sor/client
@@ -602,7 +602,9 @@ ___
     deno install
     ```
 
-4. Exécution du serveur de développement
+    On note qu'ici, pour des questions de disponibilité, on récupère des paquets NPM plutôt que JSR. Cela entraîne la création d'un répertoire `node_modules` et d'un fichier `package.json`.
+
+4. Exécution du serveur de développement :
 
     ```sh
     deno run dev
@@ -610,21 +612,128 @@ ___
 
 ### Déroulé
 
-1. Mettre en place le routeur à la racine de l'application (`App.tsx`) :
+Le fichier `src/main.tsx` indique le point d'entrée de l'application :
 
-    ```ts
+```tsx
+import App from "./App.tsx";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+```
+
+> Le mode strict (`StrictMode`) active un [ensemble de comportements](https://react.dev/reference/react/StrictMode) utiles en phase de développement de l'application :
+> - chaque composant sera rendu *une fois de plus que nécessaire* : cela permet de vérifier l'*idempotence* d'un composant (étant données les mêmes entrées, un composant doit toujours retourner la même sortie). En d'autres termes, cela permet de détecter les effets de bord indésirables dans un composant *impur*, c'est-à-dire un composant qui produirait des modifications en-dehors de son état local (telles que muter les valeurs passées en entrée) ;
+> - chaque composant exécutera ses `Effects` *une fois de plus que nécessaire* : cela permet de détecter des bugs causés par un nettoyage manquant de l'état du composant, tels que des connexions qui resteraient ouvertes, provoquant des fuites mémoire ;
+> - chaque composant exécutera ses *callbacks* `ref` *une fois de plus que nécessaire* : cela permet de détecter des bugs provenant d'une incohérence entre les références et le DOM réel ; par exemple, un accès à un élément supprimé.
+
+On va définir le composant `App` comme étant un routeur React. C'est un outil qui permet de gérer la navigation dans une application à page unique (*SPA*, *Single-Page Application*) en associant des URL à des composants :
+- chaque chemin d'URL correspond à un composant React affiché ;
+- le routeur écoute les changements d'URL et rend le composant correspondant sans recharger la page ;
+
+Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les protections de route, etc.
+
+1. Mettre en place le routeur à la racine de l'application (`App.tsx`). Voici un point de départ pour créer deux routes :
+    - à la racine, on affiche l'index de l'application (`src/pages/index.tsx`) ;
+    - au chemin `"/polls/:selectedPoll"`, on affiche un sondage sélectionné.
+
+    ```tsx
+    import { BrowserRouter, Route, Routes } from "react-router";
+
     import Index from "./pages/index.tsx";
     import Poll from "./pages/Poll.tsx";
+    import "./App.css";
+
+    function App() {
+      return (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/polls/:selectedPoll" element={<Poll />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
+
+    export default App;
+
     ```
 
-2. Créer les composants `index.tsx` (liste des sondages) et `Poll.tsx` (sondage sélectionné)
-    - copier et importer les interfaces et type guards des objets de l'API
-    - récupérer les valeurs avec `fetch`, vérifier leur type, les afficher
+2. Créer le composant `index.tsx`, dans lequel on affichera la liste des sondages :
+    1. Utiliser `useState` pour initialiser la liste des sondages (elle sera toujours vide avant la première requête vers le serveur) et définir la fonction de mise à jour de l'état du composant ;
+    2. Utiliser `useEffect` pour émetttre la requête HTTP nécessaire à récupérer les sondages depuis l'API et la passer à la fonction de mise à jour de l'état :
+
+        ```tsx
+        export default function Index() {
+          const [polls, setPolls] = ... // À compléter
+
+          useEffect(() => {
+            (async () => {
+              const response = fetch(...) // À compléter
+            })();
+          }, []);
+        ```
+
+        Voici deux exemples de fonctionnement de l'API `fetch` pour :
+        - une requête `GET` :
+
+          ```ts
+          async function fetch(url: string);
+          ```
+        
+        - une requête `POST` :
+
+          ```ts
+          async function fetch(url: string, {
+            method: "POST",
+            body: {}, // un objet JSON
+          });
+          ```
+
+        Observer le type de `response`. Observer aussi la hiérachie des interfaces. De quelles propriétés et méthodes fournies par cet objet peut-on se servir pour la récupération des données, leur affichage, et le traitement des erreurs ?
+
+    3. Utiliser le style de programmation fonctionnel pour *mapper* chaque sondage à un item de liste (`<li>`) dans la définition du composant :
+
+        ```tsx
+        return (
+          <main id="content">
+            <h1>📊 Real-time polls</h1>
+            <p>Click on a poll below to participate.</p>
+
+            <ul>
+              {polls.map(
+                // À compléter
+                // ...
+              )}
+            </ul>
+          </main>
+        );
+        ```
+
+3. Créer le composant `Poll.tsx` (sondage sélectionné) :
+    - S'appuyer sur les interfaces et *type guards* définis pour les objets de l'API : il faut copier dans le projet client les fichiers de types et *helpers* issus du projet serveur ;
+    - Dans le composant :
+      1. récupérer les valeurs depuis l'API avec `fetch` ;
+      2. vérifier leur type ;
+      3. les afficher.
 
 <div class="hidden">
+---
+
+## TP 4 : Mécanisme de vote en direct
+
+TODO: WebSocket
+
+1. Implanter le mécanisme de vote dans le serveur
+2. Implanter le mécanisme de vote dans le client
+
 ___
 
-## TP 4 : Authentification -- Côté serveur
+## TP 5 : Authentification
+
+### Côté serveur
 
 1. Écrire un module `jwt.ts` comprenant les fonctions suivantes :
 
@@ -635,7 +744,7 @@ ___
     export async function verifyPassword(password: string, hash: string): Promise<boolean>;
     ```
 
-## TP 5 : Authentification -- Côté client
+### Côté client
 
 1. Créer un composant pour la connexion utilisateur
 
