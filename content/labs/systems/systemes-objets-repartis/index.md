@@ -732,6 +732,42 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
     - le serveur ne répond pas ;
     - le sondage demandé n'existe pas.
 
+    On peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
+
+      ```ts
+      import { randomInt} from "node:crypto";
+
+      import { Context, Next } from "@oak/oak";
+
+      import { APIErrorCode, APIException } from "../model/interfaces.ts";
+
+      function delay(ms: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      export async function entropyMiddleware(ctx: Context, next: Next) {
+        const d10 = randomInt(0, 10);
+
+        if (d10 === 9) {
+          throw new APIException(APIErrorCode.SERVER_ERROR, 500, "Entropy error :-)");
+        }
+
+        if (d10 >= 3 && d10 < 9) {
+          const timeout = randomInt(0, 5);
+
+          await delay(timeout * 1000);
+        }
+
+        await next();
+      }
+      ```
+
+    On l'intègre à la chaîne de traitement d'une requête :
+
+    ```ts
+    router.post("/", errorMiddleware, entropyMiddleware, async (ctx) => { }
+    ```
+
 <div class="hidden">
 ---
 
