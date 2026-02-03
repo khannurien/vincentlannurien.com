@@ -628,6 +628,8 @@ createRoot(document.getElementById("root")!).render(
 > - chaque composant sera rendu *une fois de plus que nécessaire* : cela permet de vérifier l'*idempotence* d'un composant (étant données les mêmes entrées, un composant doit toujours retourner la même sortie). En d'autres termes, cela permet de détecter les effets de bord indésirables dans un composant *impur*, c'est-à-dire un composant qui produirait des modifications en-dehors de son état local (telles que muter les valeurs passées en entrée) ;
 > - chaque composant exécutera ses `Effects` *une fois de plus que nécessaire* : cela permet de détecter des bugs causés par un nettoyage manquant de l'état du composant, tels que des connexions qui resteraient ouvertes, provoquant des fuites mémoire ;
 > - chaque composant exécutera ses *callbacks* `ref` *une fois de plus que nécessaire* : cela permet de détecter des bugs provenant d'une incohérence entre les références et le DOM réel ; par exemple, un accès à un élément supprimé dans le DOM de la page.
+>
+> Avec ce mode activé, on verra donc des requêtes HTTP en double dans les journaux, des connexions/déconnexions supplémentaires aux WebSockets, etc.
 
 On va définir le composant `App` comme étant un routeur React. C'est un outil qui permet de gérer la navigation dans une application à page unique (*SPA*, *Single-Page Application*) en associant des URL à des composants :
 - chaque chemin d'URL correspond à un composant React affiché ;
