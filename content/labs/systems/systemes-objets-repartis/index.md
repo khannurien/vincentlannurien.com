@@ -725,6 +725,11 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
       3. vérifier leur type avec un *type guard* ;
       4. les afficher dans le code HTML du composant.
 
+4. Comment adapter l'affichage du composant aux situations suivantes :
+    - le sondage courant n'est pas encore chargé ;
+    - le serveur ne répond pas ;
+    - le sondage demandé n'existe pas.
+
 <div class="hidden">
 ---
 
