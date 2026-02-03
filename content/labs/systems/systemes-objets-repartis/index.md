@@ -732,7 +732,7 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
     - le serveur ne répond pas ;
     - le sondage demandé n'existe pas.
 
-    On peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
+    Bien sûr, à ce stade on étudie un système "distribué" composé d'un serveur et d'un client déployés sur la même machine. Les délais sont donc virtuellement inexistants, de même que les pertes de conexion. Pour mieux visualiser ces phénomènes côté client, on peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
 
       ```ts
       import { randomInt} from "node:crypto";
@@ -762,7 +762,7 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
       }
       ```
 
-    On l'intègre à la chaîne de traitement d'une requête :
+    On l'intègre à la chaîne de traitement d'une requête pour que la réponse échoue ou soit retardée en cas de mauvais tirage :
 
     ```ts
     router.post("/", errorMiddleware, entropyMiddleware, async (ctx) => { }
