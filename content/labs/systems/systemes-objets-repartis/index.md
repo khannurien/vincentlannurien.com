@@ -432,6 +432,30 @@ router.get("/", (ctx) => {
     const createdAt = new Date().toISOString();
     ```
 
+    > Une fois que l'on a récupéré les valeurs envoyées par le client, on peut faire l'insertion en base de données :
+
+    ```ts
+    // On récupère le corps de la requête utilisateur, en JSON
+    const createPollRequest = await ctx.request.body.json();
+
+    // Attention : il faut ici valider les données envoyées par le client...
+    db.prepare(
+    `INSERT INTO polls (id, title, description, user_id, created_at, expires_at, is_active)
+      VALUES (?, ?, ?, ?, ?, ?, ?);`,
+    ).run(
+      pollId,
+      createPollRequest.title,
+      createPollRequest.description ?? null,
+      null, // TODO: Authentication, cf. TP 5
+      createdAt,
+      createPollRequest.expiresAt ?? null,
+      1,
+    );
+
+    // Ensuite, on procède aux insertions pour les options du sondage !
+    // À compléter...
+    ```
+
 ### Test fonctionnel
 
 1. Avec `curl` :
@@ -663,7 +687,7 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
 
     ```
 
-2. Créer le composant `index.tsx`, dans lequel on affichera la liste des sondages :
+2. Créer le composant `Index` (`src/pages/index.tsx`), dans lequel on affichera la liste des sondages :
     1. Utiliser `useState` pour initialiser la liste des sondages (elle sera toujours vide avant la première requête vers le serveur) et définir la fonction de mise à jour de l'état du composant ;
     2. Utiliser `useEffect` pour émetttre la requête HTTP nécessaire à récupérer les sondages depuis l'API et la passer à la fonction de mise à jour de l'état :
 
