@@ -14,6 +14,7 @@ tags:
 
 todo:
   - add final resources (slides, exercises)
+  - update figure 1 (add vite http server for client application)
 ---
 
 ![](./images/iot-philips.png)
@@ -154,23 +155,74 @@ import { DatabaseSync } from "node:sqlite";
 
 // ---------- Database -----------------------------------
 
-export const db = new DatabaseSync("polls.db");
+const db = new DatabaseSync("polls.db");
 
 // ---------- HTTP Router --------------------------------
 
 const router = new Router();
 
-// ---------- WebSocket Management -----------------------
+// ---------- Poll Management ----------------------------
 
-const clients = new Set<WebSocket>();
+// Create a new poll
+router.post("/polls", async (ctx) => {
+  // TODO: validate body, create poll
+});
 
-// ---------- API: Poll Management -----------------------
+// Get a single poll by ID
+router.get("/polls/:pollId", (ctx) => {
+  // TODO: fetch poll from DB
+});
 
-// ---------- API: Voting --------------------------------
+// List all polls
+router.get("/polls", (ctx) => {
+  // TODO: return polls list
+});
 
-// ---------- API: Poll Results --------------------------
+// Update a poll
+router.put("/polls/:pollId", async (ctx) => {
+  // TODO: update poll in DB
+});
 
-// ---------- API: Authentication / Users ----------------
+// Delete a poll
+router.delete("/polls/:pollId", (ctx) => {
+  // TODO: delete poll from DB
+});
+
+// ---------- Voting -------------------------------------
+
+// Upgrade HTTP to WebSocket
+router.get("/votes/:pollId", (ctx) => {
+  // TODO: create vote record, increment tally, idempotency
+});
+
+// ---------- Poll Results -------------------------------
+
+// Get aggregated results for a poll
+router.get("/polls/:pollId/results", (ctx) => {
+  // TODO: compute and return current tally
+});
+
+// ---------- Authentication / Users ---------------------
+
+// Register
+router.post("/users/register", (ctx) => {
+  // TODO: register user, return token
+});
+
+// Login
+router.post("/users/login", (ctx) => {
+  // TODO: authenticate user, return token
+});
+
+// Validate token
+router.get("/users/validate", (ctx) => {
+  // TODO: check token validity
+});
+
+// Get user profile
+router.get("/users/me", (ctx) => {
+  // TODO: check token validity
+});
 
 // ---------- Application --------------------------------
 
@@ -792,15 +844,140 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
     router.post("/", errorMiddleware, entropyMiddleware, async (ctx) => { }
     ```
 
-<div class="hidden">
 ---
 
 ## TP 4 : Mécanisme de vote en direct
 
-TODO: WebSocket
+On propose d'utiliser l'API WebSocket pour ouvrir un canal de communication bidirectionnelle entre les applications serveur et client.
 
-1. Implanter le mécanisme de vote dans le serveur
-2. Implanter le mécanisme de vote dans le client
+Deno offre une implantation de WebSocket, l'interface [`WebSocket`](https://docs.deno.com/api/web/~/WebSocket), dans sa bibliothèque standard. On va l'utiliser côté serveur.
+
+### Interfaces
+
+Il faut définir un langage commun pour que le serveur et le client puissent communiquer sur un WebSocket. On définit trois types de messages :
+- l'envoi d'un vote (`VoteCastMessage`) : envoyé par le client au serveur lors d'un vote de l'utilisateur ;
+- l'accusé de réception (`VoteAckMessage`) : retourné par le serveur au client lorsque son vote a été traité. Il peut comporter une erreur ;
+- la mise à jour du nombre de votes (`VotesUpdateMessage`) : diffusé par le serveur à tous les clients connectés à un sondage lors d'un changement du nombre de votes pour une option.
+
+```ts
+/**
+ * WebSockets
+ */
+
+// Request
+export interface VoteCastMessage {
+  type: "vote_cast";
+  pollId: string;
+  optionId: string;
+  userId?: string;
+}
+
+// Response: acknowledge
+export interface VoteAckMessage {
+  type: "vote_ack";
+  pollId: string;
+  optionId: string;
+  success: boolean;
+  error?: APIError;
+}
+
+// Response: votes update
+export interface VotesUpdateMessage {
+  type: "votes_update";
+  pollId: string;
+  optionId: string;
+  voteCount: number;
+}
+```
+
+### Côté serveur
+
+1. On commence par ajouter une route pour la gestion des votes (`routes/votes.ts`). La route inclut l'identifiant du sondage, car les clients s'abonnent à un canal *par sondage*. Cela permet de recevoir les mises à jour du nombre de votes pour toutes les options d'un sondage. L'API WebSocket est événementielle : on définit des *callbacks* à exécuter lors de la connexion, de la réception d'un message, de la déconnexion ainsi que de la réception d'une erreur.
+
+    ```ts
+    router.get("/votes/:pollId", errorMiddleware, (ctx) => {
+      const pollId = ctx.params.pollId;
+
+      if (!pollId) {
+        throw new APIException(APIErrorCode.NOT_FOUND, 404, "Poll not found");
+      }
+
+      if (!ctx.isUpgradable) {
+        throw new APIException(APIErrorCode.BAD_REQUEST, 400, "WebSocket required");
+      }
+
+      // On demande à HTTP de mettre à jour le protocole pour mettre en place une connexion WebSocket
+      const ws = ctx.upgrade();
+
+      ws.onopen = () => {
+        // À compléter...
+      };
+
+      ws.onmessage = (e) => {
+        const msg = JSON.parse(e.data);
+
+        // Il faut vérifier l'interface de `msg`...
+
+        if (msg.type === "vote_cast") {
+          // À compléter...
+        } else {
+          // À compléter...
+        }
+      };
+
+      ws.onclose = () => {
+        // À compléter...
+      }
+
+      ws.onerror = (e) => {
+        // À compléter...
+      }
+    }
+    ```
+
+2. Pour garder le code de la route succinct, on délègue la gestion des WebSockets à un service (`services/vote-service.ts`). Celui-ci stocke l'ensemble des connexions ouvertes dans une `Map`, pour diffuser à tous les clients connectés à un sondage donné les messages de mise à jour. Les fonctionnalités du service sont données telles que :
+    - la fonction `handleVoteMessage` est appelée lors de la réception d'un message de type `vote_cast`. Elle appelle la fonction `castVote` qui interagit avec la base de données ;
+    - la fonction `broadcast` est appelée pour diffuser les messages de mise à jour des compteurs de votes ;
+    - les fonctions `subscribe` et `unsubscribe` sont responsables de maintenir la `Map` des connexions en cours.
+
+    ```ts
+    // Poll ID vers WebSocket
+    const subscriptions = new Map<string, Set<WebSocket>>();
+
+    function castVote(
+      db: DatabaseSync,
+      pollId: string,
+      optionId: string,
+      userId?: string,
+    ): number {
+      // ...
+    }
+
+    export function subscribe(ws: WebSocket, pollId: string): void {
+      // ...
+    }
+
+    export function broadcast(pollId: string, message: VotesUpdateMessage): void {
+      // ...
+    }
+
+    export function handleVoteMessage(
+      db: DatabaseSync,
+      ws: WebSocket,
+      msg: VoteCastMessage,
+    ): void {
+      // ...
+    }
+
+    export function sendError(ws: WebSocket, exception: APIException): void {
+      // ...
+    }
+    ```
+
+<div class="hidden">
+### Côté client
+
+TODO: ...
 
 ___
 
