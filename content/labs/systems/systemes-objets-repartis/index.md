@@ -790,8 +790,8 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
         );
         ```
 
-3. Créer le composant `Poll.tsx` (sondage sélectionné) :
-    - S'appuyer sur les interfaces et *type guards* définis pour les objets de l'API : il faut copier dans le projet client les fichiers de types et *helpers* issus du projet serveur ;
+3. Créer le composant `Poll` (`src/pages/Poll.tsx`) dans lequel on affichera et interagira avec le sondage sélectionné :
+    - S'appuyer sur les interfaces et *type guards* définis pour les objets de l'API : il faut copier dans le projet client les fichiers de types et de fonctions *helpers* issus du projet serveur ;
     - Dans le composant :
       1. récupérer l'identifiant du sondage sélectionné *via* le routeur avec `useParams` :
 
@@ -799,11 +799,11 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
           const { selectedPoll } = useParams();
           ```
 
-      2. récupérer les valeurs depuis l'API avec `fetch` ;
+      2. récupérer, *via* `useEffect`, les valeurs depuis l'API avec `fetch` ;
       3. vérifier leur type avec un *type guard* ;
-      4. les afficher dans le code HTML du composant.
+      4. les afficher dans le code HTML retourné par le composant.
 
-4. Comment adapter l'affichage du composant aux situations suivantes :
+4. Adapter l'affichage du composant aux situations suivantes :
     - le sondage courant n'est pas encore chargé ;
     - le serveur ne répond pas ;
     - le sondage demandé n'existe pas.
@@ -848,7 +848,7 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
     }
     ```
 
-    Bien sûr, à ce stade on étudie un système "distribué" composé d'un serveur et d'un client déployés sur la même machine. La latence est donc virtuellement inexistante, de même que les pertes de conexion. Pour mieux visualiser ces phénomènes côté client, on peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
+    Bien sûr, à ce stade on étudie un système "distribué" composé d'un serveur et d'un client déployés sur la même machine. La latence est donc virtuellement inexistante, de même que les pertes de connexion. Pour mieux visualiser ces phénomènes côté client, on peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
 
       ```ts
       import { randomInt} from "node:crypto";
@@ -947,7 +947,7 @@ export interface VotesUpdateMessage {
       }
 
       // On demande à HTTP de mettre à jour le protocole pour mettre en place une connexion WebSocket
-      const ws = ctx.upgrade();
+      const ws: WebSocket = ctx.upgrade();
 
       ws.onopen = () => {
         // À compléter...
