@@ -808,6 +808,46 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
     - le serveur ne répond pas ;
     - le sondage demandé n'existe pas.
 
+    Pour simplifier le code du client, notamment en matière de gestion des dépendances (les effets sont déclenchés lors d'un changement d'état des variables dont ils dépendent), on peut utiliser le *pattern* suivant pour définir l'état d'un sondage :
+
+      ```tsx
+      type PollState =
+        | { status: "loading" }
+        | { status: "error"; error: string }
+        | { status: "loaded"; poll: Poll };
+
+      export default function Poll() {
+        const { selectedPoll } = useParams();
+
+        const [pollState, setPollState] = useState<PollState>({ status: "loading" });
+
+        useEffect(() => {
+          if (!selectedPoll) return;
+
+          setPollState({ status: "loading" });
+
+          (async () => {
+            try {
+              const resp = await fetch(`${API_URL}/polls/${selectedPoll}`);
+              if (!resp.ok) {
+                const json = await resp.json();
+                throw new Error(json.error?.message || `HTTP ${resp.status}`);
+              }
+
+              const json = await resp.json();
+              // Attention : il faut valider les données reçues
+              setPollState({ status: "loaded", poll: json.data });
+            } catch (err) {
+              setPollState({
+                status: "error",
+                error: err instanceof Error ? err.message : "Failed to load poll",
+              });
+            }
+          })();
+        }, [selectedPoll]); // Dépendance à `selectedPoll` : l'effet sera déclenché à nouveau lors d'une modification de l'état du sondage
+    }
+    ```
+
     Bien sûr, à ce stade on étudie un système "distribué" composé d'un serveur et d'un client déployés sur la même machine. La latence est donc virtuellement inexistante, de même que les pertes de conexion. Pour mieux visualiser ces phénomènes côté client, on peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
 
       ```ts
@@ -974,11 +1014,128 @@ export interface VotesUpdateMessage {
     }
     ```
 
-<div class="hidden">
 ### Côté client
 
-TODO: ...
+1. On met à jour le composant `Poll.tsx` avec de nouveaux effets, qui dépendent de l'état du sondage, et qui correspondent au cycle de vie d'un WebSocket :
 
+    ```tsx
+    // Connexion au WebSocket après chargement du sondage
+    useEffect(() => {
+      if (pollState.status !== "loaded") return;
+
+      connect(pollState.poll.id);
+
+      // Fonction de nettoyage : on retourne la fonction de déconnexion
+      return () => disconnect();
+    }, [pollState]);
+
+    // Réception d'un accusé de réception (après un vote)
+    useEffect(() => {
+      return onVoteAck((ack: VoteAckMessage) => {
+        if (!ack.success) {
+          setVoteError(ack.error?.message || "Vote failed");
+        }
+      });
+    }, []);
+
+    // Réception d'un message de mise à jour des compteurs de vote
+    useEffect(() => {
+      // On appelle la fonction `onVoteUpdate` du service de vote (cf. ci-dessous) en lui passant le message reçu
+      return onVoteUpdate((update: VotesUpdateMessage) => {
+        // On prend l'état local précédent du sondage
+        setPollState((prev) => {
+          if (prev.status !== "loaded") return prev;
+
+          // On met à jour l'état local courant du sondage
+          return {
+            ...prev,
+            poll: {
+              ...prev.poll,
+              options: prev.poll.options.map((opt) =>
+                opt.id === update.optionId
+                  ? { ...opt, voteCount: update.voteCount }
+                  : opt
+              ),
+            },
+          };
+        });
+      });
+    }, []); // Cet effet n'a pas de dépendances : `onVoteUpdate` enregistre un callback qui sera appelé par le service de vote à la réception d'un message 
+    ```
+
+2. De manière similaire au serveur, le composant appelle des fonctions issues d'un service (`services/vote.ts`) qui maintient l'état du WebSocket pendant son cycle de vie :
+
+    ```ts
+    import type { VoteAckMessage, VotesUpdateMessage } from "../model.ts";
+
+    // WebSocket et sondage courants initialisés à `null`
+    let ws: WebSocket | null = null;
+    let pollId: string | null = null;
+
+    // Ensembles des fonctions à appeler à la réception d'un message du serveur
+    const updateCallbacks = new Set<(update: VotesUpdateMessage) => void>();
+    const ackCallbacks = new Set<(ack: VoteAckMessage) => void>();
+
+    // Fonction de connexion : initialisation du WebSocket et définition de l'action à effectuer à la réception d'un message
+    export function connect(newPollId: string): void {
+      pollId = newPollId;
+
+      // On ferme un éventuel WebSocket précédent
+      if (ws) ws.close();
+
+      // Le protocole n'est plus HTTP !
+      ws = new WebSocket(`ws://localhost:8000/votes/${pollId}`);
+
+      // Événement : réception d'un message
+      ws.onmessage = (e) => {
+        // Attention : valider les données entrantes
+        const msg = JSON.parse(e.data);
+
+        // En fonction du type de message, on exécute les fonctions appropriées en leur passant le message reçu
+        if (msg.type === "votes_update") {
+          updateCallbacks.forEach((cb) => cb(msg));
+        } else if (msg.type === "vote_ack") {
+          ackCallbacks.forEach((cb) => cb(msg));
+        }
+      };
+    }
+
+    // Fonction de déconnexion : fermeture du WebSocket
+    export function disconnect(): void {
+      if (ws) ws.close();
+      ws = null;
+      pollId = null;
+    }
+
+    // Fonction de vote : envoi de messages de vote
+    export function vote(optionId: string): { success: boolean; error?: string } {
+      // Le WebSocket n'est pas ouvert
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        return { success: false, error: "Not connected" };
+      }
+
+      // Envoi du vote de l'utilisateur
+      ws.send(JSON.stringify({ type: "vote_cast", pollId, optionId }));
+
+      return { success: true };
+    }
+
+    // Réception d'une mise à jour des compteurs de votes
+    export function onVoteUpdate(
+      cb: (update: VotesUpdateMessage) => void,
+    ): () => void {
+      updateCallbacks.add(cb);
+      return () => updateCallbacks.delete(cb);
+    }
+
+    // Réception d'un accusé de réception du serveur
+    export function onVoteAck(cb: (ack: VoteAckMessage) => void): () => void {
+      ackCallbacks.add(cb);
+      return () => ackCallbacks.delete(cb);
+    }
+    ```
+
+<div class="hidden">
 ___
 
 ## TP 5 : Authentification
