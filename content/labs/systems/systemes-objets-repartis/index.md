@@ -904,7 +904,7 @@ Il faut définir un langage commun pour que le serveur et le client puissent com
  * WebSockets
  */
 
-// Request
+// Requête : vote de l'utilisateur
 export interface VoteCastMessage {
   type: "vote_cast";
   pollId: string;
@@ -912,7 +912,7 @@ export interface VoteCastMessage {
   userId?: string;
 }
 
-// Response: acknowledge
+// Réponse : accusé de réception
 export interface VoteAckMessage {
   type: "vote_ack";
   pollId: string;
@@ -921,7 +921,7 @@ export interface VoteAckMessage {
   error?: APIError;
 }
 
-// Response: votes update
+// Diffusion : compteurs de votes
 export interface VotesUpdateMessage {
   type: "votes_update";
   pollId: string;
@@ -934,15 +934,15 @@ Ces messages peuvent être sérialisés sous forme de chaînes de caractères po
 
 ```ts
 // Envoi (sérialisation)
-const obj_src: VoteCastMessage = {
+const objSrc: VoteCastMessage = {
   type: "vote_cast",
   pollId: "foo",
   optionId: "bar",
 };
-const str = JSON.stringify(obj_src);
+const str = JSON.stringify(objSrc);
 
 // Réception (désérialisation)
-const obj_dst = JSON.parse(str);
+const objDst = JSON.parse(str);
 ```
 
 ### Côté serveur
