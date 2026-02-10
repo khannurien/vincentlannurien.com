@@ -930,6 +930,21 @@ export interface VotesUpdateMessage {
 }
 ```
 
+Ces messages peuvent être sérialisés sous forme de chaînes de caractères pour être communiqués sur un WebSocket :
+
+```ts
+// Envoi (sérialisation)
+const obj_src: VoteCastMessage = {
+  type: "vote_cast",
+  pollId: "foo",
+  optionId: "bar",
+};
+const str = JSON.stringify(obj_src);
+
+// Réception (désérialisation)
+const obj_dst = JSON.parse(str);
+```
+
 ### Côté serveur
 
 1. On commence par ajouter une route pour la gestion des votes (`routes/votes.ts`). La route inclut l'identifiant du sondage, car les clients s'abonnent à un canal *par sondage*. Cela permet de recevoir les mises à jour du nombre de votes pour toutes les options d'un sondage. L'API WebSocket est événementielle : on définit des *callbacks* à exécuter lors de la connexion, de la réception d'un message, de la déconnexion ainsi que de la réception d'une erreur.
