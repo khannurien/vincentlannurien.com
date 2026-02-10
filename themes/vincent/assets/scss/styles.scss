@@ -243,15 +243,23 @@ hr {
 
 #content .flex {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   align-items: flex-start;
-  flex-wrap: wrap;
 }
 
 #content .flex .flex-item {
-  flex: 1;
+  flex-grow: var(--grow, 1);
+  flex-shrink: 1;
+  flex-basis: 0;
+  box-sizing: border-box;
 }
 
+@media (max-width: 864px) {
+  #content .flex .flex-item {
+    flex: 1 1 100%;
+  }
+}
 
 /*
  * Header

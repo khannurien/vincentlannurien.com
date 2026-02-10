@@ -851,7 +851,7 @@ Il permet par ailleurs de gérer les paramètres d'URL, les redirections, les pr
     Bien sûr, à ce stade on étudie un système "distribué" composé d'un serveur et d'un client déployés sur la même machine. La latence est donc virtuellement inexistante, de même que les pertes de connexion. Pour mieux visualiser ces phénomènes côté client, on peut ajouter au serveur un *middleware* qui provoque des délais et des erreurs aléatoirement :
 
       ```ts
-      import { randomInt} from "node:crypto";
+      import { randomInt } from "node:crypto";
 
       import { Context, Next } from "@oak/oak";
 
@@ -894,10 +894,18 @@ Deno offre une implantation de WebSocket, l'interface [`WebSocket`](https://docs
 
 ### Interfaces
 
+{{< flex columns="6, 3" >}}
+
 Il faut définir un langage commun pour que le serveur et le client puissent communiquer sur un WebSocket. On définit trois types de messages :
 - l'envoi d'un vote (`VoteCastMessage`) : envoyé par le client au serveur lors d'un vote de l'utilisateur ;
 - l'accusé de réception (`VoteAckMessage`) : retourné par le serveur au client lorsque son vote a été traité. Il peut comporter une erreur ;
 - la mise à jour du nombre de votes (`VotesUpdateMessage`) : diffusé par le serveur à tous les clients connectés à un sondage lors d'un changement du nombre de votes pour une option.
+
+---
+
+![](./images/websocket-tp.png)
+
+{{< /flex >}}
 
 ```ts
 /**
@@ -944,6 +952,8 @@ const str = JSON.stringify(objSrc);
 // Réception (désérialisation)
 const objDst = JSON.parse(str);
 ```
+
+
 
 ### Côté serveur
 

@@ -14,7 +14,7 @@ todo:
   - Ajout d'une section dédiée aux clefs SSH
 ---
 
-{{< flex >}}
+{{< flex columns="2, 5" >}}
 ![](../images/linus-torvalds.jpg)
 
 ---

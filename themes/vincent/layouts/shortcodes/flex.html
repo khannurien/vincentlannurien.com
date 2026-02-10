@@ -1,8 +1,11 @@
+{{ $columns := .Get "columns" | default "" }}
+{{ $blocks := split .Inner "---" }}
+
 <div class="flex">
-  {{ $blocks := split .Inner "---" }}
-  {{ range $blocks }}
-  <div class="flex-item">
-    {{ . | markdownify }}
-  </div>
+  {{ range $index, $block := $blocks }}
+    {{ $grow := index (split $columns ",") $index | default "1" }}
+    <div class="flex-item" style="--grow: {{ $grow }};">
+      {{ $block | markdownify }}
+    </div>
   {{ end }}
 </div>
