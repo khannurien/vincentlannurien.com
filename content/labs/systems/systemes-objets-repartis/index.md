@@ -1006,11 +1006,12 @@ const objDst = JSON.parse(str);
     - les fonctions `subscribe` et `unsubscribe` sont responsables de maintenir la `Map` des connexions en cours.
 
     ```ts
-    // Poll ID vers WebSocket
+    // Poll ID vers liste de WebSockets uniques
     const subscriptions = new Map<string, Set<WebSocket>>();
 
+    // Fonction d'écriture d'un vote en base de données
+    // Retourne le compteur de votes mis à jour pour l'option choisie
     function castVote(
-      db: DatabaseSync,
       pollId: string,
       optionId: string,
       userId?: string,
@@ -1018,24 +1019,41 @@ const objDst = JSON.parse(str);
       // ...
     }
 
+    // Ajout d'un client à la liste des WebSockets ouverts pour un sondage donné
     export function subscribe(ws: WebSocket, pollId: string): void {
       // ...
     }
 
-    export function broadcast(pollId: string, message: VotesUpdateMessage): void {
+    // Retrait d'un client à la liste des WebSockets ouverts pour un sondage donné
+    export function unsubscribe(ws: WebSocket, pollId: string): void {
       // ...
     }
 
+    // Fonction appelée à la réception d'un message `vote_cast` sur un WebSocket
+    // Retourne un message `vote_ack` au client responsable du vote
+    // Appelle `broadcast` pour diffuser un message `votes_update` à tous les clients connectés à un sondage donné
     export function handleVoteMessage(
-      db: DatabaseSync,
       ws: WebSocket,
       msg: VoteCastMessage,
     ): void {
       // ...
     }
 
-    export function sendError(ws: WebSocket, exception: APIException): void {
+    // Diffuse un message `votes_update` à tous les clients connectés à un sondage donné
+    export function broadcast(pollId: string, message: VotesUpdateMessage): void {
       // ...
+    }
+
+    // Fonction utilisée pour retourner un message d'erreur au client
+    export function sendError(ws: WebSocket, exception: APIException): void {
+      ws.send(JSON.stringify({
+        type: "vote_ack",
+        success: false,
+        error: {
+          code: exception.code,
+          message: exception.message,
+        },
+      }));
     }
     ```
 
