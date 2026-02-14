@@ -1189,6 +1189,7 @@ const objDst = JSON.parse(str);
     }
     ```
 
+<div class="hidden">
 ___
 
 ## TP 5 : Authentification
@@ -1318,7 +1319,6 @@ TODO: Grâce à l'ajout des utilisateurs et de l'authentification, on peut ajout
 
 1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
 
-<div class="hidden">
 ___
 
 ## TP 6 : Déploiement
