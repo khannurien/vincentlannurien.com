@@ -1069,7 +1069,7 @@ const objDst = JSON.parse(str);
 
 1. Le cycle de vie du WebSocket doit être lié au cycle de vie du composant `Poll` : l'instanciation du WebSocket a lieu lors du montage du composant, et sa fermeture est garantie par la fonction de nettoyage retournée par `useEffect`.
 
-    On met en œuvre ce *hook* dans le composant `Poll.tsx` en définissant deux *callbacks* qui implantent le comportement à adopter en cas de réception de messages `vote_ack` ou bien `votes_update`. Le *hook* retourne une fonction `vote` que l'on pourra appeler dans le composant pour envoyer un message `vote_cast` :
+    On met en œuvre ce mécanisme dans le composant `Poll.tsx` en définissant deux *callbacks* qui implantent le comportement à adopter en cas de réception de messages `vote_ack` ou bien `votes_update` :
 
     ```ts
     // On définit la fonction à exécuter à la réception d'un message `votes_update`
@@ -1100,15 +1100,16 @@ const objDst = JSON.parse(str);
       }
     }, []);
 
-    // On initialise le hook `useVoteSocket` qui se déclenchera à la réception de tout message
+    // On initialise le hook `useVoteSocket` qui se déclenchera à la réception de tout message (voir étape suivante dans le sujet)
     // On lui passe l'identifiant du sondage courant, et les méthodes à aossier aux deux types de message
+    // La fonction `vote` qu'il retourne doit être utilisée dans le composant pour envoyer un vote (lorsque l'utilisateur sélectionne une option de sondage)
     const { vote } = useVoteSocket(selectedPoll, {
       onUpdate: handleUpdate,
       onAck: handleAck,
     });
     ```
 
-2. On définit un *hook* React (`hooks/useVoteSocket.ts`) qui encapsule la gestion des communications en maintenant une référence (`useRef`) au WebSocket courant. Ce mécanisme permet de réagir à la réception d'un message en appelant les fonctions `onUpdate` ou `onAck`, en fonction du type de message transmis par le serveur :
+2. Pour garder le code du composant succinct, on définit les effets dans un *hook* React (`hooks/useVoteSocket.ts`) qui encapsule la gestion des communications en maintenant une référence (`useRef`) au WebSocket courant. Ce mécanisme permet de réagir à la réception d'un message en appelant les fonctions `onUpdate` ou `onAck`, en fonction du type de message transmis par le serveur :
 
     ```ts
     import { useEffect, useRef } from "react";
@@ -1183,11 +1184,11 @@ const objDst = JSON.parse(str);
         return { success: true };
       };
 
+      // Le hook retourne une fonction `vote` que l'on appelle dans le composant pour envoyer un message `vote_cast`
       return { vote };
     }
     ```
 
-<div class="hidden">
 ___
 
 ## TP 5 : Authentification
@@ -1317,6 +1318,7 @@ TODO: Grâce à l'ajout des utilisateurs et de l'authentification, on peut ajout
 
 1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
 
+<div class="hidden">
 ___
 
 ## TP 6 : Déploiement
