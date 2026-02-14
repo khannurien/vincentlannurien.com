@@ -1194,12 +1194,30 @@ ___
 
 ## TP 5 : Authentification
 
-TODO: Interfaces, partagées entre le serveur et le client
-- `User`
-- `LoginRequest` : DTO
-- `RegisterRequest` : DTO
-- `AuthResponse` : 
-- `AuthPayload` : 
+{{< flex columns="6, 4" >}}
+
+Dans ce TP, nous allons ajouter à notre application la gestion des utilisateurs et de leur authentification. Il sera possible d'empêcher l'accès à certaines fonctionnalités aux utilisateurs qui ne seraient pas connectés.
+
+Pour cela, on utilisera un mécanisme de jeton de connexion, *JWT* (pour *JSON Web Tokens*).
+
+---
+
+![](./images/authentication-tp.png)
+
+{{< /flex >}}
+
+On commence par détailler l'ensemble des structures de données que l'on va manipuler, aussi bien côté serveur et que côté client, pour la fonctionnalité d'authentification.
+
+Voici les interfaces partagées entre le serveur et le client :
+
+- `User` : un utilisateur (côté serveur, il faut aussi son pendant base de données, `UserRow`) ;
+- `LoginRequest` : *Data Transfer Object* (*DTO*) qui contient les informations requises pour une connexion utilisateur ;
+- `RegisterRequest` : *DTO* qui contient les informations requises pour l'enregistrement d'un nouvel utilisateur ;
+- `AuthResponse` : réponse du serveur en cas d'authentification réussie ; comporte une structure `User` ainsi qu'un jeton *JWT*.
+
+Côté serveur :
+
+- `AuthPayload` : le contenu décodé du jeton, signé cryptographiquement. On y retrouve l'identifiant unique de l'utilisateur, son nom, son niveau de permissions ainsi qu'un champ `exp` donnant la date d'expiration du jeton.
 
 ```ts
 /**
@@ -1229,6 +1247,7 @@ export interface AuthResponse {
   user: User;
 }
 
+// Côté serveur
 export interface AuthPayload {
   userId: string;
   username: string;
@@ -1239,11 +1258,13 @@ export interface AuthPayload {
 
 ### Côté serveur
 
-TODO:
-- module `lib/jwt.ts` :
-- ...
+Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification côté serveur :
 
-1. Écrire la fonction `verifyJWT` du module `jwt.ts` donné ci-dessous :
+- `lib/jwt.ts` : module de gestion des jetons (création et vérification d'un jeton) et des mots de passe (hashage et vérification d'un mot de passe). S'appuie sur la bibliothèque cryptographique de Node ;
+- `middleware/auth.ts` : ajouté à la chaîne de middlewares des routes à protéger, il vérifie la présence et la validité de l'en-tête `Authorization` des requêtes reçues. Si le jeton transmis par le client est valide, la requête est validée et son contexte est augmenté des informations de l'utilisateur ;
+- `routes/users.ts` : définit les routes de gestion des utilisateurs (CRUD) ainsi que de connexion et déconnexion.
+
+1. Compléter la fonction `verifyJWT` du module `jwt.ts` donné ci-dessous :
 
     ```ts
     import { randomBytes, scrypt } from "node:crypto";
@@ -1302,12 +1323,91 @@ TODO:
     }
     ```
 
+2. ...
+
+    ```ts
+    import { Context, Next, State } from "@oak/oak";
+    import { verifyJWT } from "../lib/jwt.ts";
+    import { APIErrorCode, type AuthPayload } from "../model/interfaces.ts";
+
+    // ...
+    export interface AuthContext extends Context {
+      state: AuthState;
+    }
+
+    // ...
+    export interface AuthState extends State {
+      user?: AuthPayload;
+    }
+
+    // ...
+    export async function authMiddleware(ctx: AuthContext, next: Next) {
+      // ...
+      const authHeader = ctx.request.headers.get("Authorization");
+
+      // ...
+      if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        ctx.response.status = 401;
+        ctx.response.body = {
+          success: false,
+          error: {
+            code: APIErrorCode.UNAUTHORIZED,
+            message: "Missing or invalid token",
+          },
+        };
+        return;
+      }
+
+      // ...
+      const token = authHeader.substring(7);
+      const payload = await verifyJWT(token);
+
+      // ...
+      if (!payload) {
+        ctx.response.status = 401;
+        ctx.response.body = {
+          success: false,
+          error: { code: APIErrorCode.UNAUTHORIZED, message: "Invalid token" },
+        };
+        return;
+      }
+
+      // ...
+      ctx.state.user = payload;
+
+      // ...
+      await next();
+    }
+    ```
+
+3. ...
+
+    ```ts
+    // ...
+    router.post("/register", async (ctx) => {
+      // ...
+    }
+
+    // ...
+    router.post("/login", async (ctx) => {
+      // ...
+    }
+
+    // ...
+    router.get("/me", authMiddleware, (ctx: AuthContext) => {
+      // ...
+    }
+    ```
+
 ### Côté client
 
-TODO:
-- `contexts/`
-- `hooks/`
-- ...
+Pour bien comprendre la séparation des responsabilités, on crée plusieurs fichiers dans l'application React :
+
+- `contexts/AuthContext.ts` : "conteneur de l'état", fournit l'interface qui définit le contexte d'identification courant (c'est-à-dire l'utilisateur et le token retournés par le serveur après une connexion réussie). Permet d'accéder à l'état du contexte, et retourne une fonction qui permet de le modifier ;
+- `contexts/AuthProvider.tsx` : composant *wrapper* qui englobe toute l'application et qui maintient effectivement l'état de ce contexte (en faisant appel à `useState`). Il est responsable de passer l'état de l'authentification à tous les composants enfants ;
+- `hooks/useAuth.ts` : "accesseur / mutateur de l'état", lit le contexte d'authentification et fournit les méthodes pour agir dessus (`login`, `logout`). Fournit également une fonction *helper* `authFetch` qui ajoute l'en-tête `Authorization` aux requêtes HTTP `fetch` vers le serveur nécessitant d'être authentifié ;
+- `pages/Login.tsx` : composant point d'entrée pour la connexion d'un utilisateur : affiche un formulaire (nom d'utilisateur, mot de passe), envoie la requête de connexion au serveur, reçoit `AuthResponse` et appelle `login` pour mettre à jour le contexte d'authentification dans toute l'application ;
+- `pages/Restricted.tsx` : composant *wrapper* qui englobe toute page de l'application accessible seulement par les utilisateurs authentifiés. Bloque la navigation si l'utilisateur n'est pas connecté.
 
 1. ...
 2. ...
@@ -1315,7 +1415,7 @@ TODO:
 
 ### Nouvelles fonctionnalités
 
-TODO: Grâce à l'ajout des utilisateurs et de l'authentification, on peut ajouter de nouvelles fonctionnalités à l'application
+TODO: Grâce à l'ajout des utilisateurs et de l'authentification, on peut intégrer de nouvelles fonctionnalités à l'application
 
 1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
 
