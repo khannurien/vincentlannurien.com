@@ -594,7 +594,7 @@ router.get("/", (ctx) => {
       ```ts
       import { Context, Next } from "@oak/oak";
 
-      import { APIErrorCode, APIException, APIFailure } from "../model/interfaces.ts";
+      import { APIErrorCode, APIException, type APIFailure } from "../model/interfaces.ts";
 
       export async function errorMiddleware(ctx: Context, next: Next) {
         try {
@@ -921,13 +921,23 @@ export interface VoteCastMessage {
 }
 
 // Réponse : accusé de réception
-export interface VoteAckMessage {
+export interface VoteAckMessageFailure {
   type: "vote_ack";
   pollId: string;
   optionId: string;
-  success: boolean;
-  error?: APIError;
+  success: false;
+  error: APIError;
 }
+
+export interface VoteAckMessageSuccess {
+  type: "vote_ack";
+  pollId: string;
+  optionId: string;
+  success: true;
+  error?: never;
+}
+
+export type VoteAckMessage = VoteAckMessageFailure | VoteAckMessageSuccess;
 
 // Diffusion : compteurs de votes
 export interface VotesUpdateMessage {
@@ -952,8 +962,6 @@ const str = JSON.stringify(objSrc);
 // Réception (désérialisation)
 const objDst = JSON.parse(str);
 ```
-
-
 
 ### Côté serveur
 
@@ -1059,122 +1067,123 @@ const objDst = JSON.parse(str);
 
 ### Côté client
 
-1. On met à jour le composant `Poll.tsx` avec de nouveaux effets, qui dépendent de l'état du sondage, et qui correspondent au cycle de vie d'un WebSocket :
+1. Le cycle de vie du WebSocket doit être lié au cycle de vie du composant `Poll` : l'instanciation du WebSocket a lieu lors du montage du composant, et sa fermeture est garantie par la fonction de nettoyage retournée par `useEffect`.
 
-    ```tsx
-    // Connexion au WebSocket après chargement du sondage
-    useEffect(() => {
-      if (pollState.status !== "loaded") return;
-
-      connect(pollState.poll.id);
-
-      // Fonction de nettoyage : on retourne la fonction de déconnexion
-      return () => disconnect();
-    }, [pollState]);
-
-    // Réception d'un accusé de réception (après un vote)
-    useEffect(() => {
-      return onVoteAck((ack: VoteAckMessage) => {
-        if (!ack.success) {
-          setVoteError(ack.error?.message || "Vote failed");
-        }
-      });
-    }, []);
-
-    // Réception d'un message de mise à jour des compteurs de vote
-    useEffect(() => {
-      // On appelle la fonction `onVoteUpdate` du service de vote (cf. ci-dessous) en lui passant le message reçu
-      return onVoteUpdate((update: VotesUpdateMessage) => {
-        // On prend l'état local précédent du sondage
-        setPollState((prev) => {
-          if (prev.status !== "loaded") return prev;
-
-          // On met à jour l'état local courant du sondage
-          return {
-            ...prev,
-            poll: {
-              ...prev.poll,
-              options: prev.poll.options.map((opt) =>
-                opt.id === update.optionId
-                  ? { ...opt, voteCount: update.voteCount }
-                  : opt
-              ),
-            },
-          };
-        });
-      });
-    }, []); // Cet effet n'a pas de dépendances : `onVoteUpdate` enregistre un callback qui sera appelé par le service de vote à la réception d'un message 
-    ```
-
-2. De manière similaire au serveur, le composant appelle des fonctions issues d'un service (`services/vote.ts`) qui maintient l'état du WebSocket pendant son cycle de vie :
+    On met en œuvre ce *hook* dans le composant `Poll.tsx` en définissant deux *callbacks* qui implantent le comportement à adopter en cas de réception de messages `vote_ack` ou bien `votes_update`. Le *hook* retourne une fonction `vote` que l'on pourra appeler dans le composant pour envoyer un message `vote_cast` :
 
     ```ts
-    import type { VoteAckMessage, VotesUpdateMessage } from "../model.ts";
+    // On définit la fonction à exécuter à la réception d'un message `votes_update`
+    const handleUpdate = useCallback((update: VotesUpdateMessage) => {
+      setPollState((prev) => {
+        if (prev.status !== "loaded") return prev;
 
-    // WebSocket et sondage courants initialisés à `null`
-    let ws: WebSocket | null = null;
-    let pollId: string | null = null;
+        return {
+          ...prev,
+          poll: {
+            ...prev.poll,
+            options: prev.poll.options.map((opt) =>
+              opt.id === update.optionId
+                ? { ...opt, voteCount: update.voteCount }
+                : opt
+            ),
+          },
+        };
+      });
 
-    // Ensembles des fonctions à appeler à la réception d'un message du serveur
-    const updateCallbacks = new Set<(update: VotesUpdateMessage) => void>();
-    const ackCallbacks = new Set<(ack: VoteAckMessage) => void>();
+      setAnimatingOptionId(update.optionId);
+    }, []);
 
-    // Fonction de connexion : initialisation du WebSocket et définition de l'action à effectuer à la réception d'un message
-    export function connect(newPollId: string): void {
-      pollId = newPollId;
-
-      // On ferme un éventuel WebSocket précédent
-      if (ws) ws.close();
-
-      // Le protocole n'est plus HTTP !
-      ws = new WebSocket(`ws://localhost:8000/votes/${pollId}`);
-
-      // Événement : réception d'un message
-      ws.onmessage = (e) => {
-        // Attention : valider les données entrantes
-        const msg = JSON.parse(e.data);
-
-        // En fonction du type de message, on exécute les fonctions appropriées en leur passant le message reçu
-        if (msg.type === "votes_update") {
-          updateCallbacks.forEach((cb) => cb(msg));
-        } else if (msg.type === "vote_ack") {
-          ackCallbacks.forEach((cb) => cb(msg));
-        }
-      };
-    }
-
-    // Fonction de déconnexion : fermeture du WebSocket
-    export function disconnect(): void {
-      if (ws) ws.close();
-      ws = null;
-      pollId = null;
-    }
-
-    // Fonction de vote : envoi de messages de vote
-    export function vote(optionId: string): { success: boolean; error?: string } {
-      // Le WebSocket n'est pas ouvert
-      if (!ws || ws.readyState !== WebSocket.OPEN) {
-        return { success: false, error: "Not connected" };
+    // On définit la fonction à exécuter à la réception d'un accusé de réception `vote_ack`
+    const handleAck = useCallback((ack: VoteAckMessage) => {
+      if (!ack.success) {
+        setVoteError(ack.error.message);
       }
+    }, []);
 
-      // Envoi du vote de l'utilisateur
-      ws.send(JSON.stringify({ type: "vote_cast", pollId, optionId }));
+    // On initialise le hook `useVoteSocket` qui se déclenchera à la réception de tout message
+    // On lui passe l'identifiant du sondage courant, et les méthodes à aossier aux deux types de message
+    const { vote } = useVoteSocket(selectedPoll, {
+      onUpdate: handleUpdate,
+      onAck: handleAck,
+    });
+    ```
 
-      return { success: true };
-    }
+2. On définit un *hook* React (`hooks/useVoteSocket.ts`) qui encapsule la gestion des communications en maintenant une référence (`useRef`) au WebSocket courant. Ce mécanisme permet de réagir à la réception d'un message en appelant les fonctions `onUpdate` ou `onAck`, en fonction du type de message transmis par le serveur :
 
-    // Réception d'une mise à jour des compteurs de votes
-    export function onVoteUpdate(
-      cb: (update: VotesUpdateMessage) => void,
-    ): () => void {
-      updateCallbacks.add(cb);
-      return () => updateCallbacks.delete(cb);
-    }
+    ```ts
+    import { useEffect, useRef } from "react";
 
-    // Réception d'un accusé de réception du serveur
-    export function onVoteAck(cb: (ack: VoteAckMessage) => void): () => void {
-      ackCallbacks.add(cb);
-      return () => ackCallbacks.delete(cb);
+    import type { VoteAckMessage, VotesUpdateMessage } from "../model.ts";
+    import { WS_URL } from "../config/api.ts";
+
+    // Définition du hook, qui prend en paramètre l'identifiant du sondage courant, et les deux fonctions à exécuter à la réception de messages du serveur (respectivement `votes_update` et `vote_ack`)
+    export function useVoteSocket(
+      pollId: string | undefined,
+      {
+        onUpdate,
+        onAck,
+      }: {
+        onUpdate?: (msg: VotesUpdateMessage) => void;
+        onAck?: (msg: VoteAckMessage) => void;
+      },
+    ) {
+      // Le hook maintient une référence au WebSocket courant
+      const socketRef = useRef<WebSocket | null>(null);
+
+      // L'effet sera déclenché en fonction de ses dépendances :
+      // - à tout changement de sondage courant (`pollId`) : le client se connecte à/se déconnecte d'un WebSocket par sondage ;
+      // - à tout changement des fonctions `onUpdate` et `onAck` : ces fonctions capturent l'état du composant, elles sont donc recréées à chaque rendu
+      useEffect(() => {
+        if (!pollId) return;
+
+        // On ouvre un WebSocket sur le canal du sondage courant
+        const ws = new WebSocket(`${WS_URL}/votes/${pollId}`);
+        socketRef.current = ws;
+
+        // Événement : lors de la réception d'un message, on exécute la fonction appropriée en fonction de son type
+        ws.onmessage = (e) => {
+          const msg = JSON.parse(e.data);
+
+          if (msg.type === "votes_update" && onUpdate) {
+            onUpdate(msg);
+          }
+
+          if (msg.type === "vote_ack" && onAck) {
+            onAck(msg);
+          }
+        };
+
+        // Fonction de nettoyage exécutée au démontage du composant :
+        // On déconnecte le client du WebSocket
+        return () => {
+          ws.close();
+          socketRef.current = null;
+        };
+      }, [pollId, onUpdate, onAck]); // Dépendances de l'effet
+
+      // Fonction retournée par le hook : envoi d'un vote
+      // Envoi par le client d'un message `vote_cast` au serveur
+      const vote = (optionId: string) => {
+        // On récupère le WebSocket courant
+        const ws = socketRef.current;
+
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+          return { success: false, error: "Not connected" };
+        }
+
+        // On envoie le message sur le WebSocket
+        ws.send(
+          JSON.stringify({
+            type: "vote_cast",
+            pollId,
+            optionId,
+          }),
+        );
+
+        return { success: true };
+      };
+
+      return { vote };
     }
     ```
 
@@ -1183,22 +1192,130 @@ ___
 
 ## TP 5 : Authentification
 
+TODO: Interfaces, partagées entre le serveur et le client
+- `User`
+- `LoginRequest` : DTO
+- `RegisterRequest` : DTO
+- `AuthResponse` : 
+- `AuthPayload` : 
+
+```ts
+/**
+ * Authentification
+ */
+
+export interface User {
+  id: string;
+  username: string;
+  isAdmin: boolean;
+  createdAt: string;
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  username: string;
+  password: string;
+  isAdmin?: boolean;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
+export interface AuthPayload {
+  userId: string;
+  username: string;
+  isAdmin: boolean;
+  exp: number;
+}
+```
+
 ### Côté serveur
 
-1. Écrire un module `jwt.ts` comprenant les fonctions suivantes :
+TODO:
+- module `lib/jwt.ts` :
+- ...
+
+1. Écrire la fonction `verifyJWT` du module `jwt.ts` donné ci-dessous :
 
     ```ts
-    export async function createJWT(...): Promise<string>;
-    export async function verifyJWT(...): Promise<AuthPayload | null>;
-    export async function hashPassword(password: string): Promise<string>;
-    export async function verifyPassword(password: string, hash: string): Promise<boolean>;
+    import { randomBytes, scrypt } from "node:crypto";
+    import { jwtVerify, SignJWT } from "@panva/jose";
+
+    import { type AuthPayload, isAuthPayload } from "../model/interfaces.ts";
+
+    const JWT_SECRET = "tp-M1-SOR-2026";
+    const JWT_KEY = new TextEncoder().encode(JWT_SECRET);
+
+    // Crée un jeton d'authentification
+    // Le jeton est hashé avec l'algorithme HMAC avec SHA-256 et une clef secrète
+    // Le jeton est valide pendant 24 heures et attribué à l'utilisateur contenu dans `payload`
+    export async function createJWT(
+      payload: Omit<AuthPayload, "exp">,
+    ): Promise<string> {
+      return await new SignJWT(payload)
+        .setProtectedHeader({ alg: "HS256" })
+        .setExpirationTime("24h")
+        .sign(JWT_KEY);
+    }
+
+    // Passe le jeton à la fonction `verify` de la bibliothèque de JSON Web Tokens `djwt`
+    // Valide le type de l'objet retourné par `verify`, qui doit être conforme à `AuthPayload`
+    // Retourne le payload s'il est valide, `null` sinon
+    export async function verifyJWT(token: string): Promise<AuthPayload | null> {
+      // À compléter...
+    }
+
+    // Produit le hash d'un mot de passe donné en paramètre
+    // Format : hash.salt
+    export function hashPassword(password: string): Promise<string> {
+      const salt = randomBytes(16).toString("hex");
+
+      return new Promise((resolve, reject) => {
+        scrypt(password, salt, 64, (err, derivedKey) => {
+          if (err) reject(err);
+          else resolve(`${derivedKey.toString("hex")}.${salt}`);
+        });
+      });
+    }
+
+    // Compare le mot de passe et le hash passés en paramètres, en ré-hashant le mot de passe
+    export function verifyPassword(
+      password: string,
+      storedHash: string,
+    ): Promise<boolean> {
+      const [hash, salt] = storedHash.split(".");
+
+      return new Promise((resolve, reject) => {
+        scrypt(password, salt, 64, (err, derivedKey) => {
+          if (err) reject(err);
+          else resolve(hash === derivedKey.toString("hex"));
+        });
+      });
+    }
     ```
 
 ### Côté client
 
-1. Créer un composant pour la connexion utilisateur
+TODO:
+- `contexts/`
+- `hooks/`
+- ...
 
-2. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
+1. ...
+2. ...
+3. Créer un composant pour la connexion d'un utilisateur
+
+### Nouvelles fonctionnalités
+
+TODO: Grâce à l'ajout des utilisateurs et de l'authentification, on peut ajouter de nouvelles fonctionnalités à l'application
+
+1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
 
 ___
 
