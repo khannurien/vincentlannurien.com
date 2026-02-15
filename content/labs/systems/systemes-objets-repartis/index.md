@@ -1194,17 +1194,72 @@ ___
 
 ## TP 5 : Authentification
 
+### Fonctionnement général
+
 {{< flex columns="6, 4" >}}
 
 Dans ce TP, nous allons ajouter à notre application la gestion des utilisateurs et de leur authentification. Il sera possible d'empêcher l'accès à certaines fonctionnalités aux utilisateurs qui ne seraient pas connectés.
 
-Pour cela, on utilisera un mécanisme de jeton de connexion, *JWT* (pour *JSON Web Tokens*).
+Pour cela, on utilisera un mécanisme de jeton de connexion, *JWT* (pour *JSON Web Tokens*). Il est dit *sans état*, c'est-à-dire que le serveur ne maintient pas de session en mémoire. Le client doit authentifier chacune de ses requêtes en y joignant un jeton valide, généré par le serveur pour une période de validité donnée.
 
 ---
 
 ![](./images/authentication-tp.png)
 
 {{< /flex >}}
+
+1. Lors d'une connexion, le serveur vérifie les identifiants transmis par l'utilisateur, puis crée et signe cryptographiquement un jeton. Il le retourne au client.
+
+    Un jeton contient trois champs : l'en-tête, le corps (payload) et la signature, qui est chiffrée (`Chiffrement(En-tête + Corps) = Signature`).
+
+2. Le client peut ensuite ajouter ce jeton au corps des requêtes qu'il envoie vers le serveur.
+
+3. Le serveur vérifie le jeton : d'abord, il utilise l'algorithme de chiffrement indiqué par l'en-tête du jeton pour déchiffrer la signature avec sa clef privée. Ensuite, il chiffre à son tour l'en-tête et le corps du jeton et vérifie que le résultat est indentique à la signature.
+
+4. Le client est alors *authentifié*, et peut recevoir l'autorisation d'accéder à la ressource demandée.
+
+Voici un exemple de requête de connexion émise avec `curl` :
+
+```sh
+curl -X POST http://localhost:8000/users/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testuser",
+    "password": "SecurePass123!"
+  }'
+```
+
+La réponse du serveur doit comporter le token généré pour l'utilisateur :
+
+```json
+{
+  "success": true,
+  "data": {
+    "token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMTgwZjM4Mi1lMGU4LTQyY2MtODMxNi1jN2FhNGU2N2ExYzMiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImV4cCI6MTc3MTI2OTE3N30.dXG1iSse5fJ1z7KaBGXOo3M6fyNuf-0oo1LVQJpChAY",
+    "user": {
+      "id": "1180f382-e0e8-42cc-8316-c7aa4e67a1c3",
+      "username": "testuser",
+      "isAdmin": false,
+      "createdAt": "2026-02-12T12:52:05.324Z"
+    }
+  }
+}
+```
+
+Pour authentifier ses requêtes, le client y adjoint son jeton dans un en-tête *Authorization*. Le jeton est précédé du mot-clef *Bearer* :
+
+```sh
+curl -X GET http://ubordinateur:8000/users/validate \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIxMTgwZjM4Mi1lMGU4LTQyY2MtODMxNi1jN2FhNGU2N2ExYzMiLCJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImV4cCI6MTc3MTI2OTE3N30.dXG1iSse5fJ1z7KaBGXOo3M6fyNuf-0oo1LVQJpChAY"
+```
+
+Après l'avoir décodé, voici ce que retrouve le serveur dans ce jeton :
+
+![](./images/jwt-decoded.png)
+
+[JWT Debugger](https://www.jwt.io/)
+
+### Structures de données
 
 On commence par détailler l'ensemble des structures de données que l'on va manipuler, aussi bien côté serveur et que côté client, pour la fonctionnalité d'authentification.
 
