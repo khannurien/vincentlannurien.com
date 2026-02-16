@@ -1409,6 +1409,7 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
             message: "Missing or invalid token",
           },
         };
+
         return;
       }
 
@@ -1423,6 +1424,7 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
           success: false,
           error: { code: APIErrorCode.UNAUTHORIZED, message: "Invalid token" },
         };
+
         return;
       }
 
@@ -1456,27 +1458,165 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
 
     > De manière similaire à ce que l'on a fait pour les sondages et les votes, on peut créer un service (`services/users.ts`) qui centralise les fonctions en lien avec la gestion des utilisateurs. Cela permettra de garder le code des routes succinct.
 
-<div class="hidden">
-
 ### Côté client
 
-Pour bien comprendre la séparation des responsabilités, on crée plusieurs fichiers dans l'application React :
+Pour bien comprendre la séparation des responsabilités, on crée plusieurs fichiers dans l'application React. Les trois premiers sont donnés ci-dessous :
 
 - `contexts/AuthContext.ts` : "conteneur de l'état", fournit l'interface qui définit le contexte d'identification courant (c'est-à-dire l'utilisateur et le token retournés par le serveur après une connexion réussie). Permet d'accéder à l'état du contexte, et retourne une fonction qui permet de le modifier ;
-- `contexts/AuthProvider.tsx` : composant *wrapper* qui englobe toute l'application et qui maintient effectivement l'état de ce contexte (en faisant appel à `useState`). Il est responsable de passer l'état de l'authentification à tous les composants enfants ;
-- `hooks/useAuth.ts` : "accesseur / mutateur de l'état", lit le contexte d'authentification et fournit les méthodes pour agir dessus (`login`, `logout`). Fournit également une fonction *helper* `authFetch` qui ajoute l'en-tête `Authorization` aux requêtes HTTP `fetch` vers le serveur nécessitant d'être authentifié ;
-- `pages/Login.tsx` : composant point d'entrée pour la connexion d'un utilisateur : affiche un formulaire (nom d'utilisateur, mot de passe), envoie la requête de connexion au serveur, reçoit `AuthResponse` et appelle `login` pour mettre à jour le contexte d'authentification dans toute l'application ;
-- `pages/Restricted.tsx` : composant *wrapper* qui englobe toute page de l'application accessible seulement par les utilisateurs authentifiés. Bloque la navigation si l'utilisateur n'est pas connecté.
 
-1. ...
-2. ...
-3. Créer un composant pour la connexion d'un utilisateur
+    ```ts
+    import { createContext } from "react";
+
+    import { type AuthResponse } from "../model.ts";
+
+    export interface AuthContextValue {
+      authResponse: AuthResponse | null;
+      setAuthResponse: (authResponse: AuthResponse | null) => void;
+    }
+
+    export const AuthContext = createContext<AuthContextValue>({
+      authResponse: null,
+      setAuthResponse: () => {},
+    });
+    ```
+
+- `contexts/AuthProvider.tsx` : composant *wrapper* qui englobe toute l'application et qui maintient effectivement l'état de ce contexte (en faisant appel à `useState`). Il est responsable de passer l'état de l'authentification à tous les composants enfants ;
+
+    ```tsx
+    import { ReactNode, useState } from "react";
+
+    import { AuthContext, type AuthContextValue } from "./AuthContext.ts";
+
+    import { type AuthResponse } from "../model.ts";
+
+    export function AuthProvider({ children }: { children: ReactNode }) {
+      const [authResponse, setAuthResponse] = useState<AuthResponse | null>(() => {
+        const stored = localStorage.getItem("authResponse");
+
+        return stored ? JSON.parse(stored) : null;
+      });
+
+      const value: AuthContextValue = { authResponse, setAuthResponse };
+
+      return (
+        <AuthContext.Provider value={value}>
+          {children}
+        </AuthContext.Provider>
+      );
+    }
+    ```
+
+- `hooks/useAuth.ts` : "accesseur / mutateur de l'état", lit le contexte d'authentification et fournit les méthodes pour agir dessus (`login`, `logout`). Fournit également une fonction *helper* `authFetch` qui ajoute l'en-tête `Authorization` aux requêtes HTTP `fetch` vers le serveur nécessitant d'être authentifié ;
+
+```ts
+import { useContext } from "react";
+
+import { AuthContext } from "../contexts/AuthContext.ts";
+
+import { type AuthResponse } from "../model.ts";
+
+export const useAuth = () => {
+  const { authResponse, setAuthResponse } = useContext(AuthContext);
+
+  const login = (response: AuthResponse) => {
+    setAuthResponse(response);
+    localStorage.setItem("authResponse", JSON.stringify(response));
+  };
+
+  const logout = () => {
+    setAuthResponse(null);
+    localStorage.removeItem("authResponse");
+  };
+
+  const authFetch = async (input: RequestInfo, init: RequestInit = {}) => {
+    const token = authResponse?.token;
+
+    const res = await fetch(input, {
+      ...init,
+      headers: {
+        ...(init.headers ?? {}),
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.status === 401) {
+      logout();
+    }
+
+    return res;
+  };
+
+  return {
+    user: authResponse?.user ?? null,
+    token: authResponse?.token ?? null,
+    login,
+    logout,
+    authFetch,
+  };
+};
+```
+
+1. Il faut maintenant créer les composants nécessaires pour mettre en place l'authentification dans l'application client :
+
+- `pages/Register.tsx` : formulaire de création d'un nouveau compte utilisateur ;
+- `pages/Login.tsx` : point d'entrée pour la connexion d'un utilisateur, affiche un formulaire (nom d'utilisateur, mot de passe), envoie la requête de connexion au serveur, reçoit `AuthResponse` et appelle `login` pour mettre à jour le contexte d'authentification dans toute l'application ;
+- `pages/Restricted.tsx` : *wrapper* qui englobe toute page de l'application accessible seulement par les utilisateurs authentifiés. Bloque la navigation si l'utilisateur n'est pas connecté.
+
+    À titre d'exemple, ce dernier composant est donné ci-dessous. Il montre comment se servir de la fonction du hook `useAuth` :
+
+    ```ts
+    import { Navigate } from "react-router";
+
+    import { useAuth } from "../hooks/useAuth.ts";
+
+    export function RestrictedRoute({ children }: { children: React.ReactNode }) {
+      // On récupère le token de l'utilisateur courant
+      const { token } = useAuth();
+
+      // S'il existe, c'est que l'utilisateur est authentifié : on affiche la page demandée
+      // Sinon, on redirige l'utilisateur vers la page de connexion
+      return token ? <>{children}</> : <Navigate to="/login" />;
+    }
+    ```
+
+2. On crée aussi un composant `User` (`pages/User.tsx`) qui affiche une page qui comporte les informations sur l'utilisateur si ce dernier est connecté (liste des sondages créés, nombre de votes, etc.). Ce composant doit être inaccessible si l'utilisateur n'est pas connecté (voir ci-dessous).
+
+3. Mettre à jour le routeur de l'application dans `App.tsx`. On restreint l'accès au composant `User` en le déclarant sous un composant parent `Restricted` :
+
+```tsx
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/polls/:selectedPoll" element={<Poll />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/me"
+            element={
+              <RestrictedRoute>
+                <User />
+              </RestrictedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
+```
 
 ### Nouvelles fonctionnalités
 
-TODO: Grâce à l'ajout des utilisateurs et de l'authentification, on peut intégrer de nouvelles fonctionnalités à l'application
+Grâce à l'ajout des utilisateurs et de l'authentification, on peut intégrer de nouvelles fonctionnalités à l'application :
 
-1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage
+1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage ;
+2. Permettre à l'utilisateur ayant créé un sondage de le modifier par la suite ;
+3. Permettre à un administrateur de modifier et supprimer tout sondage dans l'application.
+
+<div class="hidden">
 
 ___
 
