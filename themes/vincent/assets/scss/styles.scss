@@ -90,8 +90,11 @@ pre {
 
   padding: 1rem;
 
-  white-space: pre;
-  overflow: scroll;
+  white-space: pre-wrap;     /* preserve formatting + allow wrapping */
+  overflow-wrap: anywhere;   /* break long tokens only if needed */
+  word-break: break-word;    /* legacy fallback */
+
+  min-width: 0;
 }
 
 blockquote {

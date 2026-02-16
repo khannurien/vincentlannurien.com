@@ -1189,7 +1189,6 @@ const objDst = JSON.parse(str);
     }
     ```
 
-<div class="hidden">
 ___
 
 ## TP 5 : Authentification
@@ -1200,7 +1199,7 @@ ___
 
 Dans ce TP, nous allons ajouter à notre application la gestion des utilisateurs et de leur authentification. Il sera possible d'empêcher l'accès à certaines fonctionnalités aux utilisateurs qui ne seraient pas connectés.
 
-Pour cela, on utilisera un mécanisme de jeton de connexion, *JWT* (pour *JSON Web Tokens*). Il est dit *sans état*, c'est-à-dire que le serveur ne maintient pas de session en mémoire. Le client doit authentifier chacune de ses requêtes en y joignant un jeton valide, généré par le serveur pour une période de validité donnée.
+Pour cela, on utilisera un mécanisme de jeton de connexion, *JWT* (pour *JSON Web Tokens*). Il est dit *sans état*, c'est-à-dire que le serveur ne maintient pas de session en mémoire : le client doit authentifier chacune de ses requêtes en y joignant un jeton valide, généré par le serveur pour une période de validité donnée.
 
 ---
 
@@ -1208,9 +1207,9 @@ Pour cela, on utilisera un mécanisme de jeton de connexion, *JWT* (pour *JSON W
 
 {{< /flex >}}
 
-1. Lors d'une connexion, le serveur vérifie les identifiants transmis par l'utilisateur, puis crée et signe cryptographiquement un jeton. Il le retourne au client.
+1. Lors d'une connexion de l'utilisateur (*login*), le serveur vérifie les identifiants transmis par l'utilisateur, puis crée et signe cryptographiquement un jeton. Il le retourne au client.
 
-    Un jeton contient trois champs : l'en-tête, le corps (payload) et la signature, qui est chiffrée (`Chiffrement(En-tête + Corps) = Signature`).
+    Un jeton contient trois champs : l'en-tête, le corps (*payload*) et la signature, qui est chiffrée (`Chiffrement(En-tête + Corps) = Signature`).
 
 2. Le client peut ensuite ajouter ce jeton au corps des requêtes qu'il envoie vers le serveur.
 
@@ -1342,8 +1341,8 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
         .sign(JWT_KEY);
     }
 
-    // Passe le jeton à la fonction `verify` de la bibliothèque de JSON Web Tokens `djwt`
-    // Valide le type de l'objet retourné par `verify`, qui doit être conforme à `AuthPayload`
+    // Passe le jeton à la fonction `jwtVerify` de la bibliothèque de JSON Web Tokens
+    // Valide le type de l'objet retourné par `jwtVerify`, qui doit être conforme à `AuthPayload`
     // Retourne le payload s'il est valide, `null` sinon
     export async function verifyJWT(token: string): Promise<AuthPayload | null> {
       // À compléter...
@@ -1378,29 +1377,29 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
     }
     ```
 
-2. ...
+2. Compléter le *middleware* `authMiddleware` qui sera utilisé pour protéger les routes nécessitant une authentification du client :
 
     ```ts
     import { Context, Next, State } from "@oak/oak";
     import { verifyJWT } from "../lib/jwt.ts";
     import { APIErrorCode, type AuthPayload } from "../model/interfaces.ts";
 
-    // ...
+    // On étend la définition du contexte d'une requête en typant la variable `state` contenant son état
     export interface AuthContext extends Context {
       state: AuthState;
     }
 
-    // ...
+    // On définit l'état d'une requête, qui peut contenir un payload JWT en cas de connexion réussie
     export interface AuthState extends State {
       user?: AuthPayload;
     }
 
     // ...
     export async function authMiddleware(ctx: AuthContext, next: Next) {
-      // ...
+      // On récupère l'en-tête `Authorization` de la requête
       const authHeader = ctx.request.headers.get("Authorization");
 
-      // ...
+      // On vérifie s'il est bien formé
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
         ctx.response.status = 401;
         ctx.response.body = {
@@ -1413,11 +1412,11 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
         return;
       }
 
-      // ...
+      // On découpe l'en-tête pour récupérer le token, puis on le vérifie
       const token = authHeader.substring(7);
       const payload = await verifyJWT(token);
 
-      // ...
+      // Erreur retournée en cas de token invalide
       if (!payload) {
         ctx.response.status = 401;
         ctx.response.body = {
@@ -1427,32 +1426,37 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
         return;
       }
 
-      // ...
+      // Mise à jour du contexte de la requête pour un utilisateur authentifié
       ctx.state.user = payload;
 
-      // ...
+      // On passe au middleware suivant
       await next();
     }
     ```
 
-3. ...
+3. Écrire les trois routes suivantes en s'appuyant sur les ajouts précédents :
 
     ```ts
-    // ...
+    // Enregistrement d'un nouvel utilisateur
     router.post("/register", async (ctx) => {
-      // ...
+      // À compléter...
     }
 
-    // ...
+    // Connexion utilisateur
     router.post("/login", async (ctx) => {
-      // ...
+      // À compléter...
     }
 
-    // ...
+    // Retourne les informations stockées en BDD pour l'utilisateur connecté
+    // (Liste des sondages créés, nombre de votes, etc.)
     router.get("/me", authMiddleware, (ctx: AuthContext) => {
-      // ...
+      // À compléter...
     }
     ```
+
+    > De manière similaire à ce que l'on a fait pour les sondages et les votes, on peut créer un service (`services/users.ts`) qui centralise les fonctions en lien avec la gestion des utilisateurs. Cela permettra de garder le code des routes succinct.
+
+<div class="hidden">
 
 ### Côté client
 
