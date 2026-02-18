@@ -576,60 +576,75 @@ router.get("/", (ctx) => {
 
     Voici une classe `APIException` (vue en cours) que l'on peut utiliser :
 
-      ```ts
-      export class APIException extends Error {
-        readonly code: APIErrorCode;
-        readonly status: number;
+    ```ts
+    export class APIException extends Error {
+      readonly code: APIErrorCode;
+      readonly status: number;
 
-        constructor(code: APIErrorCode, status: number, message: string) {
-          super(message);
-          this.code = code;
-          this.status = status;
-        }
+      constructor(code: APIErrorCode, status: number, message: string) {
+        super(message);
+        this.code = code;
+        this.status = status;
       }
-      ```
+    }
+    ```
 
     Ainsi que le code du *middleware* à ajouter à la chaîne de traitement des requêtes pour toutes les routes :
 
-      ```ts
-      import { Context, Next } from "@oak/oak";
+    ```ts
+    import { Context, Next } from "@oak/oak";
 
-      import { APIErrorCode, APIException, type APIFailure } from "../model/interfaces.ts";
+    import { APIErrorCode, APIException, type APIFailure } from "../model/interfaces.ts";
 
-      export async function errorMiddleware(ctx: Context, next: Next) {
-        try {
-          await next();
-        } catch (err) {
-          if (err instanceof APIException) {
-            const responseBody: APIFailure = {
-              success: false,
-              error: {
-                code: err.code,
-                message: err.message,
-              }
-            };
+    export async function errorMiddleware(ctx: Context, next: Next) {
+      try {
+        await next();
+      } catch (err) {
+        if (err instanceof APIException) {
+          const responseBody: APIFailure = {
+            success: false,
+            error: {
+              code: err.code,
+              message: err.message,
+            }
+          };
 
-            ctx.response.status = err.status;
-            ctx.response.body = responseBody;
+          ctx.response.status = err.status;
+          ctx.response.body = responseBody;
 
-            console.log(responseBody);
-          } else {
-            console.error(err);
+          console.log(responseBody);
+        } else {
+          console.error(err);
 
-            const responseBody: APIFailure = {
-              success: false,
-              error: {
-                code: APIErrorCode.SERVER_ERROR,
-                message: "Unexpected server error",
-              }
-            };
+          const responseBody: APIFailure = {
+            success: false,
+            error: {
+              code: APIErrorCode.SERVER_ERROR,
+              message: "Unexpected server error",
+            }
+          };
 
-            ctx.response.status = 500;
-            ctx.response.body = responseBody;
-          }
+          ctx.response.status = 500;
+          ctx.response.body = responseBody;
         }
       }
-      ```
+    }
+    ```
+
+    On peut l'ajouter aux définitions individuelles des routes :
+
+    ```ts
+    router.get("/", errorMiddleware, async (ctx) => { }
+    ```
+
+    Ou bien (solution recommandée) l'ajouter systématiquement à la chaîne de traitement (dans `main.ts`) :
+
+    ```ts
+    const app = new Application();
+
+    app.use(errorMiddleware);
+    // ...
+    ```
 
 ___
 
