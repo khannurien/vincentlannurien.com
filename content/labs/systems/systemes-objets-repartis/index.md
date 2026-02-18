@@ -1395,23 +1395,13 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
       user?: AuthPayload;
     }
 
-    // ...
     export async function authMiddleware(ctx: AuthContext, next: Next) {
       // On récupère l'en-tête `Authorization` de la requête
       const authHeader = ctx.request.headers.get("Authorization");
 
       // On vérifie s'il est bien formé
       if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        ctx.response.status = 401;
-        ctx.response.body = {
-          success: false,
-          error: {
-            code: APIErrorCode.UNAUTHORIZED,
-            message: "Missing or invalid token",
-          },
-        };
-
-        return;
+        throw new APIException(APIErrorCode.UNAUTHORIZED, 401, "Missing or invalid token");
       }
 
       // On découpe l'en-tête pour récupérer le token, puis on le vérifie
@@ -1420,13 +1410,7 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
 
       // Erreur retournée en cas de token invalide
       if (!payload) {
-        ctx.response.status = 401;
-        ctx.response.body = {
-          success: false,
-          error: { code: APIErrorCode.UNAUTHORIZED, message: "Invalid token" },
-        };
-
-        return;
+        throw new APIException(APIErrorCode.UNAUTHORIZED, 401, "Invalid token");
       }
 
       // Mise à jour du contexte de la requête pour un utilisateur authentifié
