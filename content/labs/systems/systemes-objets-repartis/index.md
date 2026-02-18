@@ -1115,6 +1115,7 @@ const objDst = JSON.parse(str);
     import { useEffect, useRef } from "react";
 
     import type { VoteAckMessage, VotesUpdateMessage } from "../model.ts";
+
     import { WS_URL } from "../config/api.ts";
 
     // Définition du hook, qui prend en paramètre l'identifiant du sondage courant, et les deux fonctions à exécuter à la réception de messages du serveur (respectivement `votes_update` et `vote_ack`)
@@ -1451,6 +1452,7 @@ Plusieurs nouveaux fichiers sont nécessaires pour gérer l'authentification cô
 
     // Retourne les informations stockées en BDD pour l'utilisateur connecté
     // (Liste des sondages créés, nombre de votes, etc.)
+    // Les requêtes passent par le middleware d'authentification !
     router.get("/me", authMiddleware, (ctx: AuthContext) => {
       // À compléter...
     }
@@ -1615,6 +1617,9 @@ Grâce à l'ajout des utilisateurs et de l'authentification, on peut intégrer d
 1. Ajouter la possibilité de restreindre le vote aux utilisateurs connectés lors de la création d'un sondage ;
 2. Permettre à l'utilisateur ayant créé un sondage de le modifier par la suite ;
 3. Permettre à un administrateur de modifier et supprimer tout sondage dans l'application.
+
+> Il ne faut pas oublier de mettre à jour le schéma de la base de données, si besoin, pour intégrer les identifiants utilisateur comme clefs étrangères aux enregistrements (sondages, votes). Éventuellement, il faut choisir un comportement par défaut pour l'application : on peut tout à fait, par exemple, resteindre la possiblité de voter sur un sondage aux seuls utilisateurs connectés.
+> Ces changements doivent se refléter dans les interfaces des objets de l'API.
 
 <div class="hidden">
 
