@@ -1620,13 +1620,21 @@ Grâce à l'ajout des utilisateurs et de l'authentification, on peut intégrer d
 > Il ne faut pas oublier de mettre à jour le schéma de la base de données, si besoin, pour intégrer les identifiants utilisateur comme clefs étrangères aux enregistrements (sondages, votes). Éventuellement, il faut choisir un comportement par défaut pour l'application : on peut tout à fait, par exemple, resteindre la possiblité de voter sur un sondage aux seuls utilisateurs connectés.
 > Ces changements doivent se refléter dans les interfaces des objets de l'API.
 
-<div class="hidden">
-
 ___
 
 ## TP 6 : Déploiement
 
+Dans ce TP, on va configurer les deux applications ainsi qu'un *reverse proxy* de manière à accéder au client à l'adresse suivante : `https://app.coucou.localhost`.
+
+> Sous Linux, il n'est, par défaut, pas possible pour un processus utilisateur d'écouter sur un port privilégié ([inférieur à 1024](https://unix.stackexchange.com/a/16568)). Sur une machine personnelle, on peut [y remédier](https://superuser.com/a/892391) :
+> - en donnant les privilèges `CAP_NET_BIND_SERVICE` à l'exécutable ;
+> - en configuration le pare-feu pour rediriger un port privilégié vers un port plus haut ;
+> - en désactivant complètement ce mécanisme de protection au niveau du noyau.
+> Sur les machines du département, ces manipulations sont impossibles. On utilisera donc le port `4443` dans le cadre de ce TP.
+
 ### `mkcert`
+
+1. Installation de `mkcert` :
 
 ```sh
 # Ajouter un répertoire local au PATH
@@ -1638,53 +1646,70 @@ source ~/.bashrc
 curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
 chmod +x mkcert-v*-linux-amd64
 mv mkcert-v*-linux-amd64 ~/.local/bin
+```
 
+2. Génération des certificats :
+
+```sh
 # Générer un certificat pour le domaine coucou.localhost
-mkcert coucou.localhost
+mkcert *.coucou.localhost
 ```
 
-1. Dans Firefox : Paramètres > Vie privée et sécurité > Afficher les certificats
-2. Onglet "Autorités" > Importer
-3. Dossier personnel > Clic droit > Afficher les fichiers cachés
-4. Se déplacer dans ~/.local/share/mkcert
-5. Choisir le fichier rootCA.pem
-6. Cocher "Confirmer cette AC pour identifier des sites web"
-7. Valider avec OK
-8. Relancer Firefox
-9. Exécuter le script suivant :
+3. Ajout de l'autorité de certification au navigateur :
 
-```ts
-const listener = Deno.listenTls({
-  port: 4443,
-  hostname: "coucou.localhost",
-  cert: await Deno.readTextFile("coucou.localhost.pem"),
-  key: await Deno.readTextFile("coucou.localhost-key.pem"),
-});
+    1. Dans Firefox : Paramètres > Vie privée et sécurité > Afficher les certificats
+    2. Onglet "Autorités" > Importer
+    3. Dossier personnel > Clic droit > Afficher les fichiers cachés
+    4. Se déplacer dans `~/.local/share/mkcert`
+    5. Choisir le fichier `rootCA.pem`
+    6. Cocher "Confirmer cette AC pour identifier des sites web"
+    7. Valider avec OK
+    8. Relancer Firefox
+    9. Exécuter le script suivant :
 
-console.log(`https://coucou.localhost:4443`);
+    ```ts
+    const listener = Deno.listenTls({
+      port: 4443,
+      hostname: "coucou.localhost",
+      cert: await Deno.readTextFile("coucou.localhost.pem"),
+      key: await Deno.readTextFile("coucou.localhost-key.pem"),
+    });
 
-for await (const conn of listener) {
-  const httpConn = Deno.serveHttp(conn);
-  for await (const requestEvent of httpConn) {
-    requestEvent.respondWith(new Response("Hello world"));
-  }
-}
-```
+    console.log(`https://coucou.localhost:4443`);
 
-10. Ouvrir la page https://coucou.localhost:4443 dans Firefox
-11. Constater qu'il n'y a pas d'avertissement de sécurité
+    for await (const conn of listener) {
+      const httpConn = Deno.serveHttp(conn);
+      for await (const requestEvent of httpConn) {
+        requestEvent.respondWith(new Response("Hello world"));
+      }
+    }
+    ```
+
+    10. Ouvrir la page https://coucou.localhost:4443 dans Firefox
+    11. Constater qu'il n'y a pas d'avertissement de sécurité
 
 ### nginx
 
-1. Télécharger nginx et l'ajouter au PATH :
+1. Télécharger nginx et l'ajouter au `PATH` :
 
     ```sh
     curl -L https://github.com/jirutka/nginx-binaries/raw/refs/heads/binaries/nginx-1.28.1-x86_64-linux -o ~/.local/bin/nginx
     chmod +x ~/.local/bin/nginx
     ```
 
-2. Écrire la configuration dans `nginx.conf`
+2. Écrire la configuration dans `nginx.conf` comme vu en cours.
 
+3. Faire les ajustements nécessaires dans la configuration des deux applications.
+
+4. Exécuter nginx dans le répertoire comportement le fichier de configuration.
+
+    Pour tuer nginx, on peut utiliser le fichier `nginx.pid` :
+
+    ```sh
+    kill $(cat nginx.pid)
+    ```
+
+<div class="hidden">
 ___
 
 ## TP 7 : Performances et fiabilité
