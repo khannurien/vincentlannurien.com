@@ -1624,7 +1624,7 @@ ___
 
 ## TP 6 : Déploiement
 
-Dans ce TP, on va configurer les deux applications ainsi qu'un *reverse proxy* de manière à accéder au client à l'adresse suivante : `https://app.coucou.localhost`.
+Dans ce TP, on va configurer les deux applications ainsi qu'un *reverse proxy* de manière à accéder au client à l'adresse suivante : `https://app.sor.localhost`.
 
 > Sous Linux, il n'est, par défaut, pas possible pour un processus utilisateur d'écouter sur un port privilégié ([inférieur à 1024](https://unix.stackexchange.com/a/16568)). Sur une machine personnelle, on peut [y remédier](https://superuser.com/a/892391) :
 > - en donnant les privilèges `CAP_NET_BIND_SERVICE` à l'exécutable ;
@@ -1632,7 +1632,7 @@ Dans ce TP, on va configurer les deux applications ainsi qu'un *reverse proxy* d
 > - en désactivant complètement ce mécanisme de protection au niveau du noyau.
 > Sur les machines du département, ces manipulations sont impossibles. On utilisera donc le port `4443` dans le cadre de ce TP.
 
-### `mkcert`
+### Création des certificats
 
 1. Installation de `mkcert` :
 
@@ -1651,31 +1651,31 @@ mv mkcert-v*-linux-amd64 ~/.local/bin
 2. Génération des certificats :
 
 ```sh
-# Générer un certificat pour le domaine coucou.localhost
-mkcert *.coucou.localhost
+# Générer un certificat pour le domaine sor.localhost
+mkcert *.sor.localhost
 ```
 
 3. Ajout de l'autorité de certification au navigateur :
 
-    1. Dans Firefox : Paramètres > Vie privée et sécurité > Afficher les certificats
-    2. Onglet "Autorités" > Importer
-    3. Dossier personnel > Clic droit > Afficher les fichiers cachés
-    4. Se déplacer dans `~/.local/share/mkcert`
-    5. Choisir le fichier `rootCA.pem`
-    6. Cocher "Confirmer cette AC pour identifier des sites web"
-    7. Valider avec OK
-    8. Relancer Firefox
-    9. Exécuter le script suivant :
+    1. Dans Firefox : *Paramètres > Vie privée et sécurité > Afficher les certificats* ;
+    2. Onglet *Autorité > Importer* ;
+    3. Afficher le répertoire des certificats dans *Dossier personnel > Clic droit > Afficher les fichiers cachés* ;
+    4. Se déplacer dans `~/.local/share/mkcert` ;
+    5. Choisir le fichier `rootCA.pem` ;
+    6. Cocher *"Confirmer cette AC pour identifier des sites web"* ;
+    7. Valider avec *OK* ;
+    8. Relancer Firefox ;
+    9. Exécuter le script suivant avec Deno :
 
     ```ts
     const listener = Deno.listenTls({
       port: 4443,
-      hostname: "coucou.localhost",
-      cert: await Deno.readTextFile("coucou.localhost.pem"),
-      key: await Deno.readTextFile("coucou.localhost-key.pem"),
+      hostname: "sor.localhost",
+      cert: await Deno.readTextFile("sor.localhost.pem"),
+      key: await Deno.readTextFile("sor.localhost-key.pem"),
     });
 
-    console.log(`https://coucou.localhost:4443`);
+    console.log(`https://sor.localhost:4443`);
 
     for await (const conn of listener) {
       const httpConn = Deno.serveHttp(conn);
@@ -1685,12 +1685,12 @@ mkcert *.coucou.localhost
     }
     ```
 
-    10. Ouvrir la page https://coucou.localhost:4443 dans Firefox
-    11. Constater qu'il n'y a pas d'avertissement de sécurité
+    10. Ouvrir la page [`https://sor.localhost:4443`](https://sor.localhost:4443) dans Firefox ;
+    11. Constater qu'il n'y a pas d'avertissement de sécurité.
 
-### nginx
+### Configuration du *reverse proxy*
 
-1. Télécharger nginx et l'ajouter au `PATH` :
+1. Télécharger nginx et le déplacer dans un répertoire du `PATH` :
 
     ```sh
     curl -L https://github.com/jirutka/nginx-binaries/raw/refs/heads/binaries/nginx-1.28.1-x86_64-linux -o ~/.local/bin/nginx
@@ -1701,9 +1701,7 @@ mkcert *.coucou.localhost
 
 3. Faire les ajustements nécessaires dans la configuration des deux applications.
 
-4. Exécuter nginx dans le répertoire comportement le fichier de configuration.
-
-    Pour tuer nginx, on peut utiliser le fichier `nginx.pid` :
+4. Exécuter nginx dans le répertoire comportement le fichier de configuration. En cas de modification à ce fichier, nginx devrait recharger sa configuration automatiquement. Si ce n'est pas le cas, pour tuer le processus, on peut utiliser le fichier `nginx.pid` :
 
     ```sh
     kill $(cat nginx.pid)
