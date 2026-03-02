@@ -1693,7 +1693,7 @@ mkcert *.sor.localhost
 1. Télécharger nginx et le déplacer dans un répertoire du `PATH` :
 
     ```sh
-    curl -L https://github.com/jirutka/nginx-binaries/raw/refs/heads/binaries/nginx-1.28.1-x86_64-linux -o ~/.local/bin/nginx
+    curl -L https://github.com/jirutka/nginx-binaries/raw/refs/heads/binaries/nginx-1.28.2-x86_64-linux -o ~/.local/bin/nginx
     chmod +x ~/.local/bin/nginx
     ```
 
