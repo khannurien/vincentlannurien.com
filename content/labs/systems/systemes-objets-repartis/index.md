@@ -1701,6 +1701,28 @@ mkcert *.sor.localhost
 
 3. Faire les ajustements nécessaires dans la configuration des deux applications.
 
+    > Note : côté client, il faut aussi préciser au serveur de développement Vite à quels noms d'hôte il est autorisé à répondre. On modifie le fichier `vite.config.ts` :
+
+    ```ts
+    import { defineConfig } from "vite";
+    import react from "@vitejs/plugin-react";
+    import deno from "@deno/vite-plugin";
+
+    export default defineConfig({
+      server: {
+        port: 3000,
+        // Ajouter le nom d'hôte du client ici
+        allowedHosts: [
+          "app.sor.localhost",
+        ],
+      },
+      plugins: [react(), deno()],
+      optimizeDeps: {
+        include: ["react/jsx-runtime"],
+      },
+    });
+    ```
+
 4. Exécuter nginx dans le répertoire comportement le fichier de configuration. En cas de modification à ce fichier, nginx devrait recharger sa configuration automatiquement. Si ce n'est pas le cas, pour tuer le processus, on peut utiliser le fichier `nginx.pid` :
 
     ```sh
