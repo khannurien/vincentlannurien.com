@@ -1651,8 +1651,10 @@ mv mkcert-v*-linux-amd64 ~/.local/bin
 2. Génération des certificats :
 
 ```sh
-# Générer un certificat pour le domaine sor.localhost
-mkcert *.sor.localhost
+# Générer un certificat pour :
+# - le domaine sor.localhost
+# - l'ensemble de ses sous-domaines (wildcard)
+mkcert sor.localhost *.sor.localhost
 ```
 
 3. Ajout de l'autorité de certification au navigateur :
@@ -1671,8 +1673,8 @@ mkcert *.sor.localhost
     const listener = Deno.listenTls({
       port: 4443,
       hostname: "sor.localhost",
-      cert: await Deno.readTextFile("sor.localhost.pem"),
-      key: await Deno.readTextFile("sor.localhost-key.pem"),
+      cert: await Deno.readTextFile("sor.localhost+1.pem"),
+      key: await Deno.readTextFile("sor.localhost+1-key.pem"),
     });
 
     console.log(`https://sor.localhost:4443`);
