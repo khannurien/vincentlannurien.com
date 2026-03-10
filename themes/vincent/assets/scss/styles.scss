@@ -827,7 +827,7 @@ main .essential .grid-small {
 
 main .essential .grid .essential-item {
   display: grid;
-  grid-template-rows: 1fr auto; /* content grows, image row sticks to bottom */
+  grid-template-rows: auto 1fr auto;
   padding: 1rem;
 
   background: $color-background;
@@ -853,6 +853,9 @@ main .essential .grid .essential-item-header {
 }
 
 main .essential .grid .essential-item-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   margin: 1rem 0 1rem 0;
 }
 
