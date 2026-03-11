@@ -1104,8 +1104,6 @@ const objDst = JSON.parse(str);
           },
         };
       });
-
-      setAnimatingOptionId(update.optionId);
     }, []);
 
     // On définit la fonction à exécuter à la réception d'un accusé de réception `vote_ack`
