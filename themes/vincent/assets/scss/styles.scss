@@ -358,6 +358,24 @@ header .grid .header-nav .full-name {
   }
 }
 
+/* Default: show title text, hide home icon */
+header .grid .header-title .header-title-icon {
+  display: none;
+}
+header .grid .header-title .header-title-full {
+  display: inline;
+}
+
+/* Mobile: show home icon, hide title text */
+@media (max-width: 640px) {
+  header .grid .header-title .header-title-icon {
+    display: inline;
+  }
+  header .grid .header-title .header-title-full {
+    display: none;
+  }
+}
+
 header .grid .header-nav li {
   display: inline;
 }
@@ -535,6 +553,11 @@ main .main-head .main-head-meta {
 }
 
 main .main-head .main-head-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  line-height: 2;
   font-size: 80%;
 }
 
@@ -551,6 +574,17 @@ main .main-head .main-head-info .main-head-tag a {
 main .main-head .main-head-info .main-head-tag a:hover {
   background: $color-comment;
   color: $color-foreground;
+}
+
+@media (max-width: 480px) {
+  main .main-head {
+    padding: 0.5rem 1rem;
+  }
+
+  main .main-content,
+  main .main-list {
+    padding: 1rem;
+  }
 }
 
 main .main-content {

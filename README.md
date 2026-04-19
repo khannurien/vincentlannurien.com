@@ -9,5 +9,5 @@ hugo new content --kind essential/records essential/records/some-genre.md
 Create a new post:
 
 ```shell
-hugo new content posts/some-post
+hugo new content blog/some-post
 ```
