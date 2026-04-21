@@ -9,7 +9,5 @@ tags:
   - "music"
 ---
 
-## List
-
 - [musicForProgramming();](https://musicforprogramming.net/)
 - [Poolsuite](https://poolsuite.net/)

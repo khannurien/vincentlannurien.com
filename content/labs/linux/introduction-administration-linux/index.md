@@ -15,7 +15,7 @@ todo:
 ---
 
 {{< flex columns="2, 5" >}}
-![](../images/linus-torvalds.jpg)
+![](./images/linus-torvalds.jpg)
 
 ---
 
@@ -135,7 +135,7 @@ Pour vous aider à démarrer, voici une liste des commandes que vous allez devoi
 
 Ce premier TD ne concerne pas l'installation d'une distribution Linux "de bureau" que vous utiliseriez au quotidien sur votre machine. Notre cours adresse la question de l'*administration* d'un système Linux : nous allons mettre en place une machine virtuelle (VM, pour *Virtual Machine*) Linux qui fera office de *serveur*.
 
-![](../images/wip-server-racks.jpg)
+![](./images/wip-server-racks.jpg)
 
 [Alexis Lê-Quôc](https://commons.wikimedia.org/wiki/File:Half_filled_server_racks.jpg)
 
