@@ -18,13 +18,15 @@ Hardware:
 - 32 GB DDR4
 - 1x NVIDIA RTX 4070 Super (12 GB)
 
-Performance:
+Features:
 
-- TODO: ttft, tk/s
-- streaming?
-- tools use: jinja
-- quantized KV cache
-- large context
+- Vision (`mmproj`)
+- Tools use (`jinja`)
+
+Optimizations :
+
+- MoE model, maximum GPU usage
+- Quantized KV cache for large context
 
 ## Pre-requisites
 
@@ -35,9 +37,16 @@ sudo apt-get install build-essential git libcurl4-openssl-dev curl libgomp1 cmak
 
 ## Model download
 
+TODO: HF_TOKEN
+
 ```sh
 curl -LsSf https://hf.co/cli/install.sh | bash
-hf download --local-dir models/ --include "*IQ4_XS*.gguf" bartowski/Qwen_Qwen3.6-35B-A3B-GGU
+# TODO: Main model
+export HF_TOKEN=TODO && \
+  hf download --local-dir models/ --include "*IQ4_XS*.gguf" bartowski/Qwen_Qwen3.6-35B-A3B-GGUF
+# TODO: Vision model
+export HF_TOKEN=TODO && \
+  hf download --local-dir models/ --include "*mmproj*bf16*.gguf" bartowski/Qwen_Qwen3.6-35B-A3B-GGUF
 ```
 
 ## Llama.cpp
@@ -53,7 +62,51 @@ cmake --build build --config Release -j$(nproc)
 
 # Run the model
 # TODO: Options details
-./build/bin/llama-server --model models/Qwen_Qwen3.6-35B-A3B-IQ4_XS.gguf -ngl 999 --ctx-size 131072 --cache-type-k q8_0 --cache-type-v q8_0 -fa on --jinja
+./build/bin/llama-server \
+  --model models/Qwen3.6-35B-A3B-UD-IQ4_XS.gguf \
+  --mmproj models/mmproj-Qwen3.6-35B-A3B-BF16.gguf \
+  -ngl 999 \
+  --ctx-size 98304 \
+  --cache-type-k q8_0 \
+  --cache-type-v q8_0 \
+  -fa on \
+  --jinja
+```
+
+TODO: `llama-bench`
+
+Real-world agentic tasks expected performance: prompt processing @ ~100-200 tk/s, text generation @ ~7.5 tk/s. Forget about interactive tasks :-)
+
+Recursive exploration of a directory tree to find and summarize heterogeneous/unstructured PDF files located at arbitrary depth in the tree:
+
+```
+prompt eval time =    2279.39 ms /   322 tokens (    7.08 ms per token,   141.27 tokens per second)
+       eval time =   54034.10 ms /   384 tokens (  140.71 ms per token,     7.11 tokens per second)
+      total time =   56313.49 ms /   706 tokens
+
+prompt eval time =    2279.39 ms /   322 tokens (    7.08 ms per token,   141.27 tokens per second)
+       eval time =   54034.10 ms /   384 tokens (  140.71 ms per token,     7.11 tokens per second)
+      total time =   56313.49 ms /   706 tokens
+
+prompt eval time =    5341.49 ms /   391 tokens (   13.66 ms per token,    73.20 tokens per second)
+       eval time =   37373.45 ms /   275 tokens (  135.90 ms per token,     7.36 tokens per second)
+      total time =   42714.94 ms /   666 tokens
+
+prompt eval time =  101418.50 ms / 24541 tokens (    4.13 ms per token,   241.98 tokens per second)
+       eval time =   11200.17 ms /    86 tokens (  130.23 ms per token,     7.68 tokens per second)
+      total time =  112618.68 ms / 24627 tokens
+
+prompt eval time =    5720.40 ms /  1316 tokens (    4.35 ms per token,   230.05 tokens per second)
+       eval time =    9054.11 ms /    73 tokens (  124.03 ms per token,     8.06 tokens per second)
+      total time =   14774.51 ms /  1389 tokens
+
+prompt eval time =   28682.33 ms /  7074 tokens (    4.05 ms per token,   246.63 tokens per second)
+       eval time =   13261.89 ms /   106 tokens (  125.11 ms per token,     7.99 tokens per second)
+      total time =   41944.22 ms /  7180 tokens
+
+prompt eval time =    9068.96 ms /  2109 tokens (    4.30 ms per token,   232.55 tokens per second)
+       eval time =    5989.99 ms /    51 tokens (  117.45 ms per token,     8.51 tokens per second)
+      total time =   15058.94 ms /  2160 tokens
 ```
 
 ## OpenCode
@@ -76,7 +129,11 @@ Configuration file: `~/.config/opencode/opencode.json`
       },
       "models": {
         "qwen3.6-35b": {
-          "name": "Qwen3.6-35B-A3B"
+          "name": "Qwen3.6-35B-A3B",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
         }
       }
     }
@@ -84,4 +141,18 @@ Configuration file: `~/.config/opencode/opencode.json`
 }
 ```
 
-Start `opencode`, use <kbd>Ctrl</kbd> + <kbd>P</kbd> to select the local model.
+In a terminal, start `opencode`, use <kbd>Ctrl</kbd> + <kbd>P</kbd> to select the local model.
+
+This OpenCode shortcut conflicts with VS Code's command palette. Open `keybindings.json` (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>, then type "shortcuts json") and add those:
+
+```json
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen",
+    "when": "!terminalFocus",
+  },
+  {
+    "key": "ctrl+p",
+    "command": "-workbench.action.quickOpen",
+  },
+```
