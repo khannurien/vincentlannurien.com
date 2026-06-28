@@ -29,18 +29,34 @@
   function createModal(target) {
     const template = document.getElementById('essential-modal');
     const modal = template.content.firstElementChild.cloneNode(true);
+    const closeButton = modal.querySelector('.modal-close');
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.remove();
+    function closeModal() {
+      document.removeEventListener('keydown', handleKeydown);
+      modal.remove();
+    }
+
+    function handleKeydown(event) {
+      if (event.key === 'Escape') {
+        closeModal();
       }
     }
+
+    // When the user clicks anywhere outside of the modal, close it
+    modal.addEventListener('click', function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    });
+
+    closeButton.addEventListener('click', closeModal);
+    document.addEventListener('keydown', handleKeydown);
 
     const iframe = modal.querySelector('iframe');
     iframe.src = "https://www.youtube.com/embed/" + target.dataset.src;
 
     const modal_node = document.getElementById('modal-node');
     modal_node.appendChild(modal);
+    closeButton.focus();
   }
 </script>

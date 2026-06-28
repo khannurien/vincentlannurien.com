@@ -1,24 +1,9 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
+{{ define "main" }}
+  <section class="main-content center">
+    <p>
+      <img src="/assets/combine.png" alt="" />
+    </p>
 
-  <body>
-    {{ partial "background.html" . }}
-
-    <div id="content">
-      {{ partial "header.html" . }}
-
-      <main id="main">
-        <section class="main-content center">
-          <p>
-            <img src="/assets/combine.png" alt="" />
-          </p>
-
-          <p><em>Move along, citizen.</em></p>
-        </section>
-      </main>
-
-      {{ partial "footer.html" . }}
-    </div>
-  </body>
-</html>
+    <p><em>Move along, citizen.</em></p>
+  </section>
+{{ end }}

@@ -1,50 +1,35 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
+{{ define "main" }}
+  {{ with .Content }}
+  <section class="main-content">
+    {{ . }}
+  </section>
+  {{ end }}
 
-  <body>
-    {{ partial "background.html" . }}
+  <section class="latest-posts">
+    {{ $posts := where .Site.RegularPages "Section" "blog" }}
+    {{ $paginator := .Paginate $posts }}
+    {{ .Scratch.Set "pagination" $paginator }}
 
-    <div id="content">
-      {{ partial "header.html" . }}
-
-      <main id="main">
-        {{ with .Content }}
-        <section class="main-content">
-          {{ . }}
-        </section>
+    <div class="main-list">
+      <ul>
+        {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
+        <li>
+          <a class="main-list-item main-list-item-blog" href="{{ .Permalink }}" title="{{ .Title }}">
+            <span class="main-list-meta main-list-mode">
+              <small>-rw-r--r--</small>
+            </span>
+            <span class="main-list-meta main-list-date">
+              <small>[ {{ time.Format "Jan 2006" .Date }} ] :: </small>
+            </span>
+            <span class="main-list-link">
+              {{ .Title }}
+            </span>
+          </a>
+        </li>
         {{ end }}
-
-        <section class="latest-posts">
-          {{ $posts := where .Site.RegularPages "Section" "blog" }}
-          {{ $paginator := .Paginate $posts }}
-          {{ .Scratch.Set "pagination" $paginator }}
-
-          <div class="main-list">
-            <ul>
-              {{ range $index, $post := ($paginator.Pages).ByDate.Reverse }}
-              <li>
-                <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
-                  <span class="main-list-meta">
-                    <small>-rw-r--r--</small>
-                  </span>
-                  <span class="main-list-meta">
-                    <small>[ {{ time.Format "Jan 2006" .Date }} ] :: </small>
-                  </span>
-                  <span class="main-list-link">
-                    {{ .Title }}
-                  </span>
-                </a>
-              </li>
-              {{ end }}
-            </ul>
-          </div>
-        </section>
-
-        {{ partial "pagination.html" . }}
-      </main>
-
-      {{ partial "footer.html" . }}
+      </ul>
     </div>
-  </body>
-</html>
+  </section>
+
+  {{ partial "pagination.html" . }}
+{{ end }}

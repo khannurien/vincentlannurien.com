@@ -1,45 +1,30 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
+{{ define "main" }}
+  {{ $pages := .Pages }}
+  {{ $paginator := .Paginate $pages }}
+  {{ .Scratch.Set "pagination" $paginator }}
 
-  <body>
-    {{ partial "background.html" . }}
+  {{ with .Content }}
+  <section class="main-content">
+    {{ . }}
+  </section>
+  {{ end }}
 
-    <div id="content">
-      {{ partial "header.html" . }}
+  <section class="main-list">
+    <ul>
+      {{ range $index, $page := ($paginator.Pages).ByDate.Reverse }}
+      <li>
+        <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
+          ➤ <span class="main-list-link"><strong>{{ .Title }}</strong></span>
+        </a>
+        <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
+        {{ partial "recursive.html" $page }}
+      </li>
+      {{ if ne $index (sub (len ($pages)) 1) }}
+      <hr>
+      {{ end }}
+      {{ end }}
+    </ul>
+  </section>
 
-      {{ $pages := .Pages }}
-      {{ $paginator := .Paginate $pages }}
-      {{ .Scratch.Set "pagination" $paginator }}
-
-      <main id="main">
-        {{ with .Content }}
-        <section class="main-content">
-          {{ . }}
-        </section>
-        {{ end }}
-
-        <section class="main-list">
-          <ul>
-            {{ range $index, $page := ($paginator.Pages).ByDate.Reverse }}
-            <li>
-              <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
-                ➤ <span class="main-list-link"><strong>{{ .Title }}</strong></span>
-              </a>
-              <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
-              {{ partial "recursive.html" $page }}
-            </li>
-            {{ if ne $index (sub (len ($pages)) 1) }}
-            <hr>
-            {{ end }}
-            {{ end }}
-          </ul>
-        </section>
-
-        {{ partial "pagination.html" . }}
-      </main>
-
-      {{ partial "footer.html" . }}
-    </div>
-  </body>
-</html>
+  {{ partial "pagination.html" . }}
+{{ end }}

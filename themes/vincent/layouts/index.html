@@ -1,28 +1,13 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
+{{ define "main" }}
+  <section class="main-content justify">
+    <div class="main-container">
+      <div class="main-wrapper">
+        <img src="./about/images/monge.jpg" alt="Le Monge, as seen from Yves Collet street" />
 
-  <body>
-    {{ partial "background.html" . }}
-
-    <div id="content">
-      {{ partial "header.html" . }}
-
-      <main id="main">
-        <section class="main-content justify">
-          <div class="main-container">
-            <div class="main-wrapper">
-              <img src="./about/images/monge.jpg" alt="Le Monge, as seen from Yves Collet street" />
-
-              {{ partial "now-playing.html" }}
-            </div>
-          </div>
-
-          {{ .Content }}
-        </section>
-      </main>
-
-      {{ partial "footer.html" . }}
+        {{ partial "now-playing.html" }}
+      </div>
     </div>
-  </body>
-</html>
+
+    {{ .Content }}
+  </section>
+{{ end }}

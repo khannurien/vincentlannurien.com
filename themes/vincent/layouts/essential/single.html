@@ -1,28 +1,13 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
+{{ define "main" }}
+  <section class="main-head crt">
+    <blockquote class="essential-intro">{{ .Params.intro | markdownify }}</blockquote>
+  </section>
 
-  <body>
-    {{ partial "background.html" . }}
+  <section class="main-content">
+    {{ .Content }}
 
-    <div id="content">
-      {{ partial "header.html" . }}
-
-      <main id="main">
-        <section class="main-head crt">
-          <blockquote class="essential-intro">{{ .Params.intro | markdownify }}</blockquote>
-        </section>
-
-        <section class="main-content">
-          {{ .Content }}
-
-          {{ if eq .Page.Parent.Name "Essential Records" }}
-            {{ partial "essential/modal-youtube.html" }}
-          {{ end }}
-        </section>
-      </main>
-
-      {{ partial "footer.html" . }}
-    </div>
-  </body>
-</html>
+    {{ if eq .Page.Parent.Name "Essential Records" }}
+      {{ partial "essential/modal-youtube.html" }}
+    {{ end }}
+  </section>
+{{ end }}

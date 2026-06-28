@@ -1,8 +1,17 @@
-$font-print: "Spectral", serif;
+$font-print: Georgia, "Times New Roman", Times, serif;
 
 @page {
   size: A4;
-  margin: 2cm;
+  margin: 1.5cm;
+}
+
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none !important;
 }
 
 .hidden {
@@ -20,28 +29,125 @@ hr,
 }
 
 main {
+  max-width: 100%;
+
   font-family: $font-print;
-  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
   font-weight: 400;
   font-style: normal;
-  font-size: 48pt;
+  font-size: 14pt;
+  line-height: 1.5;
 
   text-align: justify;
 }
 
+p,
+li,
+blockquote {
+  orphans: 3;
+  widows: 3;
+}
+
 main article {
-  margin: 36pt;
+  margin: 0;
 }
 
 main article .main-head-info {
   display: none;
 }
 
+main .main-head,
+main .main-content,
+main .main-list {
+  max-width: 100%;
+  padding: 0;
+  background: transparent;
+  color: black;
+}
+
+pre,
+code,
+kbd {
+  font-family: monospace;
+}
+
+pre,
+code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+pre,
+blockquote,
+table,
+figure,
+.main-head,
+.essential-item,
+.embed-container,
+.fit-embed {
+  max-width: 100%;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  overflow-wrap: anywhere;
+}
+
+iframe,
+embed,
+object,
+.modal,
+.now-playing-container {
+  display: none;
+}
+
 main article {
   h1, h2, h3, h4, h5, h6 {
-    margin: 108pt auto 36pt auto;
+    margin: 24pt auto 12pt auto;
 
+    break-after: avoid;
+    page-break-after: avoid;
     text-decoration: underline;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  h1:first-child,
+  .main-head h1,
+  .main-content > h1:first-child,
+  .main-content > h2:first-child,
+  .main-content > h3:first-child {
+    break-before: auto;
+    page-break-before: auto;
+  }
+
+  h2,
+  h3 {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h1 + *,
+  h2 + *,
+  h3 + *,
+  h4 + *,
+  h5 + *,
+  h6 + * {
+    break-before: avoid;
+    page-break-before: avoid;
   }
 
   img {
@@ -51,7 +157,7 @@ main article {
 
     margin: 0 auto;
 
-    width: 75%;
+    width: auto;
     height: auto;
     max-width: 100%;
     image-resolution: 300dpi;
@@ -68,7 +174,7 @@ main article {
     vertical-align: super;
 
     font-style: italic;
-    font-size: 70%;
+    font-size: 80%;
     color: grey;
   }
 }

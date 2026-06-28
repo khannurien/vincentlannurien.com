@@ -8,12 +8,12 @@
       <span class="animate-blink">💔</span><span style="opacity: 0.5">🤍🤍</span>
     </p>
 
-    <label for="sidebar-toggle" role="button" class="sidebar-toggle-label" aria-label="Toggle menu">☰</label>
+    <label for="sidebar-toggle" role="button" tabindex="0" class="sidebar-toggle-label" aria-label="Toggle menu" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.click(); }">☰</label>
 
     <ul class="header-nav">
       {{ $currentPage := . }}
       {{ range .Site.Menus.main }}
-      <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+      <li class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}">
         <a href="{{ .URL }}">
           <span class="full-name">{{ .Name }}</span>
           <span class="short-name">{{ .Pre }}</span>
@@ -33,11 +33,13 @@
 {{ end }}
 
 <input type="checkbox" role="button" id="sidebar-toggle" class="sidebar-toggle" aria-controls="sidebar">
-<aside class="sidebar">
+<label for="sidebar-toggle" class="sidebar-backdrop" aria-hidden="true"></label>
+<aside id="sidebar" class="sidebar">
+  <label for="sidebar-toggle" role="button" tabindex="0" class="sidebar-close" aria-label="Close menu" onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.click(); }">×</label>
   <ul class="sidebar-nav">
     {{ $currentPage := . }}
     {{ range .Site.Menus.main }}
-      <li class="{{ if $currentPage.HasMenuCurrent "main" . }}active{{ end }}">
+      <li class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}active{{ end }}">
         <a href="{{ .URL }}"><span>{{ .Name }}</span></a>
       </li>
     {{ end }}

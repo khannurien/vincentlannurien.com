@@ -1,46 +1,31 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
+{{ define "main" }}
+  <article>
+    <section class="main-head crt">
+      <div class="main-head-meta">
+        <div class="main-head-title">
+          <h1 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h1>
+        </div>
 
-  <body>
-    {{ partial "background.html" . }}
+        <div class="main-head-info">
+          <span>📅</span>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">
+            {{ .Date.Format "02 . 01 . 2006" }}
+          </time>
+          <span>—</span>
+          {{ $taxonomy := "tags" }}
+          {{ with .Param $taxonomy }}
+            {{ range $index, $tag := . }}
+              {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
+              <span class="main-head-tag"><a href="{{ .Permalink }}">🏷️ {{ $tag | urlize }}</a></span>
+              {{ end }}
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+    </section>
 
-    <div id="content">
-      {{ partial "header.html" . }}
-
-      <main id="main">
-        <article>
-          <section class="main-head crt">
-            <div class="main-head-meta">
-              <div class="main-head-title">
-                <h1 class="{{ if .Params.hide_title }}hidden{{ end }}">{{ .Title }}</h1>
-              </div>
-
-              <div class="main-head-info">
-                <span>📅</span>
-                <date>
-                  {{ .Date.Format "02 . 01 . 2006" }}
-                </date>
-                <span>—</span>
-                {{ $taxonomy := "tags" }}
-                {{ with .Param $taxonomy }}
-                  {{ range $index, $tag := . }}
-                    {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
-                    <span class="main-head-tag"><a href="{{ .Permalink }}">🏷️ {{ $tag | urlize }}</a></span>
-                    {{ end }}
-                  {{ end }}
-                {{ end }}
-              </div>
-            </div>
-          </section>
-
-          <section class="main-content">
-            {{ .Content }}
-          </section>
-        </article>
-      </main>
-
-      {{ partial "footer.html" . }}
-    </div>
-  </body>
-</html>
+    <section class="main-content">
+      {{ .Content }}
+    </section>
+  </article>
+{{ end }}
