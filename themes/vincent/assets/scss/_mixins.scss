@@ -1,0 +1,34 @@
+/*
+ * Palette tinting
+ *
+ * Recolors any image with the active palette: the image keeps its own
+ * luminosity, hue and saturation come from $tint. Works with any palette,
+ * so artwork follows the colorscheme instead of being hardcoded.
+ */
+
+/* Background images: the image layer blends down onto the flat $tint. */
+@mixin tint-background($image, $tint: $color-selection, $size: cover, $repeat: no-repeat) {
+  background-image: url($image);
+  background-color: $tint;
+  background-repeat: $repeat;
+  background-size: $size;
+  background-blend-mode: luminosity;
+}
+
+/* Inline media (<img>, <video>, ...): a $tint overlay blends down onto it. */
+@mixin tint-media($tint: $color-selection) {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: $tint;
+    mix-blend-mode: color;
+
+    pointer-events: none;
+  }
+}

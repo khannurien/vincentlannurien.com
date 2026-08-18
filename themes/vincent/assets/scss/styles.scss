@@ -21,6 +21,8 @@ $color-purple: map-get($palette, "purple");
 $color-red: map-get($palette, "red");
 $color-yellow: map-get($palette, "yellow");
 
+@import "mixins";
+
 $font-sans-variable: "Fira Sans", "Helvetica Neue", sans-serif;
 $font-sans-fallback: "Fira Sans", "Helvetica Neue", sans-serif;
 $font-sans-condensed-variable: "Fira Sans Condensed", "Helvetica Neue", sans-serif;
@@ -536,8 +538,7 @@ header .grid .header-nav li {
 
 nav#breadcrumbs {
   color: $color-foreground;
-  background: url('/assets/matrix.gif') no-repeat $color-selection;
-  background-size: cover;
+  @include tint-background('/assets/matrix.gif');
   
   border-width: 0 0 1px 0;
   border-style: solid;
@@ -552,7 +553,7 @@ nav#breadcrumbs {
 }
 
 nav#breadcrumbs ul {
-  background-color: rgba(40, 42, 54, 0.8);
+  background-color: rgba($color-background, 0.8);
   -webkit-backdrop-filter: blur(1px);
   backdrop-filter: blur(1px);
 
