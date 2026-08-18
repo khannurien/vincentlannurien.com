@@ -7,19 +7,23 @@
         </div>
 
         <div class="main-head-info">
-          <span>📅</span>
-          <time datetime="{{ .Date.Format "2006-01-02" }}">
-            {{ .Date.Format "02 . 01 . 2006" }}
-          </time>
-          <span>—</span>
-          {{ $taxonomy := "tags" }}
-          {{ with .Param $taxonomy }}
-            {{ range $index, $tag := . }}
-              {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
-              <span class="main-head-tag"><a href="{{ .Permalink }}">🏷️ {{ $tag | urlize }}</a></span>
+          <div class="main-head-date {{ if .Params.hide_date }}hidden{{ end }}">
+            <span>📅</span>
+            <time datetime="{{ .Date.Format "2006-01-02" }}">
+              {{ .Date.Format "02 . 01 . 2006" }}
+            </time>
+          </div>
+          <div class="main-head-tags {{ if .Params.hide_tags }}hidden{{ end }}">
+            <span>—</span>
+            {{ $taxonomy := "tags" }}
+            {{ with .Param $taxonomy }}
+              {{ range $index, $tag := . }}
+                {{ with $.Site.GetPage (printf "/%s/%s" $taxonomy $tag) }}
+                <span class="main-head-tag"><a href="{{ .Permalink }}">🏷️ {{ $tag | urlize }}</a></span>
+                {{ end }}
               {{ end }}
             {{ end }}
-          {{ end }}
+          </div>
         </div>
       </div>
     </section>

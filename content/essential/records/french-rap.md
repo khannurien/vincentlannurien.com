@@ -17,7 +17,6 @@ records:
     youtube_links:
       - name: "Blessé Dans Mon Ego"
         url: "https://www.youtube.com/watch?v=UUdEx4DK7K0"
-        id: "UUdEx4DK7K0"
 
   - artist: "X Men"
     album: "Ma 6-T Va Crack-er"
@@ -27,7 +26,6 @@ records:
     youtube_links:
       - name: "Retour Aux Pyramides"
         url: "https://www.youtube.com/watch?v=s2AKYGBT328"
-        id: "s2AKYGBT328"
 
   - artist: "Sté Strausz"
     album: "Sté Real"
@@ -37,7 +35,6 @@ records:
     youtube_links:
       - name: "Track Cheul"
         url: "https://www.youtube.com/watch?v=OZHxWUFctMg&t=788"
-        id: "OZHxWUFctMg?start=788"
 
   - artist: "IAM"
     album: "L'Ecole du Micro d'Argent"
@@ -47,7 +44,6 @@ records:
     youtube_links:
       - name: "Elle Donne Son Corps Avant Son Nom"
         url: "https://www.youtube.com/watch?v=a3w7ZLCU_l4"
-        id: "a3w7ZLCU_l4"
 
   - artist: "Doc Gynéco"
     album: "Première Consultation"
@@ -57,7 +53,6 @@ records:
     youtube_links:
       - name: "Passement de Jambes"
         url: "https://www.youtube.com/watch?v=EoNF6qX5wD0"
-        id: "EoNF6qX5wD0"
 
   - artist: "Suprême NTM"
     album: "Paris Sous Les Bombes"
@@ -67,7 +62,6 @@ records:
     youtube_links:
       - name: ""
         url: "https://www.youtube.com/watch?v=Wnh15slpWoA"
-        id: "Wnh15slpWoA"
 
   - artist: "Kheops"
     album: "Sad Hill"
@@ -77,7 +71,6 @@ records:
     youtube_links:
       - name: "Mama Lova (feat. Oxmo Puccino)"
         url: "https://www.youtube.com/watch?v=ZSICn78pv4c"
-        id: "ZSICn78pv4c"
 
   - artist: "Kohndo"
     album: "Tout Est Écrit"
@@ -87,7 +80,6 @@ records:
     youtube_links:
       - name: "Trop De Haine"
         url: "https://www.youtube.com/watch?v=fnfOrvwHz9g"
-        id: "fnfOrvwHz9g"
 
   - artist: "113"
     album: "Les Princes De La Ville"
@@ -97,7 +89,6 @@ records:
     youtube_links:
       - name: "Les Princes De La Ville"
         url: "https://www.youtube.com/watch?v=F_tTFp3i8Uw"
-        id: "F_tTFp3i8Uw"
 ---
 
 {{< essential >}}

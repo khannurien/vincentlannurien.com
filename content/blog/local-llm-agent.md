@@ -1,8 +1,8 @@
 ---
-draft: true
+draft: false
 hide_title: false
 
-title: "Local LLM Agent"
+title: "Local LLM agent using llama.cpp and OpenCode"
 date: 2026-04-20T11:59:08Z
 
 tags:

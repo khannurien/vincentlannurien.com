@@ -17,7 +17,6 @@ records:
     youtube_links:
       - name: "Toots and the Maytals - Revolution"
         url: "https://www.youtube.com/watch?v=Y2oI1q2t6gE"
-        id: "Y2oI1q2t6gE"
 
   - artist: "Black Uhuru"
     album: "Black Uhuru"
@@ -27,7 +26,6 @@ records:
     youtube_links:
       - name: "Black Uhuru - Leaving to Zion"
         url: "https://www.youtube.com/watch?v=_uQIcGUDy6I"
-        id: "_uQIcGUDy6I"
 
   - artist: "Lee Scratch Perry"
     album: "King Scratch (Musical Masterpieces From The Upsetter Ark-ive)"
@@ -37,7 +35,6 @@ records:
     youtube_links:
       - name: "Max Romeo - One Step Forward / Ital Corner (12\" Mix)"
         url: "https://www.youtube.com/watch?v=oBQvv1XK7Dk"
-        id: "oBQvv1XK7Dk"
 
   - artist: "Burning Spear"
     album: "Marcus Garvey"
@@ -47,7 +44,6 @@ records:
     youtube_links:
       - name: "Burning Spear - Marcus Garvey"
         url: "https://www.youtube.com/watch?v=oGN3R49-CAE"
-        id: "oGN3R49-CAE"
 ---
 
 {{< essential >}}

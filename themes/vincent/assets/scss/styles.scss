@@ -1,21 +1,25 @@
-/*
- * Dracula Color Palette
- * https://github.com/dracula/dracula-theme#color-palette
- */
+@import "palettes";
 
-$color-background: #282a36;
-$color-current: #44475a;
-$color-selection: #53576d;
-$color-foreground: #f8f8f2;
-$color-comment: #6272a4;
+$palette-name: "{{ .Site.Params.palette | default "dracula" }}" !default;
+$palette: map-get($palettes, $palette-name);
 
-$color-cyan: #8be9fd;
-$color-green: #50fa7b;
-$color-orange: #ffb86c;
-$color-pink: #ff79c6;
-$color-purple: #bd93f9;
-$color-red: #ff5555;
-$color-yellow: #f1fa8c;
+@if $palette == null {
+  $palette: map-get($palettes, "dracula");
+}
+
+$color-background: map-get($palette, "background");
+$color-current: map-get($palette, "current");
+$color-selection: map-get($palette, "selection");
+$color-foreground: map-get($palette, "foreground");
+$color-comment: map-get($palette, "comment");
+
+$color-cyan: map-get($palette, "cyan");
+$color-green: map-get($palette, "green");
+$color-orange: map-get($palette, "orange");
+$color-pink: map-get($palette, "pink");
+$color-purple: map-get($palette, "purple");
+$color-red: map-get($palette, "red");
+$color-yellow: map-get($palette, "yellow");
 
 $font-sans-variable: "Fira Sans", "Helvetica Neue", sans-serif;
 $font-sans-fallback: "Fira Sans", "Helvetica Neue", sans-serif;

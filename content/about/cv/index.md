@@ -1,6 +1,8 @@
 ---
 draft: false
 hide_title: false
+hide_date: true
+hide_tags: true
 
 title: "CV"
 date: "2025-01-24T12:02:15+02:00"

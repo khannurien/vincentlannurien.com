@@ -17,7 +17,6 @@ records:
     youtube_links:
       - name: "Iron Man"
         url: "https://www.youtube.com/watch?v=b3-QqGVt-tM"
-        id: "b3-QqGVt-tM"
 
   - artist: "Bongzilla"
     album: "Amerijuanican"
@@ -27,7 +26,6 @@ records:
     youtube_links:
       - name: "Amerijuanican"
         url: "https://www.youtube.com/watch?v=WXSaCJrPNhU"
-        id: "WXSaCJrPNhU"
 
   - artist: "Clutch"
     album: "Clutch"
@@ -37,7 +35,6 @@ records:
     youtube_links:
       - name: "Big News I"
         url: "https://www.youtube.com/watch?v=aCVkm2QBG-Q"
-        id: "aCVkm2QBG-Q"
 
   - artist: "Colour Haze"
     album: "All"
@@ -47,7 +44,6 @@ records:
     youtube_links:
       - name: "Silent"
         url: "https://www.youtube.com/watch?v=dZTaY2Vx3so"
-        id: "dZTaY2Vx3so"
 
   - artist: "Electric Wizard"
     album: "Dopethrone"
@@ -57,7 +53,6 @@ records:
     youtube_links:
       - name: "Funeralopolis"
         url: "https://www.youtube.com/watch?v=ZdlEIlq9nZg"
-        id: "ZdlEIlq9nZg"
 
   - artist: "Sleep"
     album: "Sleep's Holy Mountain"
@@ -67,7 +62,6 @@ records:
     youtube_links:
       - name: "Aquarian"
         url: "https://www.youtube.com/watch?v=GC6IlzNm54A"
-        id: "GC6IlzNm54A"
 
   - artist: "Eyehategod"
     album: "Dopesick"
@@ -77,7 +71,6 @@ records:
     youtube_links:
       - name: "My Name Is God (I Hate You)"
         url: "https://www.youtube.com/watch?v=p0k1WLzruHI"
-        id: "p0k1WLzruHI"
 
   - artist: "Weedeater"
     album: "...and Justice for Y'all"
@@ -87,7 +80,6 @@ records:
     youtube_links:
       - name: "Tuesday Night"
         url: "https://www.youtube.com/watch?v=DW4d3ke5hnk"
-        id: "DW4d3ke5hnk"
 
   - artist: "Truckfighters"
     album: "Desert X"
@@ -97,7 +89,6 @@ records:
     youtube_links:
       - name: "Desert Cruiser"
         url: "https://www.youtube.com/watch?v=UfbwJfejIxY"
-        id: "UfbwJfejIxY"
 
   - artist: "Queens of the Stone Age"
     album: "Queens of the Stone Age"
@@ -107,13 +98,10 @@ records:
     youtube_links:
       - name: "Regular John"
         url: "https://www.youtube.com/watch?v=wjNbxJttwP8"
-        id: "wjNbxJttwP8"
       - name: "If Only"
         url: "https://www.youtube.com/watch?v=1HqTh0nd9GE"
-        id: "1HqTh0nd9GE"
       - name: "You Would Know"
         url: "https://www.youtube.com/watch?v=Fp32A3Tvi8A"
-        id: "Fp32A3Tvi8A"
 
   - artist: "The Black Angels"
     album: "Passover"
@@ -123,7 +111,6 @@ records:
     youtube_links:
       - name: "Young Men Dead"
         url: "https://www.youtube.com/watch?v=VvKjpGP6P5Y"
-        id: "VvKjpGP6P5Y"
 ---
 
 {{< essential 0 6 >}}

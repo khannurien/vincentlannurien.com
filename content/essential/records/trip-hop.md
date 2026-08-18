@@ -17,7 +17,6 @@ records:
     youtube_links:
       - name: "Nights Introlude"
         url: "https://www.youtube.com/watch?v=C6ixa3G_tL4"
-        id: "C6ixa3G_tL4"
 
   - artist: "DJ Shadow"
     album: "Endtroducing....."
@@ -27,7 +26,6 @@ records:
     youtube_links:
       - name: "Stem / Long Stem / Transmission 2"
         url: "https://www.youtube.com/watch?v=M1g-pF2ZezM"
-        id: "M1g-pF2ZezM"
 
   - artist: "Lovage"
     album: "Music to Make Love to Your Old Lady By"
@@ -37,7 +35,6 @@ records:
     youtube_links:
       - name: "Everyone Has a Summer"
         url: "https://www.youtube.com/watch?v=sKc3-Vv4IhI"
-        id: "sKc3-Vv4IhI"
 
   - artist: "Archive"
     album: "Londinium"
@@ -47,7 +44,6 @@ records:
     youtube_links:
       - name: "Darkroom"
         url: "https://www.youtube.com/watch?v=vutJwvDybuU"
-        id: "vutJwvDybuU"
 
 ---
 

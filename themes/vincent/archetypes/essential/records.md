@@ -15,7 +15,6 @@ records:
     youtube_links:
       - name: ""
         url: ""
-        id: ""
 
 ---
 

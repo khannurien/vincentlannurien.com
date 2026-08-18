@@ -17,8 +17,9 @@
   <link href="https://fonts.cdnfonts.com/css/fantasque-sans-mono" rel="stylesheet">
   <link rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" href="{{ .Site.BaseURL }}/atom.xml" />
   <link rel="alternate" type="application/json" title="{{ .Site.Title }}" href="{{ .Site.BaseURL }}/feed.json" />
+  {{ $palette := .Site.Params.palette | default "dracula" }}
   {{ $styles_reset := resources.Get "css/normalize.css" | toCSS (dict "outputStyle" "compressed") | minify }}
-  {{ $styles_screen := resources.Get "scss/styles.scss" | toCSS (dict "outputStyle" "compressed") | minify }}
+  {{ $styles_screen := resources.Get "scss/styles.scss" | resources.ExecuteAsTemplate (printf "scss/styles.%s.scss" $palette) . | toCSS (dict "outputStyle" "compressed") | minify }}
   {{ $styles_print := resources.Get "scss/print.scss" | toCSS (dict "outputStyle" "compressed") | minify }}
   <style media="all">
     {{ $styles_reset.Content | safeCSS }}

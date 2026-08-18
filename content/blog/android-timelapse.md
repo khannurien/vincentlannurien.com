@@ -1,13 +1,14 @@
 ---
-draft: true
+draft: false
 hide_title: false
 
-title: "Android Timelapse"
+title: "Android: timelapse video using camera feed"
 date: 2026-03-26T18:45:00Z
 
 tags:
   - "video"
   - "android"
+  - "windows"
 ---
 
 ## Stream

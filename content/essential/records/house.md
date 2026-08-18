@@ -17,7 +17,6 @@ records:
     youtube_links:
       - name: "Deep Burnt"
         url: "https://www.youtube.com/watch?v=cYtBjRkc95g"
-        id: "cYtBjRkc95g"
 
   - artist: "Moodymann"
     album: "Moodymann"
@@ -27,10 +26,8 @@ records:
     youtube_links:
       - name: "Lyk U Used 2"
         url: "https://www.youtube.com/watch?v=iX8X9RIO_cI"
-        id: "iX8X9RIO_cI"
       - name: "Hold It Down"
         url: "https://www.youtube.com/watch?v=3-y4Yqx4uwQ"
-        id: "3-y4Yqx4uwQ"
 
   - artist: "Omar-S"
     album: "Thank You For Letting Me Be Myself"
@@ -40,7 +37,6 @@ records:
     youtube_links:
       - name: "The Shit Baby"
         url: "https://www.youtube.com/watch?v=ftdMfGqwaC8"
-        id: "ftdMfGqwaC8"
 
   - artist: "Theo Parrish"
     album: "Dreamer's Blue's / Lost Angel"
@@ -49,8 +45,7 @@ records:
     url_discogs: "https://www.discogs.com/fr/master/418387-Theo-Parrish-Dreamers-Blues-Lost-Angel"
     youtube_links:
       - name: "Lost Angel"
-        url: "https://www.youtube.com/watch?v=ON2dJZnP4mQ"
-        id: "ON2dJZnP4mQ"
+        url: "https://www.youtube.com/watch?v=jAK-PCMeGYA"
 
   - artist: "Admin"
     album: "Spirit Boogie EP"
@@ -60,7 +55,6 @@ records:
     youtube_links:
       - name: "Bright Moments"
         url: "https://www.youtube.com/watch?v=WMPzxCnWRdI"
-        id: "WMPzxCnWRdI"
 
   - artist: "Four Tet"
     album: "There Is Love In You"
@@ -70,7 +64,6 @@ records:
     youtube_links:
       - name: "Angel Echoes"
         url: "https://www.youtube.com/watch?v=FiBBcHZ84i8"
-        id: "FiBBcHZ84i8"
 ---
 
 {{< essential >}}

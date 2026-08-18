@@ -1,0 +1,22 @@
+{{- $url := . -}}
+{{- $id := "" -}}
+{{- $start := "" -}}
+{{- if in $url "youtu.be/" -}}
+  {{- $id = replaceRE `^.*youtu\.be/([^?&#/]+).*$` `$1` $url -}}
+{{- else if in $url "/embed/" -}}
+  {{- $id = replaceRE `^.*/embed/([^?&#/]+).*$` `$1` $url -}}
+{{- else if in $url "/shorts/" -}}
+  {{- $id = replaceRE `^.*/shorts/([^?&#/]+).*$` `$1` $url -}}
+{{- else if in $url "watch" -}}
+  {{- $id = replaceRE `^.*[?&]v=([^?&#]+).*$` `$1` $url -}}
+{{- end -}}
+{{- if in $url "start=" -}}
+  {{- $start = replaceRE `^.*[?&]start=([0-9]+).*$` `$1` $url -}}
+{{- else if in $url "t=" -}}
+  {{- $start = replaceRE `^.*[?&]t=([0-9]+).*$` `$1` $url -}}
+{{- end -}}
+{{- if $start -}}
+  {{- printf "%s?start=%s" $id $start -}}
+{{- else -}}
+  {{- $id -}}
+{{- end -}}

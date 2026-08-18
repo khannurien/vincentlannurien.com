@@ -10,7 +10,8 @@
             <span>{{ $record.artist }} - <a href="{{ $record.url_discogs }}">{{ $record.album }}</a> <small>({{ $record.year }})</small></span>
           </div>
           <div class="essential-item-content">
-            <a data-src='{{ index (index $record.youtube_links 0) "id" }}' href="#" onclick="createModal(this); return false;">
+            {{ $first_youtube := index $record.youtube_links 0 }}
+            <a data-src='{{ partial "youtube-id.html" $first_youtube.url }}' href="#" onclick="createModal(this); return false;">
               <img src="../{{ $record.cover }}" />
             </a>
           </div>
@@ -53,6 +54,7 @@
     document.addEventListener('keydown', handleKeydown);
 
     const iframe = modal.querySelector('iframe');
+    if (!target.dataset.src) return;
     iframe.src = "https://www.youtube.com/embed/" + target.dataset.src;
 
     const modal_node = document.getElementById('modal-node');

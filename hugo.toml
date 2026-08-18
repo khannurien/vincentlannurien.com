@@ -8,6 +8,7 @@ pluralizeListTitles = false
   logo = '/assets/favicon.ico'
   description = "Some notes that made their way out here"
   author = 'Vincent Lannurien'
+  palette = 'purple'
 
 [permalinks]
   pages = "/:slug"
@@ -71,7 +72,7 @@ pluralizeListTitles = false
     lineNumbersInTable = true
     noClasses = true
     noHl = false
-    style = 'doom-one'
+    style = 'rose-pine'
     tabWidth = 2
 
 [outputs]
