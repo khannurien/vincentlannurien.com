@@ -8,7 +8,7 @@ pluralizeListTitles = false
   logo = '/assets/favicon.ico'
   description = "Some notes that made their way out here"
   author = 'Vincent Lannurien'
-  palette = 'purple'
+  palette = 'kanagawa'
 
 [permalinks]
   pages = "/:slug"
