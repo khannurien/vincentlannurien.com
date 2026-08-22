@@ -6,6 +6,7 @@ hide_tags: true
 
 title: "Publications"
 date: "2025-01-24T12:02:15+02:00"
+updatedAt: 2025-09-11T15:50:36Z
 
 tags:
   - "work"

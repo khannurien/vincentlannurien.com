@@ -4,6 +4,7 @@ hide_title: false
 
 title: "Music tools and resources"
 date: 2026-03-16T18:41:39Z
+updatedAt: 2026-08-18T13:07:55Z
 
 tags:
   - "music"

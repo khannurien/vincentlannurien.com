@@ -6,6 +6,7 @@ hide_tags: true
 
 title: "Teachings"
 date: "2025-01-24T12:02:15+02:00"
+updatedAt: 2026-08-18T13:07:55Z
 
 tags:
   - "work"

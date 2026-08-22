@@ -4,6 +4,7 @@ hide_title: false
 
 title: "Local LLM agent using llama.cpp and OpenCode"
 date: 2026-04-20T11:59:08Z
+updatedAt: 2026-08-18T13:07:55Z
 
 tags:
   - "llm"

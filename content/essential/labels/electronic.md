@@ -1,6 +1,7 @@
 ---
 title: "Essential Electronic Labels"
 date: 2023-07-26T11:38:48+02:00
+updatedAt: 2024-10-10T20:11:43Z
 images:
   - "images/electronic/astro_nautico.jpg"
   - "images/electronic/future_times.jpg"

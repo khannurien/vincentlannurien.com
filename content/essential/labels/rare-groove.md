@@ -1,6 +1,7 @@
 ---
 title: "Essential Rare Groove Labels"
 date: 2023-07-29T09:33:48+02:00
+updatedAt: 2024-10-10T20:11:43Z
 images:
   - "images/rare-groove/bongo_joe.jpg"
   - "images/rare-groove/habibi_funk_records.jpg"

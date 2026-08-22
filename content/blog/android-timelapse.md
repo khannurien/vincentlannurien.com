@@ -4,6 +4,7 @@ hide_title: false
 
 title: "Android: timelapse video using camera feed"
 date: 2026-03-26T18:45:00Z
+updatedAt: 2026-08-18T13:07:55Z
 
 tags:
   - "video"

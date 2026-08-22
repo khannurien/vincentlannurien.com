@@ -1,6 +1,7 @@
 ---
 title: "Essential French Rap Records"
 date: 2023-07-30T18:19:12+02:00
+updatedAt: 2024-10-18T09:44:17Z
 images:
   - "images/french-rap/la_rumeur_poison_avril.jpg"
   - "images/french-rap/ma_6t_va_cracker.jpg"

@@ -4,6 +4,7 @@ hide_title: false
 
 title: "Systèmes à objets répartis"
 date: "2026-01-05T15:13:37+02:00"
+updatedAt: 2026-03-11T13:07:28Z
 
 tags:
   - "labs"

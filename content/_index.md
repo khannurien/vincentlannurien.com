@@ -10,6 +10,7 @@ links:
     url: "https://linuxquimper.org/"
   - name: "🎶 SoundCloud"
     url: "https://soundcloud.com/khannurien"
+updatedAt: 2026-01-17T10:01:21Z
 ---
 
 ```c {.animate-float}
