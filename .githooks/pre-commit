@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#
+# Stamps an `updatedAt` field into the YAML front matter of every content file
+# that is being modified by this commit, so pages can advertise when they were
+# last touched. New files are left alone: their `date` already says it.
+#
+# Enable with:
+#
+#   git config core.hooksPath .githooks
+#
+
+set -e
+
+now=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+git diff --cached --name-only --diff-filter=M -z -- 'content/*.md' |
+while IFS= read -r -d '' file; do
+  # Only YAML front matter is understood.
+  [ -f "$file" ] || continue
+  [ "$(head -n 1 "$file" | tr -d '\r')" = "---" ] || continue
+
+  # Partially staged files would get their unstaged hunks swept into the
+  # commit by the `git add` below, so leave those to the author.
+  if ! git diff --quiet -- "$file"; then
+    echo "pre-commit: $file has unstaged changes, not stamping updatedAt" >&2
+    continue
+  fi
+
+  # A commit that only bumps `updatedAt` is not a content update.
+  if [ -z "$(git diff --cached -U0 -- "$file" \
+             | grep -E '^[-+]' \
+             | grep -vE '^(\+\+\+|---)' \
+             | grep -vE '^[-+]updatedAt:')" ]; then
+    continue
+  fi
+
+  # Line endings are whatever the working copy uses (see core.autocrlf).
+  awk -v ts="$now" '
+    BEGIN { fm = 0; done = 0 }
+    {
+      line = $0
+      eol = ""
+      if (substr(line, length(line), 1) == "\r") {
+        eol = "\r"
+        line = substr(line, 1, length(line) - 1)
+      }
+    }
+    NR == 1 && line == "---" { fm = 1; print; next }
+    fm == 1 && line == "---" {
+      if (!done) printf "updatedAt: %s%s\n", ts, eol
+      fm = 2; print; next
+    }
+    # Drop any existing field: it is re-emitted right after `date`.
+    fm == 1 && line ~ /^updatedAt:[ \t]/ { next }
+    fm == 1 && line ~ /^date:[ \t]/ {
+      print
+      printf "updatedAt: %s%s\n", ts, eol
+      done = 1
+      next
+    }
+    { print }
+  ' "$file" > "$file.updatedAt.tmp"
+
+  # awk terminates the last record, so a file that had no trailing newline
+  # would grow one -- a spurious diff line, and one the guard above cannot
+  # tell apart from a real edit on the next commit.
+  if [ -n "$(tail -c 1 "$file")" ]; then
+    printf %s "$(cat "$file.updatedAt.tmp")" > "$file.updatedAt.tmp2"
+    mv "$file.updatedAt.tmp2" "$file.updatedAt.tmp"
+  fi
+
+  mv "$file.updatedAt.tmp" "$file"
+  git add -- "$file"
+  echo "pre-commit: stamped updatedAt: $now in $file"
+done

@@ -7,10 +7,16 @@
         </div>
 
         <div class="main-head-info">
-          <div class="main-head-date {{ if .Params.hide_date }}hidden{{ end }}">
+          <div class="main-head-date {{ if .Params.hide_date }}hidden{{ end }}" title="First created">
             <span>📅</span>
             <time datetime="{{ .Date.Format "2006-01-02" }}">
               {{ .Date.Format "02 . 01 . 2006" }}
+            </time>
+          </div>
+          <div class="main-head-date main-head-updated {{ if or .Params.hide_date (not (.Lastmod.After .Date)) }}hidden{{ end }}" title="Last updated">
+            <span>✏️</span>
+            <time datetime="{{ .Lastmod.Format "2006-01-02" }}">
+              {{ .Lastmod.Format "02 . 01 . 2006" }}
             </time>
           </div>
           <div class="main-head-tags {{ if .Params.hide_tags }}hidden{{ end }}">

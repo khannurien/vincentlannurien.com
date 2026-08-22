@@ -10,7 +10,10 @@
 			"version": "latest"
 		}
 	},
-	"runArgs": ["--network=host"]
+	"runArgs": ["--network=host"],
+
+	// Enable the pre-commit hook that stamps updatedAt on modified content.
+	"postCreateCommand": "git config core.hooksPath .githooks"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

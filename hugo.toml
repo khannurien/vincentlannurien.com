@@ -13,6 +13,9 @@ pluralizeListTitles = false
 [permalinks]
   pages = "/:slug"
 
+[frontmatter]
+  lastmod = ["updatedAt", "lastmod", ":git", "date"]
+
 [taxonomies]
   tag = "tags"
 
