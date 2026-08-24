@@ -209,16 +209,6 @@ hr {
   margin: 1.5rem;
 }
 
-@media (max-width: 640px) {
-  .inline-image {
-    display: block;
-    float: none;
-    width: 70%;
-    max-width: 12rem;
-    margin: 1rem auto;
-  }
-}
-
 .opacity-25 {
   opacity: 25%;
 }
@@ -265,12 +255,6 @@ hr {
   margin: auto;
 
   font-size: 1em;
-}
-
-@media (max-width: 480px) {
-  #content {
-    width: calc(100% - 1rem);
-  }
 }
 
 .fit-embed {
@@ -614,7 +598,7 @@ main .main-head {
 main .main-head blockquote {
   padding: 1rem;
 
-  line-height: 1.4rem;
+  line-height: 1.4;
 
   font-family: $font-serif;
   font-optical-sizing: auto;
@@ -654,24 +638,13 @@ main .main-head .main-head-info .main-head-tag a:hover {
   color: $color-foreground;
 }
 
-@media (max-width: 480px) {
-  main .main-head {
-    padding: 0.5rem 1rem;
-  }
-
-  main .main-content,
-  main .main-list {
-    padding: 1rem;
-  }
-}
-
 main .main-content {
   padding: 1rem 2rem 1rem 2rem;
 
   background: $color-current;
   color: $color-foreground;
 
-  line-height: 1.6rem;
+  line-height: 1.6;
 
   box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
@@ -759,7 +732,7 @@ main .main-list {
   background: $color-current;
   color: $color-foreground;
 
-  line-height: 1.6rem;
+  line-height: 1.6;
 
   box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
@@ -1404,6 +1377,85 @@ footer .bye a {
   right: 0;
   width: 100%;
   height: 100%;
+}
+
+/*
+ * Mobile
+ *
+ * 678px is where the sidebar replaces the header nav; treat it as *the* mobile
+ * breakpoint. Dropping the root font-size shrinks every rem-based margin and
+ * padding at once, so the chrome tightens without each rule needing its own
+ * override; main is nudged back up to keep body copy readable.
+ */
+@media (max-width: 678px) {
+  html {
+    font-size: 100%;
+  }
+
+  main {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+
+  #content {
+    width: calc(100% - 1rem);
+  }
+  /*
+   * Homepage flourishes: the header photo (with the now-playing overlay it
+   * carries) and the hello-world easter egg. Both are landscape-shaped and eat
+   * a screenful before any actual content on a narrow viewport.
+   */
+  .main-container,
+  .highlight.animate-float {
+    display: none;
+  }
+
+  /*
+   * Keep the float from the base rule so the intro paragraph wraps around the
+   * avatar instead of being pushed below it; just shrink it to suit the column.
+   */
+  .inline-image {
+    width: 30%;
+    max-width: 5rem;
+    margin: 0 1rem 0.5rem 0;
+  }
+
+
+  header {
+    margin: 1rem 0;
+    padding: 0.5rem;
+  }
+
+  /* Decorative, and it crowds the title against the menu button. */
+  header .grid .header-logo {
+    display: none;
+  }
+
+  nav#breadcrumbs ul {
+    padding: 0.2rem 0.5rem 0.4rem 0.5rem;
+  }
+
+  main .main-head {
+    padding: 0.5rem 1rem;
+  }
+
+  main .main-content,
+  main .main-list {
+    padding: 1rem;
+  }
+
+  /* Reclaim the gutter each list row spends on horizontal margin. */
+  main .main-list .main-list-item {
+    margin: 0.25rem 0;
+  }
+
+  main .main-list .recursive .main-list-item {
+    margin-left: 1rem;
+  }
+
+  footer .bye {
+    margin: 1rem 0;
+  }
 }
 
 /*
