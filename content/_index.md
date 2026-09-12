@@ -10,7 +10,7 @@ links:
     url: "https://linuxquimper.org/"
   - name: "🎶 SoundCloud"
     url: "https://soundcloud.com/khannurien"
-updatedAt: 2026-01-17T10:01:21Z
+updatedAt: 2026-09-12T08:34:28Z
 ---
 
 ```c {.animate-float}
@@ -19,7 +19,7 @@ updatedAt: 2026-01-17T10:01:21Z
 
 <img src="./images/profile.jpg" class="inline-image rounded" />
 
-I am Vincent Lannurien, an **Associate Professor** (*Maître de Conférences*) at Lab-STICC, Université de Bretagne Occidentale (Brest, France). I am part of the [**SHAKER**](https://labsticc.fr/fr/equipes/shaker) team and my research interests are in **performance evaluation** and **optimization** of distributed and embedded systems, with a focus on energy consumption.
+I am Vincent Lannurien, an **Associate Professor** (*Maître de Conférences*) in the [Computer Science department](https://www.univ-brest.fr/departement-informatique/) at Université de Bretagne Occidentale (Brest, France). I am part of Lab-STICC, [**SHAKER**](https://labsticc.fr/fr/equipes/shaker) team, and my research interests are in **performance evaluation** and **optimization** of distributed and embedded systems, with a focus on energy consumption.
 
 Before that, I was a **Postdoctoral Researcher** at Lab-STICC, ENSTA (Brest, France).
 

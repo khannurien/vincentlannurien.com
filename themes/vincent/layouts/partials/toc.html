@@ -1,0 +1,52 @@
+{{- /*
+  Table of contents for a single page.
+
+  Entries come from .Fragments, which is the page's full heading tree: the
+  levels in [markup.tableOfContents] apply to .TableOfContents only, not
+  here, so depth is capped below instead.
+
+  Renders nothing when the page has fewer than $min top-level entries.
+
+  Markup and CSS only: <details> does the collapsing, so the whole thing
+  works with scripting disabled.
+
+  Page or site params:
+    toc_title — heading of the panel (default "Contents")
+    toc_depth — how many heading levels to list (default 3)
+*/ -}}
+
+{{- $min := 3 -}}
+{{- $title := .Param "toc_title" | default "Contents" -}}
+{{- $depth := int (.Param "toc_depth" | default 3) -}}
+{{- $headings := .Fragments.Headings -}}
+
+{{- /*
+  When a page's shallowest heading is deeper than h1, Hugo hangs the whole
+  outline off a synthetic level-0 node. Descend past it so the real headings
+  end up at the top level of the list.
+*/ -}}
+{{- if eq (len $headings) 1 -}}
+  {{- $root := index $headings 0 -}}
+  {{- if eq $root.Level 0 -}}
+    {{- $headings = $root.Headings -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if ge (len $headings) $min -}}
+<aside id="toc">
+  <details class="toc" open>
+    <summary class="toc-summary">
+      <span class="toc-title">{{ $title }}</span>
+    </summary>
+
+    <div class="toc-scroll">
+      <nav class="toc-body" aria-label="{{ $title }}">
+        {{- partial "toc-branch.html" (dict "headings" $headings "level" 1 "depth" $depth) -}}
+      </nav>
+    </div>
+  </details>
+</aside>
+
+{{- $toc := resources.Get "/ts/toc.ts" | js.Build -}}
+<script src="{{ $toc.RelPermalink }}" defer></script>
+{{- end -}}

@@ -1,0 +1,24 @@
+{{- /*
+  One level of the table of contents.
+
+  Called by toc.html, then by itself, with:
+    headings — a slice of .Fragments headings
+    level    — 1 for the outermost list, incremented on each recursion
+    depth    — deepest level to render
+*/ -}}
+
+{{- $level := .level -}}
+{{- $depth := .depth -}}
+
+<ol class="toc-list toc-list-{{ $level }}">
+  {{- range .headings }}
+  <li class="toc-item">
+    <a class="toc-link" href="#{{ .ID }}">{{ .Title | plainify }}</a>
+    {{- if lt $level $depth }}
+      {{- with .Headings }}
+        {{- partial "toc-branch.html" (dict "headings" . "level" (add $level 1) "depth" $depth) -}}
+      {{- end }}
+    {{- end }}
+  </li>
+  {{- end }}
+</ol>

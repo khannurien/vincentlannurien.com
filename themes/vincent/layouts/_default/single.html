@@ -34,8 +34,19 @@
       </div>
     </section>
 
-    <section class="main-content">
-      {{ .Content }}
-    </section>
+    {{/*
+      The wrapper is what the sticky table of contents is positioned
+      against on wide viewports: with the panel out of flow, the wrapper
+      spans exactly the article, so no offset needs measuring.
+    */}}
+    <div class="main-body">
+      {{ if .Param "toc" }}
+        {{ partial "toc.html" . }}
+      {{ end }}
+
+      <section class="main-content">
+        {{ .Content }}
+      </section>
+    </div>
   </article>
 {{ end }}

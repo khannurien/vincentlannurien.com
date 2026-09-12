@@ -282,6 +282,318 @@ hr {
 }
 
 /*
+ * Table of contents
+ *
+ * Two presentations, one markup: a panel above the article, and from
+ * $toc-breakpoint up, the same panel out in the right gutter with its top
+ * edge level with the article, sticking there until the article ends.
+ *
+ * <details> does the collapsing, so none of this needs a script. toc.ts
+ * adds the current-section highlight on top, if it runs.
+ */
+
+$toc-breakpoint: 1440px;
+$toc-breakpoint-wide: 1700px;
+
+/*
+ * Height of the fade at each end of the scroll area. The scroll area
+ * carries the same value as its bottom padding, which is what lets the
+ * bottom fade cover padding rather than text at the end of a scroll.
+ */
+$toc-fade: 1rem;
+$toc-fade-narrow: 0.8rem;
+
+/*
+ * The fades have to be the panel colour to read as a fade, so it is set
+ * in one place and the gradients follow from it.
+ */
+@mixin toc-panel($background) {
+  background: $background;
+
+  .toc-scroll::before {
+    background: linear-gradient(to bottom, $background, rgba($background, 0));
+  }
+
+  .toc-scroll::after {
+    background: linear-gradient(to top, $background, rgba($background, 0));
+  }
+}
+
+main #toc {
+  margin: 0 0 1rem 0;
+
+  /* Never wider than the content column, whatever the entries contain. */
+  min-width: 0;
+  max-width: 100%;
+}
+
+main .toc {
+  @include toc-panel($color-current);
+
+  color: $color-foreground;
+
+  font-family: $font-mono;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.8rem;
+  line-height: 1.4;
+
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
+}
+
+main .toc .toc-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+
+  padding: 0.6rem 1rem;
+
+  cursor: pointer;
+  user-select: none;
+
+  /* Replace the native disclosure triangle with our own. */
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::before {
+    content: "▸";
+    flex: 0 0 auto;
+    color: $color-orange;
+    transition: transform .15s ease-out;
+  }
+
+  &:hover .toc-title,
+  &:focus-visible .toc-title {
+    color: $color-yellow;
+  }
+}
+
+main .toc[open] .toc-summary::before {
+  transform: rotate(90deg);
+}
+
+main .toc .toc-summary .toc-title {
+  min-width: 0;
+
+  color: $color-cyan;
+  letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
+
+  transition: color .2s ease-out;
+}
+
+/*
+ * Scroll area.
+ *
+ * The native scrollbar is hidden and replaced by a fade at each end. The
+ * fades are pinned to this wrapper, so they stay put while the list moves
+ * underneath and text slides into them.
+ *
+ * The bottom fade sits over the scroll area bottom padding, so it shows
+ * nothing once the scroll reaches the end, or if the list is too short to
+ * scroll at all. The top fade has no padding under it to hide in, so it
+ * is off until toc.ts reports the list scrolled.
+ */
+main .toc .toc-scroll {
+  position: relative;
+}
+
+main .toc .toc-scroll::before,
+main .toc .toc-scroll::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: $toc-fade;
+  z-index: 1;
+
+  pointer-events: none;
+}
+
+main .toc .toc-scroll::before {
+  top: 0;
+
+  /*
+   * Off at rest: with no top padding to hide in, it would dim the first
+   * entry. toc.ts flags the wrapper once the list has been scrolled, so
+   * with scripting off the fade simply never shows.
+   */
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+
+main .toc .toc-scroll[data-toc-scrolled]::before {
+  opacity: 1;
+}
+
+main .toc .toc-scroll::after {
+  bottom: 0;
+}
+
+main .toc .toc-body {
+  /* Keep the panel from burying the article it introduces. */
+  max-height: 40vh;
+
+  /*
+   * For the nudge toc.ts gives it. The reduced-motion block near the end
+   * of this file turns it back off.
+   */
+  scroll-behavior: smooth;
+
+  /*
+   * Vertical only, and spelled out: asking for overflow-y alone resolves
+   * overflow-x to auto, which brings a horizontal scrollbar with it.
+   */
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+
+  padding: 0 1rem $toc-fade 1rem;
+
+  /* The fades are the affordance, so drop the scrollbar itself. */
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+main .toc .toc-list {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+
+  list-style: none;
+}
+
+/* Nested levels get an indent and a rule to hang off. */
+main .toc .toc-list .toc-list {
+  margin: 0.1rem 0 0.3rem 0.25rem;
+  padding-left: 0.75rem;
+
+  border-left: 1px solid rgba($color-comment, .4);
+}
+
+main .toc .toc-link {
+  display: block;
+
+  padding: 0.15rem 0.35rem 0.15rem 0.55rem;
+
+  color: $color-foreground;
+  text-decoration: none;
+
+  overflow-wrap: anywhere;
+
+  transition: background .2s ease-out, color .2s ease-out;
+}
+
+/*
+ * Depth, by weight and by how much attention each level asks for. The
+ * structure goes inside :where() so these stay at the same specificity as
+ * the rule above, and the states further down can override them without
+ * having to out-specify a selector that says nothing about state.
+ */
+main .toc :where(.toc-list-1 > .toc-item) > .toc-link {
+  font-weight: 600;
+  color: rgba($color-foreground, .95);
+}
+
+main .toc :where(.toc-list .toc-list) .toc-link {
+  color: $color-comment;
+}
+
+main .toc :where(.toc-list .toc-list .toc-list) .toc-link {
+  font-size: 0.95em;
+  opacity: .85;
+}
+
+/* The sections the current one sits under: the branch being read. */
+main .toc .toc-link.toc-ancestor {
+  color: rgba($color-orange, .75);
+}
+
+/*
+ * Where the reader is. Set by toc.ts, so it simply never appears when
+ * scripting is off.
+ */
+main .toc .toc-link[aria-current] {
+  background: rgba($color-selection, .5);
+  color: $color-orange;
+  opacity: 1;
+
+  /* An inset rule: a border would shift the row as it came and went. */
+  box-shadow: inset 0.15rem 0 0 0 $color-orange;
+}
+
+/*
+ * Last, so pointing at a row always answers. The inset rule above is left
+ * alone, so the current section stays marked while hovered.
+ */
+main .toc .toc-link:hover,
+main .toc .toc-link:focus-visible {
+  background: $color-selection;
+  color: $color-yellow;
+  opacity: 1;
+}
+
+@media (min-width: $toc-breakpoint) {
+  /*
+   * Out into the gutter. Taking the panel out of flow leaves .main-body
+   * spanning exactly the article, so top: 0 is the article's top edge
+   * and left: 100% its right edge: neither needs measuring. The wrapper
+   * spanning the article is also the distance the sticky panel travels.
+   */
+  main .main-body {
+    position: relative;
+  }
+
+  main #toc {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% + 1rem);
+    width: 12rem;
+
+    margin: 0;
+  }
+
+  main .toc {
+    position: sticky;
+    top: 2rem;
+  }
+
+  main .toc .toc-body {
+    max-height: calc(100vh - 9rem);
+  }
+}
+
+@media (min-width: $toc-breakpoint-wide) {
+  main #toc {
+    width: 16rem;
+  }
+}
+
+/* Anchor jumps from the ToC shouldn't land flush against the viewport. */
+main article .main-content {
+  h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: 1.5rem;
+  }
+
+  h1:target,
+  h2:target,
+  h3:target,
+  h4:target,
+  h5:target,
+  h6:target {
+    background: rgba($color-yellow, .12);
+  }
+}
+
+/*
  * Header
  */
 
@@ -1442,6 +1754,21 @@ footer .bye a {
   main .main-content,
   main .main-list {
     padding: 1rem;
+  }
+
+  /* Less of the screen for the outline, since there is less screen. */
+  main .toc .toc-summary {
+    padding: 0.5rem 0.75rem;
+  }
+
+  main .toc .toc-scroll::before,
+  main .toc .toc-scroll::after {
+    height: $toc-fade-narrow;
+  }
+
+  main .toc .toc-body {
+    max-height: 30vh;
+    padding: 0 0.75rem $toc-fade-narrow 0.75rem;
   }
 
   /* Reclaim the gutter each list row spends on horizontal margin. */
