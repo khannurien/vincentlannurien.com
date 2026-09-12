@@ -80,7 +80,7 @@ Real-world agentic tasks expected performance: prompt processing @ ~100-200 tk/s
 
 Recursive exploration of a directory tree to find and summarize heterogeneous/unstructured PDF files located at arbitrary depth in the tree:
 
-```
+```text
 prompt eval time =    2279.39 ms /   322 tokens (    7.08 ms per token,   141.27 tokens per second)
        eval time =   54034.10 ms /   384 tokens (  140.71 ms per token,     7.11 tokens per second)
       total time =   56313.49 ms /   706 tokens
