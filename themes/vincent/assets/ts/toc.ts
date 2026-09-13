@@ -4,7 +4,8 @@
  * The table of contents is generated, styled and collapsible without any
  * of this. All this adds is telling the reader where they are: the entry
  * for the section being read is marked, the entries it sits under with it,
- * and the panel's scroll area is nudged to keep that entry in view.
+ * and the panel's scroll area is nudged to keep that entry in view. It
+ * also keeps the back to top button from ever sitting over the panel.
  *
  * Nothing here scrolls the page, and nothing here touches the URL.
  */
@@ -33,13 +34,73 @@ const revealMargin = 24;
  */
 const scrolledThreshold = 1;
 
+/**
+ * How close the back to top button may come to the panel, in pixels,
+ * before it counts as being over it.
+ */
+const clearance = 8;
+
 const toc = document.getElementById("toc");
 const details = toc?.querySelector<HTMLDetailsElement>("details.toc") ?? null;
 const scroll = toc?.querySelector<HTMLElement>(".toc-scroll") ?? null;
 const body = toc?.querySelector<HTMLElement>(".toc-body") ?? null;
+const backToTop = document.querySelector<HTMLElement>(".back-to-top");
 
 if (toc !== null && details !== null && scroll !== null && body !== null) {
   start(toc, details, scroll, body);
+}
+
+if (toc !== null && details !== null && backToTop !== null) {
+  keepClear(toc, details, backToTop);
+}
+
+/**
+ * Hides the back to top button for as long as it would sit over the panel.
+ *
+ * The button is pinned to the viewport and the panel is not. Above the
+ * article, the panel scrolls through the corner the button lives in. Out
+ * in the gutter, it starts level with the article and hangs past the fold
+ * until it has scrolled up to where it sticks. Neither is anything the
+ * stylesheet can see, so the boxes are compared directly.
+ *
+ * The stylesheet keeps the button off pages with a panel until this has
+ * run, so with scripting off it never covers the panel either.
+ */
+function keepClear(toc: HTMLElement, panel: HTMLElement, button: HTMLElement): void {
+  let frame = 0;
+
+  // Hiding the button leaves its box in place, so this never oscillates.
+  const check = () => {
+    frame = 0;
+    button.toggleAttribute("data-over-toc", overlaps(panel, button, clearance));
+  };
+
+  const schedule = () => {
+    if (frame === 0) {
+      frame = requestAnimationFrame(check);
+    }
+  };
+
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule);
+  panel.addEventListener("toggle", schedule);
+
+  // Unhidden first: a button still set to display: none has no box to measure.
+  toc.setAttribute("data-toc-clear", "");
+  check();
+}
+
+/** Whether two boxes on screen overlap, or come within margin of it. */
+function overlaps(a: Element, b: Element, margin: number): boolean {
+  const first = a.getBoundingClientRect();
+  const second = b.getBoundingClientRect();
+
+  return (
+    first.left < second.right + margin &&
+    second.left < first.right + margin &&
+    first.top < second.bottom + margin &&
+    second.top < first.bottom + margin
+  );
 }
 
 function start(

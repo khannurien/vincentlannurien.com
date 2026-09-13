@@ -2,7 +2,7 @@
 <html lang="{{ .Site.Language.Lang | default "en" }}">
   {{ partial "head.html" . }}
 
-  <body>
+  <body id="top">
     {{ partial "background.html" . }}
 
     <div id="content">
@@ -14,5 +14,7 @@
 
       {{ partial "footer.html" . }}
     </div>
+
+    {{ partial "back-to-top.html" . }}
   </body>
 </html>

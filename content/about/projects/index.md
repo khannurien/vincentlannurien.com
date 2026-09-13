@@ -6,6 +6,7 @@ hide_tags: true
 
 title: "Projects and students"
 date: "2025-01-24T12:02:15+02:00"
+updatedAt: 2026-09-13T06:36:26Z
 
 tags:
   - "work"
@@ -24,9 +25,9 @@ tags:
 
 ### Supervised PhD students
 
-- [2026 - ?] [Co-advisor] *Abdennour Guessoum*, **DADS** (Déploiement optimisé d'algorithmes d'apprentissage automatique hétérogènes sur un drone marin de surface), ARED/CDE, Lab-STICC, UBO
+- [2026 - ?] [Co-advisor] *Abdennour Guessoum*, **DADS** (Déploiement optimisé d'algorithmes d'apprentissage automatique hétérogènes sur un drone marin de surface), ARED/CDE, Lab-STICC, UBO. Co-advised with [Laurent Lemarchand](https://labsticc.univ-brest.fr/~lemarch/FR/) and [Jean-Philippe Babau](https://lab-sticc.univ-brest.fr/~babau/).
 
 ### Supervised MSc/Eng students
 
-- [2026] [6 months] *Lina Sadi*, Déploiement de LLM multi-tenant en périphérie, co-advised with Jalil Bouhkobza, Meriem Bouzouad. (Lab-STICC/UBO, AID LanguEdge)
-- [2026] [6 months] *Chakib Islam Kedadsa*, Caractérisation de la consommation énergétique des LLM sur des périphérique à l'edge, co-advised with Jalil Bouhkobza, Meriem Bouzouad. (Lab-STICC/UBO, AID LanguEdge)
+- [2026] [6 months] *Lina Sadi*, Déploiement de LLM multi-tenant en périphérie, Lab-STICC/UBO, AID LanguEdge. Co-advised with [Jalil Boukhobza](https://webperso.ensta.fr/boukhobza/), Meriem Bouzouad.
+- [2026] [6 months] *Chakib Islam Kedadsa*, Caractérisation de la consommation énergétique des LLM sur des périphérique à l'edge, Lab-STICC/UBO, AID LanguEdge. Co-advised with [Jalil Boukhobza](https://webperso.ensta.fr/boukhobza/), Meriem Bouzouad. 

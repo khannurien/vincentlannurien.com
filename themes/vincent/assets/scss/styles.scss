@@ -22,13 +22,27 @@ $color-red: map-get($palette, "red");
 $color-yellow: map-get($palette, "yellow");
 
 @import "mixins";
+@import "contrast";
 
-$font-sans-variable: "Fira Sans", "Helvetica Neue", sans-serif;
-$font-sans-fallback: "Fira Sans", "Helvetica Neue", sans-serif;
-$font-sans-condensed-variable: "Fira Sans Condensed", "Helvetica Neue", sans-serif;
-$font-sans-condensed-fallback: "Fira Sans Condensed", "Helvetica Neue", sans-serif;
+/*
+ * Text colours derived from the palette, adjusted to stay readable on the
+ * surfaces they sit on: articles and lists (current) and the page itself
+ * (background), where the article head and blockquotes live.
+ */
+$surfaces: ($color-current, $color-background);
+
+$color-link: legible($color-red, $surfaces);
+$color-link-hover: legible($color-pink, $surfaces);
+$color-muted: legible($color-comment, $surfaces);
+
+$font-sans: "Fira Sans", "Helvetica Neue", sans-serif;
+$font-sans-condensed: "Fira Sans Condensed", "Helvetica Neue", sans-serif;
 $font-serif: "Playfair Display", serif;
 $font-mono: "Fantasque Sans Mono", monospace;
+
+/* The centred column, and the space between it and anything in the gutter. */
+$content-width: 45rem;
+$gutter-gap: 1rem;
 
 /*
  * Inspired by true events
@@ -55,6 +69,9 @@ $font-mono: "Fantasque Sans Mono", monospace;
 html {
   background: $color-background;
   font-size: 120%;
+
+  /* For in-page jumps: the ToC and back to top. Off for reduced motion. */
+  scroll-behavior: smooth;
 }
 
 *,
@@ -76,17 +93,22 @@ figure {
 figcaption {
   text-align: center;
   font-size: 0.8rem;
-  color: $color-comment;
+  color: $color-muted;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $font-sans-condensed-fallback;
+  font-family: $font-sans-condensed;
   font-weight: 600;
   font-style: normal;
+
+  /* Body leading is too loose once a heading wraps; balance evens the lines. */
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
-@supports (font-variation-settings: normal) {
-  h1, h2, h3, h4, h5, h6 { font-family: $font-sans-condensed-variable; }
+/* Avoid a lone word on the last line of a paragraph. */
+p, li, blockquote, figcaption {
+  text-wrap: pretty;
 }
 
 code {
@@ -97,6 +119,13 @@ code {
   text-shadow: 0 0 0.5em rgba($color-foreground, 0.2);
 
   background-color: $color-selection;
+}
+
+/* Only emitted for palettes whose foreground is too faint on the chip. */
+@if contrast($color-foreground, $color-selection) < 4.5 {
+  code {
+    color: legible($color-foreground, $color-selection);
+  }
 }
 
 pre {
@@ -113,12 +142,20 @@ pre {
   min-width: 0;
 }
 
-blockquote {
+/*
+ * Justified text needs hyphenation, or word gaps open up into rivers.
+ * Relies on <html lang>. The limit keeps short words whole (Chromium only).
+ */
+blockquote,
+.justify {
   text-align: justify;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 2;
 }
 
 table {
   border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
   display: block;
   width: max-content;
   max-width: 100%;
@@ -144,7 +181,7 @@ tr:last-child td {
 
 th {
   background-color: $color-background;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 tr:nth-child(0) {
@@ -162,14 +199,10 @@ kbd {
 
   color: $color-cyan;
 
-  font-family: $font-sans-fallback;
+  font-family: $font-sans;
   font-size: .85em;
   font-weight: 400;
   letter-spacing: .05em;
-}
-
-@supports (font-variation-settings: normal) {
-  kbd { font-family: $font-sans-variable; }
 }
 
 hr {
@@ -193,10 +226,6 @@ hr {
 
 .center {
   text-align: center;
-}
-
-.justify {
-  text-align: justify;
 }
 
 .rounded {
@@ -251,7 +280,7 @@ hr {
 
 #content {
   width: calc(100% - 2rem);
-  max-width: 45rem;
+  max-width: $content-width;
   margin: auto;
 
   font-size: 1em;
@@ -294,6 +323,21 @@ hr {
 
 $toc-breakpoint: 1440px;
 $toc-breakpoint-wide: 1700px;
+$toc-width: 12rem;
+$toc-width-wide: 16rem;
+
+/*
+ * One row of gutter chrome, at the ToC's type: the panel's summary, and the
+ * back to top button. The geometry below is worked out from it.
+ */
+$gutter-row-padding: 0.6rem;
+$gutter-font-size: 0.8rem;
+$gutter-line-height: 1.4;
+$gutter-row: 2 * $gutter-row-padding + $gutter-font-size * $gutter-line-height;
+
+/* Where the panel sticks, and where the button sits under it. */
+$toc-top: 2rem;
+$back-to-top-bottom: 1.5rem;
 
 /*
  * Height of the fade at each end of the scroll area. The scroll area
@@ -335,8 +379,8 @@ main .toc {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
-  font-size: 0.8rem;
-  line-height: 1.4;
+  font-size: $gutter-font-size;
+  line-height: $gutter-line-height;
 
   box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
 }
@@ -347,7 +391,7 @@ main .toc .toc-summary {
   gap: 0.5rem;
   min-width: 0;
 
-  padding: 0.6rem 1rem;
+  padding: $gutter-row-padding 1rem;
 
   cursor: pointer;
   user-select: none;
@@ -503,12 +547,11 @@ main .toc :where(.toc-list-1 > .toc-item) > .toc-link {
 }
 
 main .toc :where(.toc-list .toc-list) .toc-link {
-  color: $color-comment;
+  color: $color-muted;
 }
 
 main .toc :where(.toc-list .toc-list .toc-list) .toc-link {
   font-size: 0.95em;
-  opacity: .85;
 }
 
 /* The sections the current one sits under: the branch being read. */
@@ -523,7 +566,6 @@ main .toc .toc-link.toc-ancestor {
 main .toc .toc-link[aria-current] {
   background: rgba($color-selection, .5);
   color: $color-orange;
-  opacity: 1;
 
   /* An inset rule: a border would shift the row as it came and went. */
   box-shadow: inset 0.15rem 0 0 0 $color-orange;
@@ -537,7 +579,6 @@ main .toc .toc-link:hover,
 main .toc .toc-link:focus-visible {
   background: $color-selection;
   color: $color-yellow;
-  opacity: 1;
 }
 
 @media (min-width: $toc-breakpoint) {
@@ -555,25 +596,39 @@ main .toc .toc-link:focus-visible {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: calc(100% + 1rem);
-    width: 12rem;
+    left: calc(100% + #{$gutter-gap});
+    width: $toc-width;
 
     margin: 0;
   }
 
   main .toc {
     position: sticky;
-    top: 2rem;
+    top: $toc-top;
   }
 
+  /*
+   * Short enough to clear the back to top button pinned below it: the
+   * sticky offset, a summary row, a gap, a button row, and the button's
+   * offset from the bottom.
+   *
+   * That same stack is also what lands a panel this tall flush with the
+   * article at the end of the page. With the page scrolled all the way,
+   * what is left below the article is main's bottom margin and the footer,
+   * about 5.15rem. As long as that is taller than the button stack (4.82rem
+   * here), the article's bottom edge ends up above where the panel's would
+   * rest, and sticky lets the panel go no lower than its container, so the
+   * article pushes it up until the two line up. A shorter panel never gets
+   * pushed, and simply ends where its entries do.
+   */
   main .toc .toc-body {
-    max-height: calc(100vh - 9rem);
+    max-height: calc(100vh - #{$toc-top + 2 * $gutter-row + $gutter-gap + $back-to-top-bottom});
   }
 }
 
 @media (min-width: $toc-breakpoint-wide) {
   main #toc {
-    width: 16rem;
+    width: $toc-width-wide;
   }
 }
 
@@ -591,6 +646,161 @@ main article .main-content {
   h6:target {
     background: rgba($color-yellow, .12);
   }
+}
+
+/*
+ * Back to top
+ *
+ * Pinned to the bottom of the viewport. Where the gutter has room for it,
+ * it sits in the column the table of contents uses, dressed like the panel,
+ * and as wide as it on pages that have one out there, so the two read as
+ * one column. Where the gutter is too thin, it floats in the corner over
+ * the article instead, so it drops the panel look for one that stands out
+ * from the surface underneath.
+ */
+
+/*
+ * The column (45rem at the 120% root size is 864px), plus the gap, the
+ * button and a matching margin on each side. Media queries resolve rem
+ * against the browser default rather than the root, hence pixels.
+ */
+$back-to-top-breakpoint: 1120px;
+
+.back-to-top {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: $gutter-row-padding 0.8rem;
+
+  /*
+   * Over the article, it can land on text, code, images or the page itself,
+   * so no shade of the surfaces stands out reliably: a solid accent with a
+   * dark arrow does, and a deeper shadow lifts it off whatever is below.
+   */
+  background: $color-orange;
+  color: $color-background;
+  box-shadow: 4px 4px 0 0 rgba(0,0,0,.4);
+
+  font-family: $font-mono;
+  font-size: $gutter-font-size;
+  line-height: $gutter-line-height;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+
+  transition: color .2s ease-out, background .2s ease-out;
+
+  /* The ToC's disclosure marker, pointing up. */
+  &::before {
+    content: "▸";
+    transform: rotate(-90deg);
+    transition: color .2s ease-out;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: $color-yellow;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-cyan;
+    outline-offset: 0.25rem;
+  }
+}
+
+/* Only the arrow in the corner; the aria-label names the link either way. */
+.back-to-top .back-to-top-label {
+  display: none;
+}
+
+@media (min-width: $back-to-top-breakpoint) {
+  .back-to-top {
+    right: auto;
+    bottom: $back-to-top-bottom;
+    left: calc(50% + #{$content-width / 2} + #{$gutter-gap});
+
+    padding: $gutter-row-padding 1rem;
+
+    /* Out in the gutter, on the page background: the panel look is enough. */
+    background: $color-current;
+    color: $color-cyan;
+    box-shadow: 4px 4px 0 0 rgba(0,0,0,.15);
+
+    &::before {
+      color: $color-orange;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: $color-selection;
+      color: $color-yellow;
+    }
+  }
+
+  .back-to-top .back-to-top-label {
+    display: inline;
+  }
+}
+
+@media (min-width: $toc-breakpoint) {
+  body:has(#toc) .back-to-top {
+    width: $toc-width;
+  }
+}
+
+@media (min-width: $toc-breakpoint-wide) {
+  body:has(#toc) .back-to-top {
+    width: $toc-width-wide;
+  }
+}
+
+/*
+ * Out of the way until the page has been scrolled some: fades in over part
+ * of the first screenful, driven by the scroll position, no script. On a
+ * page too short to scroll the timeline is inactive and it stays hidden.
+ * Browsers without scroll-driven animations just always show it.
+ */
+@supports (animation-timeline: scroll()) {
+  .back-to-top {
+    opacity: 0;
+    visibility: hidden;
+
+    animation: back-to-top-reveal linear both;
+    animation-timeline: scroll(root);
+    animation-range: 40vh 70vh;
+  }
+
+  @keyframes back-to-top-reveal {
+    from {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    to {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+/*
+ * Never over the table of contents. toc.ts flags the button while the two
+ * would overlap; important, to win over the reveal animation. Until that
+ * script has run, which with scripting off is never, pages with a panel go
+ * without the button rather than risk it.
+ */
+.back-to-top[data-over-toc] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+body:has(#toc:not([data-toc-clear])) .back-to-top {
+  display: none;
 }
 
 /*
@@ -881,16 +1091,10 @@ nav#breadcrumbs ul li a:hover {
 main {
   margin: 0 auto 2rem auto;
 
-  font-family: $font-sans-fallback;
-  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
-  font-optical-sizing: auto;
+  font-family: $font-sans;
   font-weight: 400;
   font-style: normal;
   font-size: 0.85rem;
-}
-
-@supports (font-variation-settings: normal) {
-  main { font-family: $font-sans-variable; }
 }
 
 main img {
@@ -913,7 +1117,6 @@ main .main-head blockquote {
   line-height: 1.4;
 
   font-family: $font-serif;
-  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-size: 90%;
@@ -947,7 +1150,7 @@ main .main-head .main-head-info .main-head-tag a {
 
 main .main-head .main-head-info .main-head-tag a:hover {
   background: $color-comment;
-  color: $color-foreground;
+  color: legible($color-foreground, $color-comment);
 }
 
 main .main-content {
@@ -1016,8 +1219,9 @@ main article .main-content {
 
 main .main-content a,
 main .main-head a {
-  color: $color-red;
-  text-decoration: $color-current underline wavy;
+  color: $color-link;
+  /* Transparent rather than none, so the hover colour fades the line in. */
+  text-decoration: transparent underline wavy;
   text-underline-offset: 0.3rem;
 
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
@@ -1025,8 +1229,19 @@ main .main-head a {
 
 main .main-content a:hover,
 main .main-head a:hover {
-  color: $color-pink;
+  color: $color-link-hover;
   text-decoration: $color-yellow underline wavy;
+}
+
+/*
+ * Linked code: link colour on a chip's background never reads, so the
+ * chip gives up its fill for an outline and the text follows the link.
+ */
+main .main-content a code,
+main .main-head a code {
+  color: inherit;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px $color-selection;
 }
 
 main .main-content blockquote {
@@ -1088,7 +1303,7 @@ main .main-list .main-list-item .main-list-meta {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
-  color: $color-comment;
+  color: $color-muted;
 
   transition: color .2s ease-out, background .2s ease-in, text-decoration-color .2s ease-out;
 }
@@ -1111,15 +1326,15 @@ main .main-list .main-list-item .main-list-link {
 }
 
 main .main-list .main-list-item:hover .main-list-link {
-  color: $color-pink;
+  color: $color-link-hover;
 }
 
 main .main-list .recursive .main-list-item .main-list-link {
-  color: $color-red;
+  color: $color-link;
 }
 
 main .main-list .recursive .main-list-item:hover .main-list-link {
-  color: $color-green;
+  color: legible($color-green, $color-background);
 }
 
 main .main-list .main-list-item-blog {
@@ -1169,11 +1384,11 @@ main .latest-posts {
 }
 
 main .latest-posts .main-list .main-list-item .main-list-link {
-  color: $color-red;
+  color: $color-link;
 }
 
 main .latest-posts .main-list .main-list-item:hover .main-list-link {
-  color: $color-cyan;
+  color: legible($color-cyan, $surfaces);
 }
 
 /*
@@ -1208,13 +1423,13 @@ main .main-pagination:hover {
 }
 
 main .main-pagination a {
-  color: $color-purple;
+  color: legible($color-purple, $color-current);
 
   transition: color .2s ease-out, background 1s ease-in, text-decoration-color .2s ease-out;
 }
 
 main .main-pagination a:hover {
-  color: $color-cyan;
+  color: legible($color-cyan, $color-current);
   text-decoration: none;
 }
 
@@ -1362,8 +1577,11 @@ main .essential .grid .essential-item-footer .recursive {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
-  font-variant: small-caps;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
+
+  /* Real capitals, sized down: the mono face has no small caps to use. */
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 
   line-height: 1rem !important;
   text-align: right;
@@ -1375,7 +1593,7 @@ main .essential .grid .essential-item-footer .recursive {
     right: 4%;
     width: 56%;
     max-width: 10rem;
-    font-size: 0.55rem;
+    font-size: 0.47rem;
     line-height: 0.8rem !important;
     text-align: right;
   }
@@ -1514,8 +1732,11 @@ footer .main-links a {
   font-family: $font-mono;
   font-weight: 400;
   font-style: normal;
-  font-variant: small-caps;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
+
+  /* Real capitals, sized down: the mono face has no small caps to use. */
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 footer .main-links a:hover {
@@ -1547,7 +1768,7 @@ footer .bye a {
 /* The Modal (background) */
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 10; /* Sit on top, back to top button included */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -1712,6 +1933,12 @@ footer .bye a {
   #content {
     width: calc(100% - 1rem);
   }
+
+  /* Too few words per line to justify, even with hyphenation. */
+  blockquote,
+  .justify {
+    text-align: start;
+  }
   /*
    * Homepage flourishes: the header photo (with the now-playing overlay it
    * carries) and the hello-world easter egg. Both are landscape-shaped and eat
@@ -1754,6 +1981,14 @@ footer .bye a {
   main .main-content,
   main .main-list {
     padding: 1rem;
+  }
+
+  /*
+   * The root size drops here, so hold the outline near its desktop size:
+   * 0.8rem would land at 12.8px, and nested levels smaller still.
+   */
+  main .toc {
+    font-size: 0.9rem;
   }
 
   /* Less of the screen for the outline, since there is less screen. */

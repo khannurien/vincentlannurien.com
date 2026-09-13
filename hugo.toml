@@ -1,5 +1,5 @@
 baseURL = "https://vincentlannurien.com/"
-languageCode = "en-us"
+locale = "en-US"
 title = "Vincent Lannurien"
 theme = "vincent"
 pluralizeListTitles = false
