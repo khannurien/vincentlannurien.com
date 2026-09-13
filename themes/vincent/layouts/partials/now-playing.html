@@ -15,6 +15,6 @@
   </a>
 </div>
 
-{{ $listenBrainz := resources.Get "/ts/listenbrainz.ts" | js.Build }}
+{{ $listenBrainz := resources.Get "/ts/listenbrainz.ts" | js.Build | fingerprint }}
 
 <script src="{{ $listenBrainz.RelPermalink }}"></script>

@@ -47,6 +47,6 @@
   </details>
 </aside>
 
-{{- $toc := resources.Get "/ts/toc.ts" | js.Build -}}
+{{- $toc := resources.Get "/ts/toc.ts" | js.Build | fingerprint -}}
 <script src="{{ $toc.RelPermalink }}" defer></script>
 {{- end -}}
