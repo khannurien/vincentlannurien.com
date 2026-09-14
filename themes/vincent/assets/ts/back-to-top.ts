@@ -7,7 +7,7 @@
  * the stylesheet uses, and the stylesheet transitions it in.
  */
 
-const backToTop = document.querySelector<HTMLElement>(".back-to-top");
+const backToTop = document.querySelector<HTMLElement>(".page-return");
 
 if (backToTop !== null && !CSS.supports("animation-timeline: scroll()")) {
   track(backToTop);

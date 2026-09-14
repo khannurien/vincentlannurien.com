@@ -44,7 +44,7 @@ const toc = document.getElementById("toc");
 const details = toc?.querySelector<HTMLDetailsElement>("details.toc") ?? null;
 const scroll = toc?.querySelector<HTMLElement>(".toc-scroll") ?? null;
 const body = toc?.querySelector<HTMLElement>(".toc-body") ?? null;
-const backToTop = document.querySelector<HTMLElement>(".back-to-top");
+const backToTop = document.querySelector<HTMLElement>(".page-return");
 
 if (toc !== null && details !== null && scroll !== null && body !== null) {
   start(toc, details, scroll, body);

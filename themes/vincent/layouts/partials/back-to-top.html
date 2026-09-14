@@ -1,9 +1,10 @@
 {{- /*
   Back to top. Targets the body, so besides scrolling up, the next Tab
-  starts again from the top of the page.
+  starts again from the top of the page. The class and label steer clear of
+  the ones ad blocker annoyance lists hide on sight.
 */ -}}
-<a class="back-to-top" href="#top" aria-label="Back to top">
-  <span class="back-to-top-label">loop()</span>
+<a class="page-return" href="#top" aria-label="Back to the top">
+  <span class="page-return-label">loop()</span>
 </a>
 
 {{- $backToTop := resources.Get "/ts/back-to-top.ts" | js.Build | fingerprint -}}

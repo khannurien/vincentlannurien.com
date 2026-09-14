@@ -657,6 +657,9 @@ main article .main-content {
  * one column. Where the gutter is too thin, it floats in the corner over
  * the article instead, so it drops the panel look for one that stands out
  * from the surface underneath.
+ *
+ * Not .back-to-top: Fanboy's Annoyance List, shipped with uBlock Origin,
+ * hides anything by that class or aria-label on every site.
  */
 
 /*
@@ -666,7 +669,7 @@ main article .main-content {
  */
 $back-to-top-breakpoint: 1120px;
 
-.back-to-top {
+.page-return {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
@@ -714,12 +717,12 @@ $back-to-top-breakpoint: 1120px;
 }
 
 /* Only the arrow in the corner; the aria-label names the link either way. */
-.back-to-top .back-to-top-label {
+.page-return .page-return-label {
   display: none;
 }
 
 @media (min-width: $back-to-top-breakpoint) {
-  .back-to-top {
+  .page-return {
     right: auto;
     bottom: $back-to-top-bottom;
     left: calc(50% + #{$content-width / 2} + #{$gutter-gap});
@@ -742,19 +745,19 @@ $back-to-top-breakpoint: 1120px;
     }
   }
 
-  .back-to-top .back-to-top-label {
+  .page-return .page-return-label {
     display: inline;
   }
 }
 
 @media (min-width: $toc-breakpoint) {
-  body:has(#toc) .back-to-top {
+  body:has(#toc) .page-return {
     width: $toc-width;
   }
 }
 
 @media (min-width: $toc-breakpoint-wide) {
-  body:has(#toc) .back-to-top {
+  body:has(#toc) .page-return {
     width: $toc-width-wide;
   }
 }
@@ -767,16 +770,16 @@ $back-to-top-breakpoint: 1120px;
  * timeline and keeps it hidden too.
  */
 @supports (animation-timeline: scroll()) {
-  .back-to-top {
+  .page-return {
     opacity: 0;
     visibility: hidden;
 
-    animation: back-to-top-reveal linear both;
+    animation: page-return-reveal linear both;
     animation-timeline: scroll(root);
     animation-range: 100vh 150vh;
   }
 
-  @keyframes back-to-top-reveal {
+  @keyframes page-return-reveal {
     from {
       opacity: 0;
       visibility: hidden;
@@ -795,14 +798,14 @@ $back-to-top-breakpoint: 1120px;
  * as well, it stays hidden.
  */
 @supports not (animation-timeline: scroll()) {
-  .back-to-top {
+  .page-return {
     opacity: 0;
     visibility: hidden;
 
     transition: color .2s ease-out, background .2s ease-out, opacity .2s ease-out, visibility .2s ease-out;
   }
 
-  .back-to-top[data-scrolled] {
+  .page-return[data-scrolled] {
     opacity: 1;
     visibility: visible;
   }
@@ -814,12 +817,12 @@ $back-to-top-breakpoint: 1120px;
  * script has run, which with scripting off is never, pages with a panel go
  * without the button rather than risk it.
  */
-.back-to-top[data-over-toc] {
+.page-return[data-over-toc] {
   opacity: 0 !important;
   visibility: hidden !important;
 }
 
-body:has(#toc:not([data-toc-clear])) .back-to-top {
+body:has(#toc:not([data-toc-clear])) .page-return {
   display: none;
 }
 
