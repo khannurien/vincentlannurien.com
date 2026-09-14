@@ -4,15 +4,11 @@ hide_title: false
 
 title: "Programmer pour le Cloud"
 date: "2025-01-24T12:02:15+02:00"
+updatedAt: 2026-09-14T16:44:01Z
 
 tags:
-  - "labs"
-  - "cloud"
-  - "deployment"
-  - "development"
-  - "docker"
-  - "git"
-  - "ssh"
+  - "ENSTA"
+  - "3A"
 ---
 
 ![](./images/xkcd-automation.png)

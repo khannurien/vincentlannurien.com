@@ -2,16 +2,14 @@
 draft: false
 hide_title: false
 
-title: "Systèmes à objets répartis"
+title: "Systèmes à objets répartis - Services web"
 date: "2026-01-05T15:13:37+02:00"
-updatedAt: 2026-03-11T13:07:28Z
+updatedAt: 2026-09-14T16:44:01Z
 
 tags:
-  - "labs"
-  - "web"
-  - "systems"
-  - "development"
-  - "deployment"
+  - "UBO"
+  - "M1 Informatique"
+  - "S8"
 
 todo:
   - add final resources (slides, exercises)

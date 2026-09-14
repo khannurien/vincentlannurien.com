@@ -4,12 +4,11 @@ hide_title: false
 
 title: "Introduction à l'administration GNU/Linux"
 date: "2025-01-24T12:02:15+02:00"
-updatedAt: 2026-04-21T09:37:01Z
+updatedAt: 2026-09-14T16:44:01Z
 
 tags:
-  - "labs"
-  - "linux"
-  - "systems"
+  - "ENSTA"
+  - "2A"
 
 todo:
   - Ajout d'une section dédiée aux clefs SSH

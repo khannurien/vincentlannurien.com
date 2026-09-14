@@ -5,3 +5,6 @@
 <a class="back-to-top" href="#top" aria-label="Back to top">
   <span class="back-to-top-label">loop()</span>
 </a>
+
+{{- $backToTop := resources.Get "/ts/back-to-top.ts" | js.Build | fingerprint -}}
+<script src="{{ $backToTop.RelPermalink }}" defer></script>

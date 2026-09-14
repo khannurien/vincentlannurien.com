@@ -760,10 +760,11 @@ $back-to-top-breakpoint: 1120px;
 }
 
 /*
- * Out of the way until the page has been scrolled some: fades in over part
- * of the first screenful, driven by the scroll position, no script. On a
- * page too short to scroll the timeline is inactive and it stays hidden.
- * Browsers without scroll-driven animations just always show it.
+ * Out of the way until the first screenful has scrolled out of view: fades
+ * in over the next half screen, driven by the scroll position, no script.
+ * A page no taller than two screens never scrolls that far, so it never
+ * gets the button, and one too short to scroll at all has an inactive
+ * timeline and keeps it hidden too.
  */
 @supports (animation-timeline: scroll()) {
   .back-to-top {
@@ -772,7 +773,7 @@ $back-to-top-breakpoint: 1120px;
 
     animation: back-to-top-reveal linear both;
     animation-timeline: scroll(root);
-    animation-range: 40vh 70vh;
+    animation-range: 100vh 150vh;
   }
 
   @keyframes back-to-top-reveal {
@@ -785,6 +786,25 @@ $back-to-top-breakpoint: 1120px;
       opacity: 1;
       visibility: visible;
     }
+  }
+}
+
+/*
+ * Browsers without scroll-driven animations: back-to-top.ts flags the
+ * button past the same screenful and it transitions in. With scripting off
+ * as well, it stays hidden.
+ */
+@supports not (animation-timeline: scroll()) {
+  .back-to-top {
+    opacity: 0;
+    visibility: hidden;
+
+    transition: color .2s ease-out, background .2s ease-out, opacity .2s ease-out, visibility .2s ease-out;
+  }
+
+  .back-to-top[data-scrolled] {
+    opacity: 1;
+    visibility: visible;
   }
 }
 

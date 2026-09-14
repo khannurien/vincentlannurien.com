@@ -22,12 +22,9 @@ labels:
 
 ___
 
-{{< raw-html >}}
-  <center>
-    <small>~~~</small>
-    <img src="/images/banner_brest.jpg" />
-  </center>
-{{< /raw-html >}}
+{{< divider >}}
+
+{{< figure src="/images/banner_brest.jpg" >}}
 
 ___
 
