@@ -5,7 +5,7 @@ math: true
 
 title: "Objets connectés et robotique"
 date: "2025-09-05T15:13:37+02:00"
-updatedAt: 2026-09-14T16:44:01Z
+updatedAt: 2026-09-16T12:03:43Z
 
 tags:
   - "UBO"
@@ -188,8 +188,15 @@ Pour simplifier :
   - ✅ Disponible sur les machines du département
 
 1. Découverte de l'environnement logiciel
-    - Télécharger le conteneur de développement
-2. Implantation des commandes de base
+    - On utilise un conteneur de développement
+    - Exécuter la commande `docker` pour initialiser le *daemon*
+    - Télécharger le projet et le décompresser : `unzip rubo-smol.zip`
+    - Ouvrir le projet : `code rubo-smol/`
+    - Installer l'extension pour VS Code "Dev Containers"
+    - Rouvrir le projet dans le conteneur (<kbd>Ctrl</kbd> + <kbd>P</kbd> > "*Reopen in Container*")
+2. Procédure de compilation et de flash du firmware
+3. Implantation des commandes de base
+4. Connexion du robot au Wi-Fi (SSID : `RUBOLINK-OCRx` avec `x` votre numéro de groupe, mot de passe : `nullptr`)
 
 ## TP 3
 
