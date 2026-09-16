@@ -1,7 +1,5 @@
 {{ define "main" }}
-  {{ $pages := .Pages }}
-  {{ $paginator := .Paginate $pages }}
-  {{ .Scratch.Set "pagination" $paginator }}
+  {{ $is_subsection := and (eq .Kind "section") .Parent (not .Parent.IsHome) }}
 
   {{ with .Content }}
   <section class="main-content">
@@ -11,20 +9,38 @@
 
   <section class="main-list">
     <ul>
+      {{ if $is_subsection }}
+      <li>
+        <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
+          ➤ <span class="main-list-link"><strong>{{ .Title }}</strong></span>
+        </a>
+        {{ if or .Sections .Pages }}
+          {{ partial "recursive.html" . }}
+        {{ end }}
+      </li>
+      {{ else }}
+      {{ $pages := .Pages }}
+      {{ $paginator := .Paginate $pages }}
+      {{ .Scratch.Set "pagination" $paginator }}
       {{ range $index, $page := ($paginator.Pages).ByDate.Reverse }}
       <li>
         <a class="main-list-item" href="{{ .Permalink }}" title="{{ .Title }}">
           ➤ <span class="main-list-link"><strong>{{ .Title }}</strong></span>
         </a>
         <!-- <time class="main-list-time" datetime="{{ dateFormat "2006-01-02" .Date }}">({{ dateFormat "January 02, 2006" .Date }})</time> -->
-        {{ partial "recursive.html" $page }}
+        {{ if or .Sections .Pages }}
+          {{ partial "recursive.html" $page }}
+        {{ end }}
       </li>
       {{ if ne $index (sub (len ($pages)) 1) }}
       <hr>
       {{ end }}
       {{ end }}
+      {{ end }}
     </ul>
   </section>
 
-  {{ partial "pagination.html" . }}
+  {{ if not $is_subsection }}
+    {{ partial "pagination.html" . }}
+  {{ end }}
 {{ end }}
