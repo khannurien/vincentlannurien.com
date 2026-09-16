@@ -14,3 +14,6 @@ hugo.linux
 
 # WSL
 *:Zone.Identifier
+
+# Dev container
+/.devcontainer/devcontainer-lock.json
