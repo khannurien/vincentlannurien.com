@@ -71,6 +71,14 @@ kbd {
   font-family: monospace;
 }
 
+/* The screen cap is drawn with a shadow, which print drops: use a box. */
+kbd {
+  padding: 0.1em 0.4em;
+  border: 1px solid black;
+  border-radius: 0.2em;
+  translate: none;
+}
+
 pre,
 code {
   white-space: pre-wrap;

@@ -188,21 +188,60 @@ tr:nth-child(0) {
   background-color: $color-background;
 }
 
+/*
+ * Keycaps
+ *
+ * A key is drawn as a physical cap: a lit face, and a rim below it for the
+ * key's side. The rim is an inset shadow rather than a border, so the cap
+ * keeps the same box whether it is up or down, and pressing it never
+ * reflows the line it sits on.
+ */
+$keycap-pad: 0.15em;
+$keycap-rim: 0.2em;
+
 kbd {
   display: inline-block;
-  padding: 3px 5px;
-  line-height: .85em;
+  min-width: 1em;
+  padding: $keycap-pad 0.5em ($keycap-pad + $keycap-rim);
+
+  font-family: $font-sans-condensed;
+  font-size: .85em;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: .05em;
+  text-align: center;
   white-space: nowrap;
 
-  border: 2px solid $color-current;
-  box-shadow: 2px 2px $color-comment;
+  color: legible($color-cyan, ($color-selection));
+  background-color: $color-selection;
 
-  color: $color-cyan;
+  /* Light falling on the top half of the cap. */
+  background-image: linear-gradient(rgba($color-foreground, 0.1), transparent 50%);
 
-  font-family: $font-sans;
-  font-size: .85em;
-  font-weight: 400;
-  letter-spacing: .05em;
+  border: 1px solid rgba($color-foreground, 0.15);
+  border-radius: 0.35em;
+  box-shadow: inset 0 (-$keycap-rim) $color-current;
+
+  /* Lifts the cap so its face, not its rim, sits on the text baseline. */
+  vertical-align: baseline;
+  translate: 0 -0.1em;
+
+  transition: translate .06s ease-out, padding .06s ease-out;
+}
+
+/* Pressed: the cap sinks by the height of its rim. */
+kbd:active {
+  padding-top: ($keycap-pad + $keycap-rim);
+  padding-bottom: $keycap-pad;
+
+  box-shadow: inset 0 0 $color-current;
+  translate: 0 ($keycap-rim - 0.1em);
+}
+
+/* Keys inside a code block borrow the block's type, not the body's. */
+pre kbd,
+code kbd {
+  font-family: $font-mono;
 }
 
 hr {
