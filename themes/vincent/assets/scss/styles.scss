@@ -212,6 +212,9 @@ kbd {
   text-align: center;
   white-space: nowrap;
 
+  /* A cap is a thing to press, not a word to select. */
+  cursor: default;
+
   color: legible($color-cyan, ($color-selection));
   background-color: $color-selection;
 
@@ -222,20 +225,28 @@ kbd {
   border-radius: 0.35em;
   box-shadow: inset 0 (-$keycap-rim) $color-current;
 
-  /* Lifts the cap so its face, not its rim, sits on the text baseline. */
-  vertical-align: baseline;
-  translate: 0 -0.1em;
+  /*
+   * Centred on the text rather than sat on its baseline: an inline-block
+   * takes its baseline from its own last line, so aligning on the baseline
+   * would make the cap hop -- and shove the whole line with it -- as the
+   * padding shifts underneath on :active. The nudge down by half a rim
+   * centres the face, which is the part that reads as the key.
+   */
+  vertical-align: middle;
+  translate: 0 ($keycap-rim * 0.5);
 
-  transition: translate .06s ease-out, padding .06s ease-out;
+  transition: padding .06s ease-out;
 }
 
-/* Pressed: the cap sinks by the height of its rim. */
+/*
+ * Pressed: the label drops by the height of the rim as the rim collapses,
+ * so the face sinks flush while the cap's own box stays put.
+ */
 kbd:active {
   padding-top: ($keycap-pad + $keycap-rim);
   padding-bottom: $keycap-pad;
 
   box-shadow: inset 0 0 $color-current;
-  translate: 0 ($keycap-rim - 0.1em);
 }
 
 /* Keys inside a code block borrow the block's type, not the body's. */
