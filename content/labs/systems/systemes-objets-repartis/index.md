@@ -4,7 +4,7 @@ hide_title: false
 
 title: "Systèmes à objets répartis - Services web"
 date: "2026-01-05T15:13:37+02:00"
-updatedAt: 2026-09-14T16:44:01Z
+updatedAt: 2026-10-15T08:17:33Z
 
 tags:
   - "UBO"
@@ -314,7 +314,7 @@ Par commidité, on peut passer dans le fichier `deno.json` les permissions requi
 Le routage est le mécanisme principal d'un serveur web. Router une requête utilisateur, c'est la diriger vers la fonction appropriée pour traitement et réponse. Afin d'écrire une route, il nous faut :
 
 - sa *méthode* HTTP : `GET`, `POST`, `UPDATE`, `DELETE`, etc. ;
-- son *chemin* (la partie finale de l'adresse) : par exemple, la route `"/polls"` sera atteinte à l'adresse `http://localhost:8000/polls` ;
+- son *chemin* (la partie finale de l'adresse) : par exemple, la route `/polls` sera atteinte à l'adresse `http://localhost:8000/polls` ;
 - sa *fonction* associée, c'est-à-dire le code qui sera appelé par le routeur lorsqu'il recevra une requête utilisateur sur cette route.
 
 Pour illustrer, on trouve ci-dessous le code d'une fonction qui retourne "Hello, world!" dans le corps d'une réponse HTTP :
